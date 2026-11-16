@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shishoki YuE Studio v2.0 — Local AI Music &amp; Pro-DAW Workstation</title>
-  <meta name="description" content="100% offline AI music workstation powered by audio.cpp (YuE2-3B & SheetSage2). Create original songs, vocal covers, MIDI & sheet music on macOS, Windows & Linux." />
+  <meta name="description" content="100% offline AI music workstation powered by audio.cpp (YuE2-3B & SheetSage2). Free direct downloads for macOS, Windows & Linux." />
   <link rel="icon" href="assets/logo.png" />
   <style>
     :root {
@@ -16,6 +16,7 @@
       --muted: #94a3b8;
       --teal: #00ffd1;
       --teal-dark: #0ea5a4;
+      --amber: #fbbf24;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -41,7 +42,7 @@
     }
     .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1rem; white-space: nowrap; }
     .brand img { width: 34px; height: 34px; border-radius: 8px; }
-    .nav-links { display: flex; align-items: center; gap: 18px; font-size: 0.9rem; color: var(--muted); }
+    .nav-links { display: flex; align-items: center; gap: 16px; font-size: 0.9rem; color: var(--muted); }
     .nav-links a:hover { color: var(--teal); }
     .lang-select {
       background: var(--surface-2); color: var(--text); border: 1px solid var(--border);
@@ -50,12 +51,12 @@
     .lang-select:focus, .lang-select:hover { border-color: var(--teal); }
     .nav-cta {
       background: var(--teal); color: #090b12 !important;
-      padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.86rem; white-space: nowrap;
+      padding: 8px 15px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; white-space: nowrap;
     }
     .nav-cta:hover { opacity: 0.9; }
 
     /* Hero */
-    .hero { padding: 64px 0 48px; text-align: center; }
+    .hero { padding: 60px 0 44px; text-align: center; }
     .badge {
       display: inline-block; padding: 5px 14px; border-radius: 999px;
       background: rgba(0, 255, 209, 0.1); border: 1px solid rgba(0, 255, 209, 0.35);
@@ -68,19 +69,24 @@
     .hero p {
       max-width: 720px; margin: 0 auto 28px; color: var(--muted); font-size: 1.06rem;
     }
-    .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-bottom: 42px; }
+    .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 38px; }
     .btn-primary {
       background: linear-gradient(135deg, #00ffd1, #0ea5a4); color: #090b12;
-      padding: 14px 28px; border-radius: 10px; font-weight: 800; font-size: 1rem;
+      padding: 13px 26px; border-radius: 10px; font-weight: 800; font-size: 0.98rem;
       box-shadow: 0 8px 30px rgba(0, 255, 209, 0.22); transition: transform 0.15s;
     }
     .btn-primary:hover { transform: translateY(-1px); }
     .btn-secondary {
       background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
-      padding: 14px 24px; border-radius: 10px; font-weight: 600; font-size: 0.96rem;
+      padding: 13px 22px; border-radius: 10px; font-weight: 600; font-size: 0.94rem;
     }
     .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
-    .platforms { font-size: 0.84rem; color: var(--muted); margin-top: -28px; margin-bottom: 36px; }
+    .btn-donate {
+      background: rgba(251, 191, 36, 0.12); border: 1px solid rgba(251, 191, 36, 0.45); color: var(--amber);
+      padding: 13px 22px; border-radius: 10px; font-weight: 700; font-size: 0.94rem;
+    }
+    .btn-donate:hover { background: var(--amber); color: #090b12; }
+    .platforms { font-size: 0.84rem; color: var(--muted); margin-top: -24px; margin-bottom: 34px; }
     .hero-shot {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: 14px; padding: 10px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
@@ -88,9 +94,32 @@
     .hero-shot img { width: 100%; border-radius: 8px; display: block; }
 
     /* Sections */
-    section { padding: 56px 0; }
+    section { padding: 54px 0; }
     .sec-title { font-size: 1.75rem; font-weight: 800; text-align: center; margin-bottom: 10px; }
-    .sec-sub { color: var(--muted); text-align: center; max-width: 640px; margin: 0 auto 36px; font-size: 0.98rem; }
+    .sec-sub { color: var(--muted); text-align: center; max-width: 660px; margin: 0 auto 34px; font-size: 0.98rem; }
+
+    /* Direct Downloads */
+    .dl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 18px; }
+    .dl-card {
+      background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--teal);
+      border-radius: 12px; padding: 24px 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
+    }
+    .dl-os { font-size: 1.18rem; font-weight: 800; margin-bottom: 4px; }
+    .dl-desc { color: var(--muted); font-size: 0.88rem; }
+    .dl-buttons { display: flex; flex-direction: column; gap: 9px; }
+    .dl-btn {
+      display: block; text-align: center; padding: 10px 14px; border-radius: 8px;
+      background: var(--teal); color: #090b12; font-weight: 800; font-size: 0.88rem;
+    }
+    .dl-btn:hover { opacity: 0.9; }
+    .dl-btn.alt {
+      background: var(--surface-2); color: var(--text); border: 1px solid var(--border); font-weight: 600;
+    }
+    .dl-btn.alt:hover { border-color: var(--teal); color: var(--teal); }
+    .dl-note {
+      margin-top: 18px; text-align: center; font-size: 0.86rem; color: var(--muted);
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px;
+    }
 
     /* Features */
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 18px; }
@@ -127,19 +156,26 @@
     }
     .manual-btn:hover { background: var(--teal); color: #090b12; }
 
-    /* Video */
+    /* Video & Donate */
     .video-box {
       max-width: 820px; margin: 0 auto;
       background: var(--surface); border: 1px dashed var(--border); border-radius: 14px;
-      padding: 48px 24px; text-align: center; color: var(--muted);
+      padding: 44px 24px; text-align: center; color: var(--muted);
     }
     .video-box h3 { color: var(--text); margin-bottom: 8px; }
+    .donate-banner {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(14, 165, 164, 0.12));
+      border: 1px solid rgba(251, 191, 36, 0.35); border-radius: 14px;
+      padding: 32px 24px; text-align: center; max-width: 820px; margin: 0 auto;
+    }
+    .donate-banner h3 { font-size: 1.35rem; margin-bottom: 8px; }
+    .donate-banner p { color: var(--muted); max-width: 600px; margin: 0 auto 20px; font-size: 0.94rem; }
 
     footer {
       border-top: 1px solid var(--border); padding: 28px 0; text-align: center;
       color: var(--muted); font-size: 0.85rem;
     }
-    @media (max-width: 760px) {
+    @media (max-width: 800px) {
       .nav-links a:not(.nav-cta) { display: none; }
     }
   </style>
@@ -152,8 +188,8 @@
         <span>Shishoki YuE Studio</span>
       </a>
       <div class="nav-links">
+        <a href="#downloads" data-i18n="nav_downloads">Downloads</a>
         <a href="#features" data-i18n="nav_features">Features</a>
-        <a href="#screenshots" data-i18n="nav_workspace">Workspace</a>
         <a href="#manuals" data-i18n="nav_manuals">PDF Manuals</a>
         <a href="#tutorial" data-i18n="nav_tutorial">Tutorial</a>
         <select id="langSelect" class="lang-select" aria-label="Language">
@@ -163,7 +199,7 @@
           <option value="ms">Bahasa Melayu</option>
           <option value="ta">தமிழ்</option>
         </select>
-        <a class="nav-cta" href="https://shishoki.lemonsqueezy.com/checkout/buy/60168574-c439-47f1-a39b-de181c6d17e0" target="_blank" rel="noreferrer" data-i18n="nav_download">Download Free</a>
+        <a class="nav-cta" href="#downloads" data-i18n="nav_download">Download Free</a>
       </div>
     </div>
   </nav>
@@ -175,18 +211,62 @@
       Shishoki YuE Studio is a native desktop workstation powered locally by <b>audio.cpp</b> (<b>YuE2-3B</b> synthesis + <b>SheetSage2</b> audio-to-score transcription) with zero cloud limits or subscriptions.
     </p>
     <div class="hero-actions">
-      <a class="btn-primary" href="https://shishoki.lemonsqueezy.com/checkout/buy/60168574-c439-47f1-a39b-de181c6d17e0" target="_blank" rel="noreferrer" data-i18n="btn_download">
-        ⬇ Download Free App (v2.0.0)
+      <a class="btn-primary" href="#downloads" data-i18n="btn_download">
+        ⬇ Direct Download (v2.0.0)
       </a>
       <a class="btn-secondary" href="#manuals" data-i18n="btn_manuals">
-        📖 Download 19-Page PDF Manuals
+        📖 PDF Manuals (5 Languages)
+      </a>
+      <a class="btn-donate" href="https://shishoki.lemonsqueezy.com/checkout/buy/60168574-c439-47f1-a39b-de181c6d17e0" target="_blank" rel="noreferrer" data-i18n="btn_donate">
+        ☕ Support / Donate
       </a>
     </div>
-    <div class="platforms" data-i18n="platforms">Available for macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb)</div>
+    <div class="platforms" data-i18n="platforms">Direct installers for macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — No sign-up required</div>
     <div class="hero-shot">
       <img src="assets/hero-studio.png" alt="Shishoki YuE Studio Workspace" />
     </div>
   </header>
+
+  <section id="downloads" class="container">
+    <h2 class="sec-title" data-i18n="dl_title">Direct App Downloads (v2.0.0)</h2>
+    <p class="sec-sub" data-i18n="dl_sub">Choose your operating system below for instant 1-click download — no email or account required.</p>
+    <div class="dl-grid">
+      <div class="dl-card">
+        <div>
+          <div class="dl-os">macOS (Apple Silicon)</div>
+          <div class="dl-desc" data-i18n="dl_mac_desc">For M1 / M2 / M3 / M4 Macs. Open the .dmg and drag Shishoki YuE Studio into Applications.</div>
+        </div>
+        <div class="dl-buttons">
+          <a class="dl-btn" href="https://github.com/shishoki/shishoki-yue-studio/releases/download/v2.0.0/Shishoki.YuE.Studio_2.0.0_aarch64.dmg" data-i18n="dl_mac_btn">⬇ Download .DMG (7.1 MB)</a>
+        </div>
+      </div>
+
+      <div class="dl-card">
+        <div>
+          <div class="dl-os">Windows (64-bit)</div>
+          <div class="dl-desc" data-i18n="dl_win_desc">For Windows 10 &amp; 11 (x64). Recommended: standard .EXE installer (or .MSI for enterprise).</div>
+        </div>
+        <div class="dl-buttons">
+          <a class="dl-btn" href="https://github.com/shishoki/shishoki-yue-studio/releases/download/v2.0.0/Shishoki.YuE.Studio_2.0.0_x64-setup.exe" data-i18n="dl_win_exe">⬇ Download Setup .EXE (3.0 MB)</a>
+          <a class="dl-btn alt" href="https://github.com/shishoki/shishoki-yue-studio/releases/download/v2.0.0/Shishoki.YuE.Studio_2.0.0_x64_en-US.msi" data-i18n="dl_win_msi">Download .MSI Installer (3.8 MB)</a>
+        </div>
+      </div>
+
+      <div class="dl-card">
+        <div>
+          <div class="dl-os">Linux (x86_64)</div>
+          <div class="dl-desc" data-i18n="dl_lin_desc">Universal .AppImage for any distro (chmod +x to run), or .DEB package for Ubuntu / Debian.</div>
+        </div>
+        <div class="dl-buttons">
+          <a class="dl-btn" href="https://github.com/shishoki/shishoki-yue-studio/releases/download/v2.0.0/Shishoki.YuE.Studio_2.0.0_amd64.AppImage" data-i18n="dl_lin_app">⬇ Download .AppImage (79 MB)</a>
+          <a class="dl-btn alt" href="https://github.com/shishoki/shishoki-yue-studio/releases/download/v2.0.0/Shishoki.YuE.Studio_2.0.0_amd64.deb" data-i18n="dl_lin_deb">Download .DEB Package (4.1 MB)</a>
+        </div>
+      </div>
+    </div>
+    <div class="dl-note" data-i18n-html="dl_note">
+      <b>First-Time Setup:</b> After installing, click <b>Model &amp; Engine Setup Guide</b> in the bottom-left sidebar (or see Chapter 1 of the PDF manual) to place <code>audio.cpp</code> and GGUF models in your <code>YuE2</code> Engine Folder.
+    </div>
+  </section>
 
   <section id="features" class="container">
     <h2 class="sec-title" data-i18n="feat_title">Everything You Need in One Local Studio</h2>
@@ -295,6 +375,16 @@
     </div>
   </section>
 
+  <section id="donate" class="container" style="padding-top:12px;">
+    <div class="donate-banner">
+      <h3 data-i18n="don_title">☕ Enjoying Shishoki YuE Studio?</h3>
+      <p data-i18n="don_desc">Shishoki YuE Studio is 100% free and offline. If it helps your music production, you can support ongoing development with a voluntary donation via Lemon Squeezy.</p>
+      <a class="btn-donate" style="display:inline-block;" href="https://shishoki.lemonsqueezy.com/checkout/buy/60168574-c439-47f1-a39b-de181c6d17e0" target="_blank" rel="noreferrer" data-i18n="don_btn">
+        ☕ Make a Donation on Lemon Squeezy
+      </a>
+    </div>
+  </section>
+
   <footer>
     <div class="container" data-i18n="footer">
       Shishoki Production · Shishoki YuE Studio v2.0.0 · Powered locally by audio.cpp (YuE2 &amp; SheetSage2)
@@ -304,17 +394,29 @@
   <script>
     const I18N = {
       en: {
+        nav_downloads: "Downloads",
         nav_features: "Features",
-        nav_workspace: "Workspace",
         nav_manuals: "PDF Manuals",
         nav_tutorial: "Tutorial",
         nav_download: "Download Free",
         hero_badge: "Release v2.0.0 · 100% Free & Offline Desktop Studio",
         hero_title: "Local AI Music Synthesis,<br />Vocal Covers &amp; Pro-DAW Notation",
         hero_desc: "Shishoki YuE Studio is a native desktop workstation powered locally by <b>audio.cpp</b> (<b>YuE2-3B</b> synthesis + <b>SheetSage2</b> audio-to-score transcription) with zero cloud limits or subscriptions.",
-        btn_download: "⬇ Download Free App (v2.0.0)",
-        btn_manuals: "📖 Download 19-Page PDF Manuals",
-        platforms: "Available for macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb)",
+        btn_download: "⬇ Direct Download (v2.0.0)",
+        btn_manuals: "📖 PDF Manuals (5 Languages)",
+        btn_donate: "☕ Support / Donate",
+        platforms: "Direct installers for macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — No sign-up required",
+        dl_title: "Direct App Downloads (v2.0.0)",
+        dl_sub: "Choose your operating system below for instant 1-click download — no email or account required.",
+        dl_mac_desc: "For M1 / M2 / M3 / M4 Macs. Open the .dmg and drag Shishoki YuE Studio into Applications.",
+        dl_mac_btn: "⬇ Download .DMG (7.1 MB)",
+        dl_win_desc: "For Windows 10 & 11 (x64). Recommended: standard .EXE installer (or .MSI for enterprise).",
+        dl_win_exe: "⬇ Download Setup .EXE (3.0 MB)",
+        dl_win_msi: "Download .MSI Installer (3.8 MB)",
+        dl_lin_desc: "Universal .AppImage for any distro (chmod +x to run), or .DEB package for Ubuntu / Debian.",
+        dl_lin_app: "⬇ Download .AppImage (79 MB)",
+        dl_lin_deb: "Download .DEB Package (4.1 MB)",
+        dl_note: "<b>First-Time Setup:</b> After installing, click <b>Model &amp; Engine Setup Guide</b> in the bottom-left sidebar (or see Chapter 1 of the PDF manual) to place <code>audio.cpp</code> and GGUF models in your <code>YuE2</code> Engine Folder.",
         feat_title: "Everything You Need in One Local Studio",
         feat_sub: "Built for musicians, arrangers, and producers who want full creative control offline on their own hardware.",
         f1_k: "01 · Offline Engine", f1_t: "Powered by audio.cpp",
@@ -340,20 +442,35 @@
         vid_sub: "See Shishoki YuE Studio v2.0 in action — from Engine Folder setup to AI song synthesis, covers, and MIDI editing.",
         vid_box_t: "YouTube Tutorial Coming Soon",
         vid_box_b: "Once your tutorial is uploaded to YouTube, replace this box in <code>index.html</code> with your YouTube embed.",
+        don_title: "☕ Enjoying Shishoki YuE Studio?",
+        don_desc: "Shishoki YuE Studio is 100% free and offline. If it helps your music production, you can support ongoing development with a voluntary donation via Lemon Squeezy.",
+        don_btn: "☕ Make a Donation on Lemon Squeezy",
         footer: "Shishoki Production · Shishoki YuE Studio v2.0.0 · Powered locally by audio.cpp (YuE2 & SheetSage2)"
       },
       "zh-CN": {
+        nav_downloads: "立即下载",
         nav_features: "核心功能",
-        nav_workspace: "界面预览",
         nav_manuals: "PDF 手册",
         nav_tutorial: "视频教程",
         nav_download: "免费下载",
         hero_badge: "v2.0.0 正式发布 · 100% 免费离线桌面工作站",
         hero_title: "本地 AI 音乐合成、<br />人声翻唱与专业 DAW 制谱",
         hero_desc: "Shishoki YuE Studio 是一款由本地 <b>audio.cpp</b>（<b>YuE2-3B</b> 合成 + <b>SheetSage2</b> 音频扒谱）驱动的原生桌面工作站，无需云端、无订阅限制。",
-        btn_download: "⬇ 免费下载应用 (v2.0.0)",
-        btn_manuals: "📖 下载 19 页图文 PDF 手册",
-        platforms: "支持 macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb)",
+        btn_download: "⬇ 直接下载应用 (v2.0.0)",
+        btn_manuals: "📖 PDF 手册（5 种语言）",
+        btn_donate: "☕ 赞赏 / 捐赠支持",
+        platforms: "支持 macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — 无需注册直接下载",
+        dl_title: "应用直接下载 (v2.0.0)",
+        dl_sub: "选择您的操作系统即可一键直接下载，无需填写邮箱或注册账号。",
+        dl_mac_desc: "适用于 M1 / M2 / M3 / M4 Mac。打开 .dmg 并将 Shishoki YuE Studio 拖入“应用程序”即可。",
+        dl_mac_btn: "⬇ 下载 .DMG 安装包 (7.1 MB)",
+        dl_win_desc: "适用于 Windows 10 & 11 (64 位)。推荐使用标准 .EXE 安装包（或企业用 .MSI）。",
+        dl_win_exe: "⬇ 下载安装程序 .EXE (3.0 MB)",
+        dl_win_msi: "下载 .MSI 安装包 (3.8 MB)",
+        dl_lin_desc: "通用 .AppImage（赋予 chmod +x 即可运行），或适用于 Ubuntu / Debian 的 .DEB 安装包。",
+        dl_lin_app: "⬇ 下载 .AppImage (79 MB)",
+        dl_lin_deb: "下载 .DEB 安装包 (4.1 MB)",
+        dl_note: "<b>首次使用提示：</b>安装后请点击左下角 <b>Model &amp; Engine Setup Guide</b>（或查看 PDF 手册第 1 章），将 <code>audio.cpp</code> 与 GGUF 模型放入您的 <code>YuE2</code> 引擎文件夹。",
         feat_title: "集齐本地音乐制作所需的全部工具",
         feat_sub: "专为希望在自己电脑上完全离线掌控创作的音乐人、编曲师与制作人打造。",
         f1_k: "01 · 离线引擎", f1_t: "由 audio.cpp 驱动",
@@ -379,20 +496,35 @@
         vid_sub: "观看 Shishoki YuE Studio v2.0 实战演示 —— 从引擎文件夹配置到 AI 编曲、翻唱与 MIDI 精修。",
         vid_box_t: "YouTube 视频教程即将上线",
         vid_box_b: "视频上传至 YouTube 后，只需将 <code>index.html</code> 中的此区域替换为 YouTube 嵌入播放器即可。",
+        don_title: "☕ 喜欢 Shishoki YuE Studio 吗？",
+        don_desc: "Shishoki YuE Studio 100% 免费且离线运行。如果它对您的音乐创作有所帮助，欢迎通过 Lemon Squeezy 随喜赞赏支持后续开发。",
+        don_btn: "☕ 前往 Lemon Squeezy 赞赏支持",
         footer: "Shishoki Production · Shishoki YuE Studio v2.0.0 · 由本地 audio.cpp (YuE2 & SheetSage2) 驱动"
       },
       "zh-TW": {
+        nav_downloads: "立即下載",
         nav_features: "核心功能",
-        nav_workspace: "介面預覽",
         nav_manuals: "PDF 手冊",
         nav_tutorial: "影片教學",
         nav_download: "免費下載",
         hero_badge: "v2.0.0 正式發布 · 100% 免費離線桌面工作站",
         hero_title: "本地 AI 音樂合成、<br />人聲翻唱與專業 DAW 製譜",
         hero_desc: "Shishoki YuE Studio 是一款由本地 <b>audio.cpp</b>（<b>YuE2-3B</b> 合成 + <b>SheetSage2</b> 音訊扒譜）驅動的原生桌面工作站，無需雲端、無訂閱限制。",
-        btn_download: "⬇ 免費下載應用 (v2.0.0)",
-        btn_manuals: "📖 下載 19 頁圖文 PDF 手冊",
-        platforms: "支援 macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb)",
+        btn_download: "⬇ 直接下載應用 (v2.0.0)",
+        btn_manuals: "📖 PDF 手冊（5 種語言）",
+        btn_donate: "☕ 贊助 / 捐贈支持",
+        platforms: "支援 macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — 無需註冊直接下載",
+        dl_title: "應用程式直接下載 (v2.0.0)",
+        dl_sub: "選擇您的作業系統即可一鍵直接下載，無需填寫 Email 或註冊帳號。",
+        dl_mac_desc: "適用於 M1 / M2 / M3 / M4 Mac。開啟 .dmg 並將 Shishoki YuE Studio 拖入「應用程式」即可。",
+        dl_mac_btn: "⬇ 下載 .DMG 安裝檔 (7.1 MB)",
+        dl_win_desc: "適用於 Windows 10 & 11 (64 位元)。推薦使用標準 .EXE 安裝程式（或企業用 .MSI）。",
+        dl_win_exe: "⬇ 下載安裝程式 .EXE (3.0 MB)",
+        dl_win_msi: "下載 .MSI 安裝檔 (3.8 MB)",
+        dl_lin_desc: "通用 .AppImage（賦予 chmod +x 即可執行），或適用於 Ubuntu / Debian 的 .DEB 套件。",
+        dl_lin_app: "⬇ 下載 .AppImage (79 MB)",
+        dl_lin_deb: "下載 .DEB 套件 (4.1 MB)",
+        dl_note: "<b>首次使用提示：</b>安裝後請點擊左下角 <b>Model &amp; Engine Setup Guide</b>（或查看 PDF 手冊第 1 章），將 <code>audio.cpp</code> 與 GGUF 模型放入您的 <code>YuE2</code> 引擎資料夾。",
         feat_title: "集齊本地音樂製作所需的全部工具",
         feat_sub: "專為希望在自己電腦上完全離線掌控創作的音樂人、編曲師與製作人打造。",
         f1_k: "01 · 離線引擎", f1_t: "由 audio.cpp 驅動",
@@ -418,20 +550,35 @@
         vid_sub: "觀看 Shishoki YuE Studio v2.0 實戰示範 —— 從引擎資料夾設定到 AI 編曲、翻唱與 MIDI 精修。",
         vid_box_t: "YouTube 教學影片即將上線",
         vid_box_b: "影片上傳至 YouTube 後，只需將 <code>index.html</code> 中的此區域替換為 YouTube 嵌入播放器即可。",
+        don_title: "☕ 喜歡 Shishoki YuE Studio 嗎？",
+        don_desc: "Shishoki YuE Studio 100% 免費且離線運行。如果它對您的音樂創作有所幫助，歡迎透過 Lemon Squeezy 隨喜贊助支持後續開發。",
+        don_btn: "☕ 前往 Lemon Squeezy 贊助支持",
         footer: "Shishoki Production · Shishoki YuE Studio v2.0.0 · 由本地 audio.cpp (YuE2 & SheetSage2) 驅動"
       },
       ms: {
+        nav_downloads: "Muat Turun",
         nav_features: "Ciri-ciri",
-        nav_workspace: "Ruang Kerja",
         nav_manuals: "Manual PDF",
         nav_tutorial: "Tutorial",
         nav_download: "Muat Turun Percuma",
         hero_badge: "Keluaran v2.0.0 · Studio Desktop 100% Percuma & Luar Talian",
         hero_title: "Sintesis Muzik AI Tempatan,<br />Lagu Cover &amp; Notasi Pro-DAW",
         hero_desc: "Shishoki YuE Studio ialah stesen kerja desktop natif yang dikuasakan secara tempatan oleh <b>audio.cpp</b> (sintesis <b>YuE2-3B</b> + transkripsi <b>SheetSage2</b>) tanpa had awan atau langganan.",
-        btn_download: "⬇ Muat Turun Percuma (v2.0.0)",
-        btn_manuals: "📖 Muat Turun Manual PDF 19 Halaman",
-        platforms: "Tersedia untuk macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb)",
+        btn_download: "⬇ Muat Turun Terus (v2.0.0)",
+        btn_manuals: "📖 Manual PDF (5 Bahasa)",
+        btn_donate: "☕ Sokong / Derma",
+        platforms: "Pemasang terus untuk macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — Tanpa pendaftaran",
+        dl_title: "Muat Turun Terus Aplikasi (v2.0.0)",
+        dl_sub: "Pilih sistem pengendalian anda di bawah untuk muat turun segera 1-klik — tiada e-mel atau akaun diperlukan.",
+        dl_mac_desc: "Untuk Mac M1 / M2 / M3 / M4. Buka .dmg dan seret Shishoki YuE Studio ke dalam Applications.",
+        dl_mac_btn: "⬇ Muat Turun .DMG (7.1 MB)",
+        dl_win_desc: "Untuk Windows 10 & 11 (x64). Disyorkan: pemasang .EXE standard (atau .MSI untuk perusahaan).",
+        dl_win_exe: "⬇ Muat Turun Setup .EXE (3.0 MB)",
+        dl_win_msi: "Muat Turun Pemasang .MSI (3.8 MB)",
+        dl_lin_desc: "Fail universal .AppImage (jalankan chmod +x), atau pakej .DEB untuk Ubuntu / Debian.",
+        dl_lin_app: "⬇ Muat Turun .AppImage (79 MB)",
+        dl_lin_deb: "Muat Turun Pakej .DEB (4.1 MB)",
+        dl_note: "<b>Tetapan Kali Pertama:</b> Selepas memasang, klik <b>Model &amp; Engine Setup Guide</b> di bar sisi kiri bawah (atau lihat Bab 1 manual PDF) untuk meletakkan <code>audio.cpp</code> dan model GGUF dalam folder <code>YuE2</code>.",
         feat_title: "Semua Alat yang Anda Perlukan dalam Satu Studio",
         feat_sub: "Dibina untuk pemuzik, penyusun lagu dan penerbit yang mahukan kawalan kreatif penuh secara luar talian.",
         f1_k: "01 · Enjin Luar Talian", f1_t: "Dikuasakan oleh audio.cpp",
@@ -457,20 +604,35 @@
         vid_sub: "Tonton Shishoki YuE Studio v2.0 beraksi — daripada tetapan Engine Folder hingga sintesis AI, cover dan suntingan MIDI.",
         vid_box_t: "Tutorial YouTube Akan Datang",
         vid_box_b: "Setelah video tutorial dimuat naik ke YouTube, gantikan kotak ini dalam <code>index.html</code> dengan benaman YouTube anda.",
+        don_title: "☕ Suka dengan Shishoki YuE Studio?",
+        don_desc: "Shishoki YuE Studio adalah 100% percuma dan luar talian. Jika ia membantu muzik anda, anda boleh menyokong pembangunan berterusan melalui sumbangan sukarela di Lemon Squeezy.",
+        don_btn: "☕ Derma melalui Lemon Squeezy",
         footer: "Shishoki Production · Shishoki YuE Studio v2.0.0 · Dikuasakan secara tempatan oleh audio.cpp (YuE2 & SheetSage2)"
       },
       ta: {
+        nav_downloads: "பதிவிறக்கம்",
         nav_features: "அம்சங்கள்",
-        nav_workspace: "பணியிடம்",
         nav_manuals: "PDF கையேடுகள்",
         nav_tutorial: "பயிற்சி வீடியோ",
         nav_download: "இலவச பதிவிறக்கம்",
         hero_badge: "பதிப்பு v2.0.0 · 100% இலவசம் & ஆஃப்லைன் டெஸ்க்டாப் ஸ்டுடியோ",
         hero_title: "உள்ளூர் AI இசை உருவாக்கம்,<br />குரல் Covers &amp; Pro-DAW இசைக்குறிப்பு",
         hero_desc: "Shishoki YuE Studio என்பது கிளவுட் வரம்போ சந்தாவோ இன்றி உங்கள் கணினியில் உள்ளூர் <b>audio.cpp</b> (<b>YuE2-3B</b> + <b>SheetSage2</b>) மூலம் இயங்கும் டெஸ்க்டாப் இசைப் பணியிடமாகும்.",
-        btn_download: "⬇ இலவசமாகப் பதிவிறக்கவும் (v2.0.0)",
-        btn_manuals: "📖 19-பக்க PDF கையேடுகளைப் பதிவிறக்கவும்",
-        platforms: "macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb) ஆகியவற்றில் கிடைக்கிறது",
+        btn_download: "⬇ நேரடிப் பதிவிறக்கம் (v2.0.0)",
+        btn_manuals: "📖 PDF கையேடுகள் (5 மொழிகள்)",
+        btn_donate: "☕ ஆதரவு / நன்கொடை",
+        platforms: "macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — பதிவு தேவையில்லை",
+        dl_title: "நேரடி செயலிப் பதிவிறக்கங்கள் (v2.0.0)",
+        dl_sub: "மின்னஞ்சல் அல்லது கணக்கு இன்றி ஒரே கிளிக்கில் பதிவிறக்க உங்கள் இயங்குதளத்தைத் தேர்ந்தெடுக்கவும்.",
+        dl_mac_desc: "M1 / M2 / M3 / M4 Mac-களுக்கு. .dmg-ஐத் திறந்து Applications-இல் இழுக்கவும்.",
+        dl_mac_btn: "⬇ .DMG பதிவிறக்கம் (7.1 MB)",
+        dl_win_desc: "Windows 10 & 11 (x64)-க்கு. பரிந்துரை: .EXE நிறுவி (அல்லது .MSI).",
+        dl_win_exe: "⬇ Setup .EXE பதிவிறக்கம் (3.0 MB)",
+        dl_win_msi: ".MSI நிறுவி பதிவிறக்கம் (3.8 MB)",
+        dl_lin_desc: "எந்த Linux-க்கும் .AppImage (chmod +x), அல்லது Ubuntu / Debian-க்கு .DEB தொகுப்பு.",
+        dl_lin_app: "⬇ .AppImage பதிவிறக்கம் (79 MB)",
+        dl_lin_deb: ".DEB தொகுப்பு பதிவிறக்கம் (4.1 MB)",
+        dl_note: "<b>முதல் முறை அமைப்பு:</b> நிறுவிய பின், கீழ்-இடது பக்கப்பட்டியில் <b>Model &amp; Engine Setup Guide</b>-ஐ கிளிக் செய்து (அல்லது PDF கையேடு அத்தியாயம் 1) <code>audio.cpp</code> மற்றும் GGUF மாடல்களை <code>YuE2</code> கோப்புறையில் வைக்கவும்.",
         feat_title: "ஒரே உள்ளூர் ஸ்டுடியோவில் தேவையான அனைத்தும்",
         feat_sub: "தங்கள் சொந்த கணினியில் ஆஃப்லைனில் முழுப் படைப்பாற்றல் கட்டுப்பாட்டை விரும்பும் இசையமைப்பாளர்களுக்காக உருவாக்கப்பட்டது.",
         f1_k: "01 · ஆஃப்லைன் எஞ்சின்", f1_t: "audio.cpp மூலம் இயங்குகிறது",
@@ -496,6 +658,9 @@
         vid_sub: "Engine Folder அமைப்பிலிருந்து AI பாடல் உருவாக்கம், Cover மற்றும் MIDI திருத்தம் வரை செயல்பாட்டில் காண்க.",
         vid_box_t: "YouTube பயிற்சி வீடியோ விரைவில்",
         vid_box_b: "வீடியோ YouTube-இல் பதிவேற்றப்பட்டதும், <code>index.html</code>-இல் இந்தப் பகுதியை உங்கள் YouTube embed மூலம் மாற்றவும்.",
+        don_title: "☕ Shishoki YuE Studio பிடித்திருக்கிறதா?",
+        don_desc: "Shishoki YuE Studio 100% இலவசம் மற்றும் ஆஃப்லைன். இது உங்கள் இசை உருவாக்கத்திற்கு உதவினால், Lemon Squeezy வழியாக விருப்ப நன்கொடை அளித்து ஆதரிக்கலாம்.",
+        don_btn: "☕ Lemon Squeezy-இல் நன்கொடை அளிக்கவும்",
         footer: "Shishoki Production · Shishoki YuE Studio v2.0.0 · உள்ளூர் audio.cpp (YuE2 & SheetSage2) மூலம் இயங்குகிறது"
       }
     };
