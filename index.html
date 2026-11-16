@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shishoki YuE Studio v2.0 — Local AI Music & Pro-DAW Workstation</title>
+  <title>Shishoki YuE Studio v2.0 — Local AI Music &amp; Pro-DAW Workstation</title>
   <meta name="description" content="100% offline AI music workstation powered by audio.cpp (YuE2-3B & SheetSage2). Create original songs, vocal covers, MIDI & sheet music on macOS, Windows & Linux." />
   <link rel="icon" href="assets/logo.png" />
   <style>
@@ -20,7 +20,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Noto Sans", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "PingFang TC", "Tamil Sangam MN", "Noto Sans", sans-serif;
       background: radial-gradient(circle at 50% -10%, rgba(14, 165, 164, 0.16), transparent 55%), var(--bg);
       color: var(--text);
       line-height: 1.6;
@@ -31,21 +31,26 @@
     /* Nav */
     nav {
       position: sticky; top: 0; z-index: 20;
-      background: rgba(9, 11, 18, 0.85);
+      background: rgba(9, 11, 18, 0.88);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
     .nav-inner {
       display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
+      height: 64px; gap: 12px;
     }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1rem; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1rem; white-space: nowrap; }
     .brand img { width: 34px; height: 34px; border-radius: 8px; }
-    .nav-links { display: flex; align-items: center; gap: 24px; font-size: 0.9rem; color: var(--muted); }
+    .nav-links { display: flex; align-items: center; gap: 18px; font-size: 0.9rem; color: var(--muted); }
     .nav-links a:hover { color: var(--teal); }
+    .lang-select {
+      background: var(--surface-2); color: var(--text); border: 1px solid var(--border);
+      border-radius: 8px; padding: 7px 10px; font-size: 0.85rem; cursor: pointer; outline: none;
+    }
+    .lang-select:focus, .lang-select:hover { border-color: var(--teal); }
     .nav-cta {
       background: var(--teal); color: #090b12 !important;
-      padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.86rem;
+      padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.86rem; white-space: nowrap;
     }
     .nav-cta:hover { opacity: 0.9; }
 
@@ -57,11 +62,11 @@
       color: var(--teal); font-size: 0.8rem; font-weight: 600; margin-bottom: 20px;
     }
     h1 {
-      font-size: clamp(2.1rem, 4.5vw, 3.3rem); font-weight: 800; line-height: 1.15;
+      font-size: clamp(2rem, 4.4vw, 3.2rem); font-weight: 800; line-height: 1.18;
       margin-bottom: 16px; letter-spacing: -0.02em;
     }
     .hero p {
-      max-width: 720px; margin: 0 auto 28px; color: var(--muted); font-size: 1.08rem;
+      max-width: 720px; margin: 0 auto 28px; color: var(--muted); font-size: 1.06rem;
     }
     .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-bottom: 42px; }
     .btn-primary {
@@ -134,7 +139,7 @@
       border-top: 1px solid var(--border); padding: 28px 0; text-align: center;
       color: var(--muted); font-size: 0.85rem;
     }
-    @media (max-width: 680px) {
+    @media (max-width: 760px) {
       .nav-links a:not(.nav-cta) { display: none; }
     }
   </style>
@@ -147,94 +152,101 @@
         <span>Shishoki YuE Studio</span>
       </a>
       <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#screenshots">Workspace</a>
-        <a href="#manuals">PDF Manuals</a>
-        <a href="#tutorial">Tutorial</a>
-        <a class="nav-cta" href="https://shishoki.lemonsqueezy.com/checkout/buy/60168574-c439-47f1-a39b-de181c6d17e0" target="_blank" rel="noreferrer">Download Free</a>
+        <a href="#features" data-i18n="nav_features">Features</a>
+        <a href="#screenshots" data-i18n="nav_workspace">Workspace</a>
+        <a href="#manuals" data-i18n="nav_manuals">PDF Manuals</a>
+        <a href="#tutorial" data-i18n="nav_tutorial">Tutorial</a>
+        <select id="langSelect" class="lang-select" aria-label="Language">
+          <option value="en">English</option>
+          <option value="zh-CN">简体中文</option>
+          <option value="zh-TW">繁體中文</option>
+          <option value="ms">Bahasa Melayu</option>
+          <option value="ta">தமிழ்</option>
+        </select>
+        <a class="nav-cta" href="https://shishoki.lemonsqueezy.com/checkout/buy/60168574-c439-47f1-a39b-de181c6d17e0" target="_blank" rel="noreferrer" data-i18n="nav_download">Download Free</a>
       </div>
     </div>
   </nav>
 
   <header class="hero container">
-    <div class="badge">Release v2.0.0 · 100% Free &amp; Offline Desktop Studio</div>
-    <h1>Local AI Music Synthesis,<br />Vocal Covers &amp; Pro-DAW Notation</h1>
-    <p>
+    <div class="badge" data-i18n="hero_badge">Release v2.0.0 · 100% Free &amp; Offline Desktop Studio</div>
+    <h1 data-i18n-html="hero_title">Local AI Music Synthesis,<br />Vocal Covers &amp; Pro-DAW Notation</h1>
+    <p data-i18n-html="hero_desc">
       Shishoki YuE Studio is a native desktop workstation powered locally by <b>audio.cpp</b> (<b>YuE2-3B</b> synthesis + <b>SheetSage2</b> audio-to-score transcription) with zero cloud limits or subscriptions.
     </p>
     <div class="hero-actions">
-      <a class="btn-primary" href="https://shishoki.lemonsqueezy.com/checkout/buy/60168574-c439-47f1-a39b-de181c6d17e0" target="_blank" rel="noreferrer">
+      <a class="btn-primary" href="https://shishoki.lemonsqueezy.com/checkout/buy/60168574-c439-47f1-a39b-de181c6d17e0" target="_blank" rel="noreferrer" data-i18n="btn_download">
         ⬇ Download Free App (v2.0.0)
       </a>
-      <a class="btn-secondary" href="#manuals">
+      <a class="btn-secondary" href="#manuals" data-i18n="btn_manuals">
         📖 Download 19-Page PDF Manuals
       </a>
     </div>
-    <div class="platforms">Available for macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb)</div>
+    <div class="platforms" data-i18n="platforms">Available for macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb)</div>
     <div class="hero-shot">
       <img src="assets/hero-studio.png" alt="Shishoki YuE Studio Workspace" />
     </div>
   </header>
 
   <section id="features" class="container">
-    <h2 class="sec-title">Everything You Need in One Local Studio</h2>
-    <p class="sec-sub">Built for musicians, arrangers, and producers who want full creative control offline on their own hardware.</p>
+    <h2 class="sec-title" data-i18n="feat_title">Everything You Need in One Local Studio</h2>
+    <p class="sec-sub" data-i18n="feat_sub">Built for musicians, arrangers, and producers who want full creative control offline on their own hardware.</p>
     <div class="grid-3">
       <div class="card">
-        <div class="card-kicker">01 · Offline Engine</div>
-        <h3>Powered by audio.cpp</h3>
-        <p>Run YuE2-3B synthesis and SheetSage2 transcription locally on Metal, CUDA, Vulkan, or CPU with Q5_K_M, Q8_0, and BF16 quantization tiers.</p>
+        <div class="card-kicker" data-i18n="f1_k">01 · Offline Engine</div>
+        <h3 data-i18n="f1_t">Powered by audio.cpp</h3>
+        <p data-i18n="f1_b">Run YuE2-3B synthesis and SheetSage2 transcription locally on Metal, CUDA, Vulkan, or CPU with Q5_K_M, Q8_0, and BF16 quantization tiers.</p>
       </div>
       <div class="card">
-        <div class="card-kicker">02 · 3 Creation Modes</div>
-        <h3>Templates, Original &amp; Covers</h3>
-        <p>Start fast with 22 genre presets, craft custom prompts with Smart Style Builder, or extract melody &amp; chords from any song or hummed clip.</p>
+        <div class="card-kicker" data-i18n="f2_k">02 · 3 Creation Modes</div>
+        <h3 data-i18n="f2_t">Templates, Original &amp; Covers</h3>
+        <p data-i18n="f2_b">Start fast with 22 genre presets, craft custom prompts with Smart Style Builder, or extract melody &amp; chords from any song or hummed clip.</p>
       </div>
       <div class="card">
-        <div class="card-kicker">03 · Pro-DAW Editors</div>
-        <h3>Piano Roll, Stave &amp; Dual View</h3>
-        <p>Edit notes in a full MIDI Piano Roll (V/B/X/E, Ghost tracks, Cycle Loop) or 5-line Stave (abcjs SVG drag, Step-Input) synced in real time.</p>
+        <div class="card-kicker" data-i18n="f3_k">03 · Pro-DAW Editors</div>
+        <h3 data-i18n="f3_t">Piano Roll, Stave &amp; Dual View</h3>
+        <p data-i18n="f3_b">Edit notes in a full MIDI Piano Roll (V/B/X/E, Ghost tracks, Cycle Loop) or 5-line Stave (abcjs SVG drag, Step-Input) synced in real time.</p>
       </div>
       <div class="card">
-        <div class="card-kicker">04 · Smart Harmony</div>
-        <h3>Chord Studio &amp; Reharmonizer</h3>
-        <p>Transform plain chords into Jazz 7th/9th or R&amp;B/Neo-Soul voicings in one click, split mid-bar chords, and export clean .MID / .SVG / PDF.</p>
+        <div class="card-kicker" data-i18n="f4_k">04 · Smart Harmony</div>
+        <h3 data-i18n="f4_t">Chord Studio &amp; Reharmonizer</h3>
+        <p data-i18n="f4_b">Transform plain chords into Jazz 7th/9th or R&amp;B/Neo-Soul voicings in one click, split mid-bar chords, and export clean .MID / .SVG / PDF.</p>
       </div>
       <div class="card">
-        <div class="card-kicker">05 · Dual LoRA &amp; Mastering</div>
-        <h3>Stage-1 AR + Stage-2 NAR</h3>
-        <p>Combine Instrumental AR LoRAs with optional Stage-2 NAR acoustic adapters, lock seeds across takes, and export 48kHz WAV or 320kbps MP3.</p>
+        <div class="card-kicker" data-i18n="f5_k">05 · Dual LoRA &amp; Mastering</div>
+        <h3 data-i18n="f5_t">Stage-1 AR + Stage-2 NAR</h3>
+        <p data-i18n="f5_b">Combine Instrumental AR LoRAs with optional Stage-2 NAR acoustic adapters, lock seeds across takes, and export 48kHz WAV or 320kbps MP3.</p>
       </div>
       <div class="card">
-        <div class="card-kicker">06 · Multilingual UI</div>
-        <h3>5 Built-in Languages</h3>
-        <p>Switch the entire interface instantaneously between English, 简体中文, 繁體中文, Bahasa Melayu, and தமிழ் (Malaysia).</p>
+        <div class="card-kicker" data-i18n="f6_k">06 · Multilingual UI</div>
+        <h3 data-i18n="f6_t">5 Built-in Languages</h3>
+        <p data-i18n="f6_b">Switch the entire interface instantaneously between English, 简体中文, 繁體中文, Bahasa Melayu, and தமிழ் (Malaysia).</p>
       </div>
     </div>
   </section>
 
   <section id="screenshots" class="container">
-    <h2 class="sec-title">Inside the Workstation</h2>
-    <p class="sec-sub">Synchronized MIDI sequencing, interactive harmony editing, and fine-grained Pro Engine controls.</p>
+    <h2 class="sec-title" data-i18n="ws_title">Inside the Workstation</h2>
+    <p class="sec-sub" data-i18n="ws_sub">Synchronized MIDI sequencing, interactive harmony editing, and fine-grained Pro Engine controls.</p>
     <div class="gallery-grid">
       <div class="shot-card">
         <img src="assets/dual-view.png" alt="Dual View MIDI and Stave" />
-        <div class="cap"><b>Dual View (Piano Roll + Visual Stave)</b>Edit MIDI and engraved notation side-by-side with live SoundFont auditioning.</div>
+        <div class="cap" data-i18n-html="s1_cap"><b>Dual View (Piano Roll + Visual Stave)</b>Edit MIDI and engraved notation side-by-side with live SoundFont auditioning.</div>
       </div>
       <div class="shot-card">
         <img src="assets/chord-studio.png" alt="Chord Studio Popover" />
-        <div class="cap"><b>Chord Studio Popover</b>1-click diatonic Roman-numeral chords, 13 chord qualities, and bass slash inversions.</div>
+        <div class="cap" data-i18n-html="s2_cap"><b>Chord Studio Popover</b>1-click diatonic Roman-numeral chords, 13 chord qualities, and bass slash inversions.</div>
       </div>
       <div class="shot-card">
         <img src="assets/pro-engine.png" alt="Pro Engine Drawer" />
-        <div class="cap"><b>Pro Engine &amp; Dual LoRA Controls</b>Independent AR/NAR LoRA scales, Compute Backend, NAR Arena MB, and sampling overrides.</div>
+        <div class="cap" data-i18n-html="s3_cap"><b>Pro Engine &amp; Dual LoRA Controls</b>Independent AR/NAR LoRA scales, Compute Backend, NAR Arena MB, and sampling overrides.</div>
       </div>
     </div>
   </section>
 
   <section id="manuals" class="container">
-    <h2 class="sec-title">Illustrated Producer Manual 2.0 (PDF)</h2>
-    <p class="sec-sub">Choose your preferred language below to download the complete 19-page illustrated manual individually.</p>
+    <h2 class="sec-title" data-i18n="man_title">Illustrated Producer Manual 2.0 (PDF)</h2>
+    <p class="sec-sub" data-i18n="man_sub">Choose your preferred language below to download the complete 19-page illustrated manual individually.</p>
     <div class="manuals-grid">
       <div class="manual-card">
         <div>
@@ -275,18 +287,240 @@
   </section>
 
   <section id="tutorial" class="container">
-    <h2 class="sec-title">Video Walkthrough &amp; Tutorial</h2>
-    <p class="sec-sub">See Shishoki YuE Studio v2.0 in action — from Engine Folder setup to AI song synthesis, covers, and MIDI editing.</p>
+    <h2 class="sec-title" data-i18n="vid_title">Video Walkthrough &amp; Tutorial</h2>
+    <p class="sec-sub" data-i18n="vid_sub">See Shishoki YuE Studio v2.0 in action — from Engine Folder setup to AI song synthesis, covers, and MIDI editing.</p>
     <div class="video-box">
-      <h3>YouTube Tutorial Coming Soon</h3>
-      <p>Once your tutorial is uploaded to YouTube, replace this box in <code>index.html</code> with your YouTube embed.</p>
+      <h3 data-i18n="vid_box_t">YouTube Tutorial Coming Soon</h3>
+      <p data-i18n-html="vid_box_b">Once your tutorial is uploaded to YouTube, replace this box in <code>index.html</code> with your YouTube embed.</p>
     </div>
   </section>
 
   <footer>
-    <div class="container">
+    <div class="container" data-i18n="footer">
       Shishoki Production · Shishoki YuE Studio v2.0.0 · Powered locally by audio.cpp (YuE2 &amp; SheetSage2)
     </div>
   </footer>
+
+  <script>
+    const I18N = {
+      en: {
+        nav_features: "Features",
+        nav_workspace: "Workspace",
+        nav_manuals: "PDF Manuals",
+        nav_tutorial: "Tutorial",
+        nav_download: "Download Free",
+        hero_badge: "Release v2.0.0 · 100% Free & Offline Desktop Studio",
+        hero_title: "Local AI Music Synthesis,<br />Vocal Covers &amp; Pro-DAW Notation",
+        hero_desc: "Shishoki YuE Studio is a native desktop workstation powered locally by <b>audio.cpp</b> (<b>YuE2-3B</b> synthesis + <b>SheetSage2</b> audio-to-score transcription) with zero cloud limits or subscriptions.",
+        btn_download: "⬇ Download Free App (v2.0.0)",
+        btn_manuals: "📖 Download 19-Page PDF Manuals",
+        platforms: "Available for macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb)",
+        feat_title: "Everything You Need in One Local Studio",
+        feat_sub: "Built for musicians, arrangers, and producers who want full creative control offline on their own hardware.",
+        f1_k: "01 · Offline Engine", f1_t: "Powered by audio.cpp",
+        f1_b: "Run YuE2-3B synthesis and SheetSage2 transcription locally on Metal, CUDA, Vulkan, or CPU with Q5_K_M, Q8_0, and BF16 quantization tiers.",
+        f2_k: "02 · 3 Creation Modes", f2_t: "Templates, Original & Covers",
+        f2_b: "Start fast with 22 genre presets, craft custom prompts with Smart Style Builder, or extract melody & chords from any song or hummed clip.",
+        f3_k: "03 · Pro-DAW Editors", f3_t: "Piano Roll, Stave & Dual View",
+        f3_b: "Edit notes in a full MIDI Piano Roll (V/B/X/E, Ghost tracks, Cycle Loop) or 5-line Stave (abcjs SVG drag, Step-Input) synced in real time.",
+        f4_k: "04 · Smart Harmony", f4_t: "Chord Studio & Reharmonizer",
+        f4_b: "Transform plain chords into Jazz 7th/9th or R&B/Neo-Soul voicings in one click, split mid-bar chords, and export clean .MID / .SVG / PDF.",
+        f5_k: "05 · Dual LoRA & Mastering", f5_t: "Stage-1 AR + Stage-2 NAR",
+        f5_b: "Combine Instrumental AR LoRAs with optional Stage-2 NAR acoustic adapters, lock seeds across takes, and export 48kHz WAV or 320kbps MP3.",
+        f6_k: "06 · Multilingual UI", f6_t: "5 Built-in Languages",
+        f6_b: "Switch the entire interface instantaneously between English, 简体中文, 繁體中文, Bahasa Melayu, and தமிழ் (Malaysia).",
+        ws_title: "Inside the Workstation",
+        ws_sub: "Synchronized MIDI sequencing, interactive harmony editing, and fine-grained Pro Engine controls.",
+        s1_cap: "<b>Dual View (Piano Roll + Visual Stave)</b>Edit MIDI and engraved notation side-by-side with live SoundFont auditioning.",
+        s2_cap: "<b>Chord Studio Popover</b>1-click diatonic Roman-numeral chords, 13 chord qualities, and bass slash inversions.",
+        s3_cap: "<b>Pro Engine &amp; Dual LoRA Controls</b>Independent AR/NAR LoRA scales, Compute Backend, NAR Arena MB, and sampling overrides.",
+        man_title: "Illustrated Producer Manual 2.0 (PDF)",
+        man_sub: "Choose your preferred language below to download the complete 19-page illustrated manual individually.",
+        vid_title: "Video Walkthrough & Tutorial",
+        vid_sub: "See Shishoki YuE Studio v2.0 in action — from Engine Folder setup to AI song synthesis, covers, and MIDI editing.",
+        vid_box_t: "YouTube Tutorial Coming Soon",
+        vid_box_b: "Once your tutorial is uploaded to YouTube, replace this box in <code>index.html</code> with your YouTube embed.",
+        footer: "Shishoki Production · Shishoki YuE Studio v2.0.0 · Powered locally by audio.cpp (YuE2 & SheetSage2)"
+      },
+      "zh-CN": {
+        nav_features: "核心功能",
+        nav_workspace: "界面预览",
+        nav_manuals: "PDF 手册",
+        nav_tutorial: "视频教程",
+        nav_download: "免费下载",
+        hero_badge: "v2.0.0 正式发布 · 100% 免费离线桌面工作站",
+        hero_title: "本地 AI 音乐合成、<br />人声翻唱与专业 DAW 制谱",
+        hero_desc: "Shishoki YuE Studio 是一款由本地 <b>audio.cpp</b>（<b>YuE2-3B</b> 合成 + <b>SheetSage2</b> 音频扒谱）驱动的原生桌面工作站，无需云端、无订阅限制。",
+        btn_download: "⬇ 免费下载应用 (v2.0.0)",
+        btn_manuals: "📖 下载 19 页图文 PDF 手册",
+        platforms: "支持 macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb)",
+        feat_title: "集齐本地音乐制作所需的全部工具",
+        feat_sub: "专为希望在自己电脑上完全离线掌控创作的音乐人、编曲师与制作人打造。",
+        f1_k: "01 · 离线引擎", f1_t: "由 audio.cpp 驱动",
+        f1_b: "在 Metal、CUDA、Vulkan 或 CPU 上本地运行 YuE2-3B 合成与 SheetSage2 扒谱，支持 Q5_K_M、Q8_0 与 BF16 量化分级。",
+        f2_k: "02 · 三大创作模式", f2_t: "快速模板、原创与翻唱",
+        f2_b: "内置 22 个曲风预设快速起步，使用智能标签生成器写原创，或从任意歌曲/哼唱音频提取旋律与和弦。",
+        f3_k: "03 · 专业 DAW 编辑器", f3_t: "Piano Roll、五线谱与双视图",
+        f3_b: "在完整 MIDI Piano Roll（V/B/X/E、幽灵轨、循环播放）或 5 线五线谱（SVG 拖拽、步进输入）中实时同步编辑。",
+        f4_k: "04 · 智能和声", f4_t: "Chord Studio 与智能重配和声",
+        f4_b: "一键将三和弦转为爵士七/九和弦或 R&B/Neo-Soul 色彩，支持小节内拆分和弦并导出 .MID / .SVG / PDF。",
+        f5_k: "05 · 双 LoRA 与母带", f5_t: "Stage-1 AR + Stage-2 NAR",
+        f5_b: "结合纯器乐 AR LoRA 与可选 Stage-2 NAR 声学适配器，锁定随机种子，导出 48kHz WAV 或 320kbps MP3。",
+        f6_k: "06 · 多语言界面", f6_t: "内置 5 种界面语言",
+        f6_b: "可在 English、简体中文、繁體中文、Bahasa Melayu 与 தமிழ் (Malaysia) 之间即时切换。",
+        ws_title: "工作站界面预览",
+        ws_sub: "实时同步的 MIDI 音序器、交互式和声编辑与精细的 Pro Engine 参数控制。",
+        s1_cap: "<b>Dual View 双视图（Piano Roll + 五线谱）</b>同屏联动编辑 MIDI 与五线谱，支持 SoundFont 实时试听。",
+        s2_cap: "<b>Chord Studio 和弦工作室</b>一键点选调内顺阶和弦、13 种和弦性质与低音斜杠转位。",
+        s3_cap: "<b>Pro Engine 与双 LoRA 控制</b>独立调节 AR/NAR LoRA 权重、计算后端、NAR Arena 显存与采样参数。",
+        man_title: "图文制作人手册 2.0 (PDF)",
+        man_sub: "请直接点击您需要的语言版本，单独下载完整 19 页图文 PDF 手册。",
+        vid_title: "视频演示与教程",
+        vid_sub: "观看 Shishoki YuE Studio v2.0 实战演示 —— 从引擎文件夹配置到 AI 编曲、翻唱与 MIDI 精修。",
+        vid_box_t: "YouTube 视频教程即将上线",
+        vid_box_b: "视频上传至 YouTube 后，只需将 <code>index.html</code> 中的此区域替换为 YouTube 嵌入播放器即可。",
+        footer: "Shishoki Production · Shishoki YuE Studio v2.0.0 · 由本地 audio.cpp (YuE2 & SheetSage2) 驱动"
+      },
+      "zh-TW": {
+        nav_features: "核心功能",
+        nav_workspace: "介面預覽",
+        nav_manuals: "PDF 手冊",
+        nav_tutorial: "影片教學",
+        nav_download: "免費下載",
+        hero_badge: "v2.0.0 正式發布 · 100% 免費離線桌面工作站",
+        hero_title: "本地 AI 音樂合成、<br />人聲翻唱與專業 DAW 製譜",
+        hero_desc: "Shishoki YuE Studio 是一款由本地 <b>audio.cpp</b>（<b>YuE2-3B</b> 合成 + <b>SheetSage2</b> 音訊扒譜）驅動的原生桌面工作站，無需雲端、無訂閱限制。",
+        btn_download: "⬇ 免費下載應用 (v2.0.0)",
+        btn_manuals: "📖 下載 19 頁圖文 PDF 手冊",
+        platforms: "支援 macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb)",
+        feat_title: "集齊本地音樂製作所需的全部工具",
+        feat_sub: "專為希望在自己電腦上完全離線掌控創作的音樂人、編曲師與製作人打造。",
+        f1_k: "01 · 離線引擎", f1_t: "由 audio.cpp 驅動",
+        f1_b: "在 Metal、CUDA、Vulkan 或 CPU 上本地運行 YuE2-3B 合成與 SheetSage2 扒譜，支援 Q5_K_M、Q8_0 與 BF16 量化分級。",
+        f2_k: "02 · 三大創作模式", f2_t: "快速範本、原創與翻唱",
+        f2_b: "內建 22 個曲風預設快速起步，使用智慧標籤生成器寫原創，或從任意歌曲/哼唱音訊提取旋律與和弦。",
+        f3_k: "03 · 專業 DAW 編輯器", f3_t: "Piano Roll、五線譜與雙視圖",
+        f3_b: "在完整 MIDI Piano Roll（V/B/X/E、幽靈軌、循環播放）或 5 線五線譜（SVG 拖曳、步進輸入）中即時同步編輯。",
+        f4_k: "04 · 智慧和聲", f4_t: "Chord Studio 與智慧重配和聲",
+        f4_b: "一鍵將三和弦轉為爵士七/九和弦或 R&B/Neo-Soul 色彩，支援小節內拆分和弦並匯出 .MID / .SVG / PDF。",
+        f5_k: "05 · 雙 LoRA 與母帶", f5_t: "Stage-1 AR + Stage-2 NAR",
+        f5_b: "結合純器樂 AR LoRA 與可選 Stage-2 NAR 聲學適配器，鎖定隨機種子，匯出 48kHz WAV 或 320kbps MP3。",
+        f6_k: "06 · 多語言介面", f6_t: "內建 5 種介面語言",
+        f6_b: "可在 English、简体中文、繁體中文、Bahasa Melayu 與 தமிழ் (Malaysia) 之間即時切換。",
+        ws_title: "工作站介面預覽",
+        ws_sub: "即時同步的 MIDI 音序器、互動式和聲編輯與精細的 Pro Engine 參數控制。",
+        s1_cap: "<b>Dual View 雙視圖（Piano Roll + 五線譜）</b>同螢幕聯動編輯 MIDI 與五線譜，支援 SoundFont 即時試聽。",
+        s2_cap: "<b>Chord Studio 和弦工作室</b>一鍵點選調內順階和弦、13 種和弦性質與低音斜線轉位。",
+        s3_cap: "<b>Pro Engine 與雙 LoRA 控制</b>獨立調節 AR/NAR LoRA 權重、計算後端、NAR Arena 顯存與採樣參數。",
+        man_title: "圖文製作人手冊 2.0 (PDF)",
+        man_sub: "請直接點擊您需要的語言版本，單獨下載完整 19 頁圖文 PDF 手冊。",
+        vid_title: "影片示範與教學",
+        vid_sub: "觀看 Shishoki YuE Studio v2.0 實戰示範 —— 從引擎資料夾設定到 AI 編曲、翻唱與 MIDI 精修。",
+        vid_box_t: "YouTube 教學影片即將上線",
+        vid_box_b: "影片上傳至 YouTube 後，只需將 <code>index.html</code> 中的此區域替換為 YouTube 嵌入播放器即可。",
+        footer: "Shishoki Production · Shishoki YuE Studio v2.0.0 · 由本地 audio.cpp (YuE2 & SheetSage2) 驅動"
+      },
+      ms: {
+        nav_features: "Ciri-ciri",
+        nav_workspace: "Ruang Kerja",
+        nav_manuals: "Manual PDF",
+        nav_tutorial: "Tutorial",
+        nav_download: "Muat Turun Percuma",
+        hero_badge: "Keluaran v2.0.0 · Studio Desktop 100% Percuma & Luar Talian",
+        hero_title: "Sintesis Muzik AI Tempatan,<br />Lagu Cover &amp; Notasi Pro-DAW",
+        hero_desc: "Shishoki YuE Studio ialah stesen kerja desktop natif yang dikuasakan secara tempatan oleh <b>audio.cpp</b> (sintesis <b>YuE2-3B</b> + transkripsi <b>SheetSage2</b>) tanpa had awan atau langganan.",
+        btn_download: "⬇ Muat Turun Percuma (v2.0.0)",
+        btn_manuals: "📖 Muat Turun Manual PDF 19 Halaman",
+        platforms: "Tersedia untuk macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb)",
+        feat_title: "Semua Alat yang Anda Perlukan dalam Satu Studio",
+        feat_sub: "Dibina untuk pemuzik, penyusun lagu dan penerbit yang mahukan kawalan kreatif penuh secara luar talian.",
+        f1_k: "01 · Enjin Luar Talian", f1_t: "Dikuasakan oleh audio.cpp",
+        f1_b: "Jalankan sintesis YuE2-3B dan transkripsi SheetSage2 secara tempatan pada Metal, CUDA, Vulkan atau CPU (Q5_K_M, Q8_0, BF16).",
+        f2_k: "02 · 3 Mod Penciptaan", f2_t: "Templat, Lagu Asli & Cover",
+        f2_b: "Mulakan pantas dengan 22 pratetap genre, bina lagu asli dengan Smart Style Builder, atau ekstrak melodi & kord daripada audio rujukan.",
+        f3_k: "03 · Editor Pro-DAW", f3_t: "Piano Roll, Stave & Dual View",
+        f3_b: "Sunting nota dalam Piano Roll MIDI (V/B/X/E, Trek Ghost, Cycle Loop) atau Stave 5-garis (seretan SVG abcjs, Step-Input) secara segerak.",
+        f4_k: "04 · Harmoni Pintar", f4_t: "Chord Studio & Penyelaras Kord",
+        f4_b: "Tukar kord asas kepada Jazz 7th/9th atau R&B/Neo-Soul dengan satu klik, pecahkan kord pertengahan bar, dan eksport .MID / .SVG / PDF.",
+        f5_k: "05 · Dual LoRA & Mastering", f5_t: "Stage-1 AR + Stage-2 NAR",
+        f5_b: "Gabungkan Instrumental AR LoRA dengan penyesuai akustik Stage-2 NAR, kunci seed, dan eksport 48kHz WAV atau 320kbps MP3.",
+        f6_k: "06 · Antara Muka Pelbagai Bahasa", f6_t: "5 Bahasa Terbina Dalam",
+        f6_b: "Tukar keseluruhan antara muka serta-merta antara English, 简体中文, 繁體中文, Bahasa Melayu, dan தமிழ் (Malaysia).",
+        ws_title: "Paparan Ruang Kerja",
+        ws_sub: "Penjujukan MIDI segerak, suntingan harmoni interaktif, dan kawalan terperinci Pro Engine.",
+        s1_cap: "<b>Dual View (Piano Roll + Stave Visual)</b>Sunting MIDI dan notasi sebelah-menyebelah dengan ujian SoundFont langsung.",
+        s2_cap: "<b>Popover Chord Studio</b>Kord diatonik 1-klik, 13 kualiti kord, dan songsangan bes garis miring.",
+        s3_cap: "<b>Kawalan Pro Engine &amp; Dual LoRA</b>Skala AR/NAR LoRA berasingan, Compute Backend, NAR Arena MB, dan tetapan persampelan.",
+        man_title: "Manual Penerbit Berilustrasi 2.0 (PDF)",
+        man_sub: "Pilih bahasa pilihan anda di bawah untuk memuat turun manual berilustrasi 19 halaman secara individu.",
+        vid_title: "Video Panduan & Tutorial",
+        vid_sub: "Tonton Shishoki YuE Studio v2.0 beraksi — daripada tetapan Engine Folder hingga sintesis AI, cover dan suntingan MIDI.",
+        vid_box_t: "Tutorial YouTube Akan Datang",
+        vid_box_b: "Setelah video tutorial dimuat naik ke YouTube, gantikan kotak ini dalam <code>index.html</code> dengan benaman YouTube anda.",
+        footer: "Shishoki Production · Shishoki YuE Studio v2.0.0 · Dikuasakan secara tempatan oleh audio.cpp (YuE2 & SheetSage2)"
+      },
+      ta: {
+        nav_features: "அம்சங்கள்",
+        nav_workspace: "பணியிடம்",
+        nav_manuals: "PDF கையேடுகள்",
+        nav_tutorial: "பயிற்சி வீடியோ",
+        nav_download: "இலவச பதிவிறக்கம்",
+        hero_badge: "பதிப்பு v2.0.0 · 100% இலவசம் & ஆஃப்லைன் டெஸ்க்டாப் ஸ்டுடியோ",
+        hero_title: "உள்ளூர் AI இசை உருவாக்கம்,<br />குரல் Covers &amp; Pro-DAW இசைக்குறிப்பு",
+        hero_desc: "Shishoki YuE Studio என்பது கிளவுட் வரம்போ சந்தாவோ இன்றி உங்கள் கணினியில் உள்ளூர் <b>audio.cpp</b> (<b>YuE2-3B</b> + <b>SheetSage2</b>) மூலம் இயங்கும் டெஸ்க்டாப் இசைப் பணியிடமாகும்.",
+        btn_download: "⬇ இலவசமாகப் பதிவிறக்கவும் (v2.0.0)",
+        btn_manuals: "📖 19-பக்க PDF கையேடுகளைப் பதிவிறக்கவும்",
+        platforms: "macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb) ஆகியவற்றில் கிடைக்கிறது",
+        feat_title: "ஒரே உள்ளூர் ஸ்டுடியோவில் தேவையான அனைத்தும்",
+        feat_sub: "தங்கள் சொந்த கணினியில் ஆஃப்லைனில் முழுப் படைப்பாற்றல் கட்டுப்பாட்டை விரும்பும் இசையமைப்பாளர்களுக்காக உருவாக்கப்பட்டது.",
+        f1_k: "01 · ஆஃப்லைன் எஞ்சின்", f1_t: "audio.cpp மூலம் இயங்குகிறது",
+        f1_b: "Metal, CUDA, Vulkan அல்லது CPU-வில் Q5_K_M, Q8_0 மற்றும் BF16 நிலைகளில் YuE2-3B மற்றும் SheetSage2-ஐ உள்ளூரில் இயக்கவும்.",
+        f2_k: "02 · 3 உருவாக்க முறைகள்", f2_t: "Templates, Original & Covers",
+        f2_b: "22 இசை வகை Presets, Smart Style Builder, அல்லது எந்தப் பாடல்/ஹம்மிங் ஆடியோவிலிருந்தும் மெலடி & கார்டுகளைப் பிரித்தெடுக்கவும்.",
+        f3_k: "03 · Pro-DAW எடிட்டர்கள்", f3_t: "Piano Roll, Stave & Dual View",
+        f3_b: "முழு MIDI Piano Roll (V/B/X/E, Ghost தடங்கள், Cycle Loop) அல்லது 5-வரி Stave (abcjs SVG இழுத்தல், Step-Input) ஆகியவற்றில் நேரடியாகத் திருத்தவும்.",
+        f4_k: "04 · ஸ்மார்ட் ஹார்மனி", f4_t: "Chord Studio & Reharmonizer",
+        f4_b: "சாதாரண கார்டுகளை ஒரே கிளிக்கில் Jazz 7th/9th அல்லது R&B/Neo-Soul ஆக மாற்றவும்; .MID / .SVG / PDF ஆக ஏற்றுமதி செய்யவும்.",
+        f5_k: "05 · Dual LoRA & மாஸ்டரிங்", f5_t: "Stage-1 AR + Stage-2 NAR",
+        f5_b: "Instrumental AR LoRA மற்றும் Stage-2 NAR அடாப்டர்களை இணைத்து, Seed-ஐப் பூட்டி, 48kHz WAV அல்லது 320kbps MP3 ஏற்றுமதி செய்யவும்.",
+        f6_k: "06 · பல மொழி இடைமுகம்", f6_t: "5 உள்ளமைந்த மொழிகள்",
+        f6_b: "English, 简体中文, 繁體中文, Bahasa Melayu மற்றும் தமிழ் (Malaysia) ஆகியவற்றுக்கிடையே உடனடியாக மாறவும்.",
+        ws_title: "பணியிடக் காட்சி",
+        ws_sub: "ஒத்திசைக்கப்பட்ட MIDI சீக்வென்சிங், ஊடாடும் ஹார்மனி திருத்தம் மற்றும் Pro Engine கட்டுப்பாடுகள்.",
+        s1_cap: "<b>Dual View (Piano Roll + Visual Stave)</b>நேரடி SoundFont ஒலியுடன் MIDI மற்றும் இசைக்குறிப்பை அருகருகே திருத்தவும்.",
+        s2_cap: "<b>Chord Studio Popover</b>1-கிளிக் Diatonic கார்டுகள், 13 கார்டு வகைகள் மற்றும் Bass slash inversions.",
+        s3_cap: "<b>Pro Engine &amp; Dual LoRA கட்டுப்பாடுகள்</b>தனித்தனி AR/NAR LoRA அளவுகள், Compute Backend, NAR Arena MB & sampling அமைப்புகள்.",
+        man_title: "சித்திரத் தயாரிப்பாளர் கையேடு 2.0 (PDF)",
+        man_sub: "முழுமையான 19-பக்க கையேட்டைத் தனித்தனியாகப் பதிவிறக்க உங்கள் விருப்ப மொழியைத் தேர்ந்தெடுக்கவும்.",
+        vid_title: "வீடியோ வழிகாட்டி & பயிற்சி",
+        vid_sub: "Engine Folder அமைப்பிலிருந்து AI பாடல் உருவாக்கம், Cover மற்றும் MIDI திருத்தம் வரை செயல்பாட்டில் காண்க.",
+        vid_box_t: "YouTube பயிற்சி வீடியோ விரைவில்",
+        vid_box_b: "வீடியோ YouTube-இல் பதிவேற்றப்பட்டதும், <code>index.html</code>-இல் இந்தப் பகுதியை உங்கள் YouTube embed மூலம் மாற்றவும்.",
+        footer: "Shishoki Production · Shishoki YuE Studio v2.0.0 · உள்ளூர் audio.cpp (YuE2 & SheetSage2) மூலம் இயங்குகிறது"
+      }
+    };
+
+    function applyLang(lang) {
+      const dict = I18N[lang] || I18N.en;
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) el.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+        const key = el.getAttribute("data-i18n-html");
+        if (dict[key]) el.innerHTML = dict[key];
+      });
+      localStorage.setItem("shishoki_site_lang", lang);
+    }
+
+    const select = document.getElementById("langSelect");
+    const saved = localStorage.getItem("shishoki_site_lang");
+    const navLang = (navigator.language || "en").toLowerCase();
+    const initial = saved || (navLang.startsWith("zh-tw") || navLang.startsWith("zh-hk") ? "zh-TW" : navLang.startsWith("zh") ? "zh-CN" : navLang.startsWith("ms") ? "ms" : navLang.startsWith("ta") ? "ta" : "en");
+    select.value = I18N[initial] ? initial : "en";
+    applyLang(select.value);
+    select.addEventListener("change", (e) => applyLang(e.target.value));
+  </script>
 </body>
 </html>
