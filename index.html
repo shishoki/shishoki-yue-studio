@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shishoki YuE Studio v2.0 — Local AI Music & Pro-DAW Workstation</title>
+  <meta name="description" content="100% offline AI music workstation powered by audio.cpp (YuE2-3B & SheetSage2). Create original songs, vocal covers, MIDI & sheet music on macOS, Windows & Linux." />
+  <link rel="icon" href="assets/logo.png" />
+  <style>
+    :root {
+      --bg: #090b12;
+      --surface: #121524;
+      --surface-2: #191d31;
+      --border: #282d47;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --teal: #00ffd1;
+      --teal-dark: #0ea5a4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Noto Sans", sans-serif;
+      background: radial-gradient(circle at 50% -10%, rgba(14, 165, 164, 0.16), transparent 55%), var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(9, 11, 18, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1rem; }
+    .brand img { width: 34px; height: 34px; border-radius: 8px; }
+    .nav-links { display: flex; align-items: center; gap: 24px; font-size: 0.9rem; color: var(--muted); }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-cta {
+      background: var(--teal); color: #090b12 !important;
+      padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.86rem;
+    }
+    .nav-cta:hover { opacity: 0.9; }
+
+    /* Hero */
+    .hero { padding: 64px 0 48px; text-align: center; }
+    .badge {
+      display: inline-block; padding: 5px 14px; border-radius: 999px;
+      background: rgba(0, 255, 209, 0.1); border: 1px solid rgba(0, 255, 209, 0.35);
+      color: var(--teal); font-size: 0.8rem; font-weight: 600; margin-bottom: 20px;
+    }
+    h1 {
+      font-size: clamp(2.1rem, 4.5vw, 3.3rem); font-weight: 800; line-height: 1.15;
+      margin-bottom: 16px; letter-spacing: -0.02em;
+    }
+    .hero p {
+      max-width: 720px; margin: 0 auto 28px; color: var(--muted); font-size: 1.08rem;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-bottom: 42px; }
+    .btn-primary {
+      background: linear-gradient(135deg, #00ffd1, #0ea5a4); color: #090b12;
+      padding: 14px 28px; border-radius: 10px; font-weight: 800; font-size: 1rem;
+      box-shadow: 0 8px 30px rgba(0, 255, 209, 0.22); transition: transform 0.15s;
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
+    .btn-secondary {
+      background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+      padding: 14px 24px; border-radius: 10px; font-weight: 600; font-size: 0.96rem;
+    }
+    .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+    .platforms { font-size: 0.84rem; color: var(--muted); margin-top: -28px; margin-bottom: 36px; }
+    .hero-shot {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 10px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    }
+    .hero-shot img { width: 100%; border-radius: 8px; display: block; }
+
+    /* Sections */
+    section { padding: 56px 0; }
+    .sec-title { font-size: 1.75rem; font-weight: 800; text-align: center; margin-bottom: 10px; }
+    .sec-sub { color: var(--muted); text-align: center; max-width: 640px; margin: 0 auto 36px; font-size: 0.98rem; }
+
+    /* Features */
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 18px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px;
+    }
+    .card-kicker { color: var(--teal); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .card h3 { font-size: 1.08rem; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: 0.9rem; }
+
+    /* Gallery */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+    .shot-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    }
+    .shot-card img { width: 100%; height: 220px; object-fit: cover; object-position: top; display: block; border-bottom: 1px solid var(--border); }
+    .shot-card .cap { padding: 14px 16px; font-size: 0.88rem; color: var(--muted); }
+    .shot-card .cap b { color: var(--text); display: block; margin-bottom: 3px; }
+
+    /* Manuals */
+    .manuals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+    .manual-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 20px 18px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px;
+      transition: border-color 0.15s;
+    }
+    .manual-card:hover { border-color: var(--teal); }
+    .manual-lang { font-weight: 700; font-size: 1.05rem; }
+    .manual-meta { font-size: 0.82rem; color: var(--muted); }
+    .manual-btn {
+      display: inline-block; text-align: center; padding: 9px 12px; border-radius: 8px;
+      background: rgba(0, 255, 209, 0.12); color: var(--teal); border: 1px solid rgba(0, 255, 209, 0.3);
+      font-weight: 700; font-size: 0.86rem;
+    }
+    .manual-btn:hover { background: var(--teal); color: #090b12; }
+
+    /* Video */
+    .video-box {
+      max-width: 820px; margin: 0 auto;
+      background: var(--surface); border: 1px dashed var(--border); border-radius: 14px;
+      padding: 48px 24px; text-align: center; color: var(--muted);
+    }
+    .video-box h3 { color: var(--text); margin-bottom: 8px; }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 28px 0; text-align: center;
+      color: var(--muted); font-size: 0.85rem;
+    }
+    @media (max-width: 680px) {
+      .nav-links a:not(.nav-cta) { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <img src="assets/logo.png" alt="Shishoki YuE Studio" />
+        <span>Shishoki YuE Studio</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#screenshots">Workspace</a>
+        <a href="#manuals">PDF Manuals</a>
+        <a href="#tutorial">Tutorial</a>
+        <a class="nav-cta" href="https://shishoki.lemonsqueezy.com/checkout/buy/60168574-c439-47f1-a39b-de181c6d17e0" target="_blank" rel="noreferrer">Download Free</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero container">
+    <div class="badge">Release v2.0.0 · 100% Free &amp; Offline Desktop Studio</div>
+    <h1>Local AI Music Synthesis,<br />Vocal Covers &amp; Pro-DAW Notation</h1>
+    <p>
+      Shishoki YuE Studio is a native desktop workstation powered locally by <b>audio.cpp</b> (<b>YuE2-3B</b> synthesis + <b>SheetSage2</b> audio-to-score transcription) with zero cloud limits or subscriptions.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="https://shishoki.lemonsqueezy.com/checkout/buy/60168574-c439-47f1-a39b-de181c6d17e0" target="_blank" rel="noreferrer">
+        ⬇ Download Free App (v2.0.0)
+      </a>
+      <a class="btn-secondary" href="#manuals">
+        📖 Download 19-Page PDF Manuals
+      </a>
+    </div>
+    <div class="platforms">Available for macOS (Apple Silicon .dmg) · Windows (.exe / .msi) · Linux (.AppImage / .deb)</div>
+    <div class="hero-shot">
+      <img src="assets/hero-studio.png" alt="Shishoki YuE Studio Workspace" />
+    </div>
+  </header>
+
+  <section id="features" class="container">
+    <h2 class="sec-title">Everything You Need in One Local Studio</h2>
+    <p class="sec-sub">Built for musicians, arrangers, and producers who want full creative control offline on their own hardware.</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-kicker">01 · Offline Engine</div>
+        <h3>Powered by audio.cpp</h3>
+        <p>Run YuE2-3B synthesis and SheetSage2 transcription locally on Metal, CUDA, Vulkan, or CPU with Q5_K_M, Q8_0, and BF16 quantization tiers.</p>
+      </div>
+      <div class="card">
+        <div class="card-kicker">02 · 3 Creation Modes</div>
+        <h3>Templates, Original &amp; Covers</h3>
+        <p>Start fast with 22 genre presets, craft custom prompts with Smart Style Builder, or extract melody &amp; chords from any song or hummed clip.</p>
+      </div>
+      <div class="card">
+        <div class="card-kicker">03 · Pro-DAW Editors</div>
+        <h3>Piano Roll, Stave &amp; Dual View</h3>
+        <p>Edit notes in a full MIDI Piano Roll (V/B/X/E, Ghost tracks, Cycle Loop) or 5-line Stave (abcjs SVG drag, Step-Input) synced in real time.</p>
+      </div>
+      <div class="card">
+        <div class="card-kicker">04 · Smart Harmony</div>
+        <h3>Chord Studio &amp; Reharmonizer</h3>
+        <p>Transform plain chords into Jazz 7th/9th or R&amp;B/Neo-Soul voicings in one click, split mid-bar chords, and export clean .MID / .SVG / PDF.</p>
+      </div>
+      <div class="card">
+        <div class="card-kicker">05 · Dual LoRA &amp; Mastering</div>
+        <h3>Stage-1 AR + Stage-2 NAR</h3>
+        <p>Combine Instrumental AR LoRAs with optional Stage-2 NAR acoustic adapters, lock seeds across takes, and export 48kHz WAV or 320kbps MP3.</p>
+      </div>
+      <div class="card">
+        <div class="card-kicker">06 · Multilingual UI</div>
+        <h3>5 Built-in Languages</h3>
+        <p>Switch the entire interface instantaneously between English, 简体中文, 繁體中文, Bahasa Melayu, and தமிழ் (Malaysia).</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="screenshots" class="container">
+    <h2 class="sec-title">Inside the Workstation</h2>
+    <p class="sec-sub">Synchronized MIDI sequencing, interactive harmony editing, and fine-grained Pro Engine controls.</p>
+    <div class="gallery-grid">
+      <div class="shot-card">
+        <img src="assets/dual-view.png" alt="Dual View MIDI and Stave" />
+        <div class="cap"><b>Dual View (Piano Roll + Visual Stave)</b>Edit MIDI and engraved notation side-by-side with live SoundFont auditioning.</div>
+      </div>
+      <div class="shot-card">
+        <img src="assets/chord-studio.png" alt="Chord Studio Popover" />
+        <div class="cap"><b>Chord Studio Popover</b>1-click diatonic Roman-numeral chords, 13 chord qualities, and bass slash inversions.</div>
+      </div>
+      <div class="shot-card">
+        <img src="assets/pro-engine.png" alt="Pro Engine Drawer" />
+        <div class="cap"><b>Pro Engine &amp; Dual LoRA Controls</b>Independent AR/NAR LoRA scales, Compute Backend, NAR Arena MB, and sampling overrides.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="manuals" class="container">
+    <h2 class="sec-title">Illustrated Producer Manual 2.0 (PDF)</h2>
+    <p class="sec-sub">Choose your preferred language below to download the complete 19-page illustrated manual individually.</p>
+    <div class="manuals-grid">
+      <div class="manual-card">
+        <div>
+          <div class="manual-lang">English</div>
+          <div class="manual-meta">19 Pages · Master Edition (4.2 MB)</div>
+        </div>
+        <a class="manual-btn" href="manuals/Shishoki_YuE_Studio_v2.0_User_Manual.pdf" download>⬇ Download PDF</a>
+      </div>
+      <div class="manual-card">
+        <div>
+          <div class="manual-lang">简体中文</div>
+          <div class="manual-meta">19 页 · 简体中文版 (10 MB)</div>
+        </div>
+        <a class="manual-btn" href="manuals/Shishoki_YuE_Studio_v2.0_User_Manual_zh-CN.pdf" download>⬇ 下载 PDF</a>
+      </div>
+      <div class="manual-card">
+        <div>
+          <div class="manual-lang">繁體中文</div>
+          <div class="manual-meta">19 頁 · 繁體中文版 (11 MB)</div>
+        </div>
+        <a class="manual-btn" href="manuals/Shishoki_YuE_Studio_v2.0_User_Manual_zh-TW.pdf" download>⬇ 下載 PDF</a>
+      </div>
+      <div class="manual-card">
+        <div>
+          <div class="manual-lang">Bahasa Melayu</div>
+          <div class="manual-meta">19 Halaman · Edisi BM (7.9 MB)</div>
+        </div>
+        <a class="manual-btn" href="manuals/Shishoki_YuE_Studio_v2.0_User_Manual_ms.pdf" download>⬇ Muat Turun PDF</a>
+      </div>
+      <div class="manual-card">
+        <div>
+          <div class="manual-lang">தமிழ் (Tamil)</div>
+          <div class="manual-meta">19 பக்கங்கள் · தமிழ் பதிப்பு (8.7 MB)</div>
+        </div>
+        <a class="manual-btn" href="manuals/Shishoki_YuE_Studio_v2.0_User_Manual_ta.pdf" download>⬇ PDF பதிவிறக்கவும்</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="tutorial" class="container">
+    <h2 class="sec-title">Video Walkthrough &amp; Tutorial</h2>
+    <p class="sec-sub">See Shishoki YuE Studio v2.0 in action — from Engine Folder setup to AI song synthesis, covers, and MIDI editing.</p>
+    <div class="video-box">
+      <h3>YouTube Tutorial Coming Soon</h3>
+      <p>Once your tutorial is uploaded to YouTube, replace this box in <code>index.html</code> with your YouTube embed.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Shishoki Production · Shishoki YuE Studio v2.0.0 · Powered locally by audio.cpp (YuE2 &amp; SheetSage2)
+    </div>
+  </footer>
+</body>
+</html>
