@@ -102,11 +102,12 @@
     .dl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 18px; }
     .dl-card {
       background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--teal);
-      border-radius: 12px; padding: 24px 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
+      border-radius: 12px; padding: 24px 22px; display: flex; flex-direction: column; gap: 18px;
     }
+    .dl-card > div:first-child { flex: 1; }
     .dl-os { font-size: 1.18rem; font-weight: 800; margin-bottom: 4px; }
     .dl-desc { color: var(--muted); font-size: 0.88rem; }
-    .dl-buttons { display: flex; flex-direction: column; gap: 9px; }
+    .dl-buttons { display: flex; flex-direction: column; gap: 9px; min-height: 92px; }
     .dl-btn {
       display: block; text-align: center; padding: 10px 14px; border-radius: 8px;
       background: var(--teal); color: #090b12; font-weight: 800; font-size: 0.88rem;
