@@ -8,10 +8,10 @@
   <link rel="icon" href="assets/logo.png" />
   <style>
     :root {
-      --bg: #090b12;
-      --surface: #121524;
-      --surface-2: #191d31;
-      --border: #282d47;
+      --bg: #07090f;
+      --surface: #111423;
+      --surface-2: #181c30;
+      --border: #262b45;
       --text: #f1f5f9;
       --muted: #94a3b8;
       --teal: #00ffd1;
@@ -22,19 +22,42 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "PingFang TC", "Tamil Sangam MN", "Noto Sans", sans-serif;
-      background: radial-gradient(circle at 50% -10%, rgba(14, 165, 164, 0.16), transparent 55%), var(--bg);
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0, 255, 209, 0.12), transparent 60%),
+        radial-gradient(ellipse 60% 40% at 85% 35%, rgba(14, 165, 164, 0.08), transparent 60%),
+        var(--bg);
       color: var(--text);
       line-height: 1.72;
+      overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
     .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 
+    /* Apple-style Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px) scale(0.975);
+      transition:
+        opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .hero-shot { transform: none !important; }
+    }
+
     /* Nav */
     nav {
-      position: sticky; top: 0; z-index: 20;
-      background: rgba(9, 11, 18, 0.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 30;
+      background: rgba(7, 9, 15, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(38, 43, 69, 0.7);
     }
     .nav-inner {
       display: flex; align-items: center; justify-content: space-between;
@@ -43,76 +66,111 @@
     .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1rem; white-space: nowrap; }
     .brand img { width: 34px; height: 34px; border-radius: 8px; }
     .nav-links { display: flex; align-items: center; gap: 16px; font-size: 0.9rem; color: var(--muted); }
+    .nav-links a { transition: color 0.2s; }
     .nav-links a:hover { color: var(--teal); }
     .lang-select {
       background: var(--surface-2); color: var(--text); border: 1px solid var(--border);
       border-radius: 8px; padding: 7px 10px; font-size: 0.85rem; cursor: pointer; outline: none;
+      transition: border-color 0.2s;
     }
     .lang-select:focus, .lang-select:hover { border-color: var(--teal); }
     .nav-cta {
-      background: var(--teal); color: #090b12 !important;
+      background: var(--teal); color: #07090f !important;
       padding: 8px 15px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; white-space: nowrap;
+      transition: transform 0.2s, opacity 0.2s;
     }
-    .nav-cta:hover { opacity: 0.9; }
+    .nav-cta:hover { opacity: 0.92; transform: translateY(-1px); }
 
     /* Hero */
-    .hero { padding: 84px 0 64px; text-align: center; }
+    .hero { padding: 88px 24px 72px; text-align: center; }
     .badge {
       display: inline-block; padding: 6px 16px; border-radius: 999px;
       background: rgba(0, 255, 209, 0.1); border: 1px solid rgba(0, 255, 209, 0.35);
       color: var(--teal); font-size: 0.82rem; font-weight: 600; margin-bottom: 24px;
+      animation: fadeDown 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
     h1 {
-      font-size: clamp(2rem, 4.4vw, 3.2rem); font-weight: 800; line-height: 1.2;
-      margin-bottom: 22px; letter-spacing: -0.02em;
+      font-size: clamp(2.1rem, 4.6vw, 3.4rem); font-weight: 800; line-height: 1.16;
+      margin-bottom: 22px; letter-spacing: -0.025em;
+      background: linear-gradient(180deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeUp 0.9s 0.08s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
     .hero p {
       max-width: 720px; margin: 0 auto 36px; color: var(--muted); font-size: 1.08rem; line-height: 1.78;
+      animation: fadeUp 0.9s 0.16s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
-    .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 44px; }
+    .hero p b { color: #e2e8f0; }
+    .hero-actions {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 44px;
+      animation: fadeUp 0.9s 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
     .btn-primary {
-      background: linear-gradient(135deg, #00ffd1, #0ea5a4); color: #090b12;
+      background: linear-gradient(135deg, #00ffd1, #0ea5a4); color: #07090f;
       padding: 13px 26px; border-radius: 10px; font-weight: 800; font-size: 0.98rem;
-      box-shadow: 0 8px 30px rgba(0, 255, 209, 0.22); transition: transform 0.15s;
+      box-shadow: 0 8px 30px rgba(0, 255, 209, 0.22); transition: transform 0.2s, box-shadow 0.2s;
     }
-    .btn-primary:hover { transform: translateY(-1px); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(0, 255, 209, 0.34); }
     .btn-secondary {
       background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
       padding: 13px 22px; border-radius: 10px; font-weight: 600; font-size: 0.94rem;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
     }
-    .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+    .btn-secondary:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
     .btn-donate {
       background: rgba(251, 191, 36, 0.12); border: 1px solid rgba(251, 191, 36, 0.45); color: var(--amber);
       padding: 13px 22px; border-radius: 10px; font-weight: 700; font-size: 0.94rem;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
     }
-    .btn-donate:hover { background: var(--amber); color: #090b12; }
-    .platforms { font-size: 0.84rem; color: var(--muted); margin-top: -24px; margin-bottom: 34px; }
+    .btn-donate:hover { background: var(--amber); color: #07090f; transform: translateY(-2px); }
+    .platforms {
+      font-size: 0.85rem; color: var(--muted); margin-top: -22px; margin-bottom: 36px;
+      animation: fadeUp 0.9s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .hero-perspective { perspective: 1400px; }
     .hero-shot {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 14px; padding: 10px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+      border-radius: 16px; padding: 10px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65), 0 0 40px rgba(0, 255, 209, 0.06);
+      transform-origin: center top;
+      transition: transform 0.12s ease-out;
+      will-change: transform;
     }
-    .hero-shot img { width: 100%; border-radius: 8px; display: block; }
+    .hero-shot img { width: 100%; border-radius: 10px; display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     /* Sections */
-    section, section.container { padding: 90px 24px; border-top: 1px solid rgba(40, 45, 71, 0.45); scroll-margin-top: 72px; }
-    .sec-title { font-size: 1.85rem; font-weight: 800; text-align: center; margin-bottom: 14px; }
-    .sec-sub { color: var(--muted); text-align: center; max-width: 660px; margin: 0 auto 48px; font-size: 1rem; line-height: 1.75; }
+    section, section.container { padding: 92px 24px; border-top: 1px solid rgba(38, 43, 69, 0.48); scroll-margin-top: 72px; }
+    .sec-title { font-size: clamp(1.65rem, 3vw, 2.15rem); font-weight: 800; text-align: center; margin-bottom: 14px; letter-spacing: -0.015em; }
+    .sec-sub { color: var(--muted); text-align: center; max-width: 680px; margin: 0 auto 52px; font-size: 1rem; line-height: 1.75; }
 
     /* Direct Downloads */
     .dl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; }
     .dl-card {
       background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--teal);
       border-radius: 14px; padding: 28px 26px; display: flex; flex-direction: column; gap: 22px;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s, box-shadow 0.25s;
     }
+    .dl-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35); }
     .dl-card > div:first-child { flex: 1; }
     .dl-os { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; }
     .dl-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
     .dl-buttons { display: flex; flex-direction: column; gap: 11px; min-height: 96px; }
     .dl-btn {
       display: block; text-align: center; padding: 11px 16px; border-radius: 8px;
-      background: var(--teal); color: #090b12; font-weight: 800; font-size: 0.88rem;
+      background: var(--teal); color: #07090f; font-weight: 800; font-size: 0.88rem;
+      transition: opacity 0.2s, transform 0.2s;
     }
-    .dl-btn:hover { opacity: 0.9; }
+    .dl-btn:hover { opacity: 0.92; transform: translateY(-1px); }
     .dl-btn.alt {
       background: var(--surface-2); color: var(--text); border: 1px solid var(--border); font-weight: 600;
     }
@@ -126,6 +184,12 @@
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; }
     .card {
       background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 26px;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s, box-shadow 0.25s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 255, 209, 0.45);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
     }
     .card-kicker { color: var(--teal); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
     .card h3 { font-size: 1.12rem; margin-bottom: 10px; }
@@ -135,8 +199,11 @@
     .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
     .shot-card {
       background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s, box-shadow 0.25s;
     }
-    .shot-card img { width: 100%; height: 220px; object-fit: cover; object-position: top; display: block; border-bottom: 1px solid var(--border); }
+    .shot-card:hover { transform: translateY(-4px); border-color: rgba(0, 255, 209, 0.45); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4); }
+    .shot-card img { width: 100%; height: 220px; object-fit: cover; object-position: top; display: block; border-bottom: 1px solid var(--border); transition: transform 0.4s ease; }
+    .shot-card:hover img { transform: scale(1.03); }
     .shot-card .cap { padding: 18px 20px; font-size: 0.9rem; color: var(--muted); line-height: 1.68; }
     .shot-card .cap b { color: var(--text); display: block; margin-bottom: 6px; }
 
@@ -145,17 +212,17 @@
     .manual-card {
       background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
       padding: 24px 20px; display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
-      transition: border-color 0.15s;
+      transition: border-color 0.2s, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .manual-card:hover { border-color: var(--teal); }
+    .manual-card:hover { border-color: var(--teal); transform: translateY(-4px); }
     .manual-lang { font-weight: 700; font-size: 1.08rem; margin-bottom: 4px; }
     .manual-meta { font-size: 0.84rem; color: var(--muted); }
     .manual-btn {
       display: inline-block; text-align: center; padding: 10px 14px; border-radius: 8px;
       background: rgba(0, 255, 209, 0.12); color: var(--teal); border: 1px solid rgba(0, 255, 209, 0.3);
-      font-weight: 700; font-size: 0.86rem;
+      font-weight: 700; font-size: 0.86rem; transition: background 0.2s, color 0.2s;
     }
-    .manual-btn:hover { background: var(--teal); color: #090b12; }
+    .manual-btn:hover { background: var(--teal); color: #07090f; }
 
     /* Video & Donate */
     .video-box {
@@ -173,7 +240,7 @@
     .donate-banner p { color: var(--muted); max-width: 600px; margin: 0 auto 26px; font-size: 0.96rem; line-height: 1.75; }
 
     footer {
-      border-top: 1px solid var(--border); padding: 28px 0; text-align: center;
+      border-top: 1px solid var(--border); padding: 32px 0; text-align: center;
       color: var(--muted); font-size: 0.85rem;
     }
     @media (max-width: 800px) {
@@ -223,16 +290,18 @@
       </a>
     </div>
     <div class="platforms" data-i18n="platforms">Direct installers for macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — No sign-up required</div>
-    <div class="hero-shot">
-      <img src="assets/hero-studio.png" alt="Shishoki YuE Studio Workspace" />
+    <div class="hero-perspective">
+      <div class="hero-shot" id="heroShot">
+        <img src="assets/hero-studio.png" alt="Shishoki YuE Studio Workspace" />
+      </div>
     </div>
   </header>
 
   <section id="downloads" class="container">
-    <h2 class="sec-title" data-i18n="dl_title">Direct App Downloads (v2.0.0)</h2>
-    <p class="sec-sub" data-i18n="dl_sub">Choose your operating system below for instant 1-click download — no email or account required.</p>
+    <h2 class="sec-title reveal" data-i18n="dl_title">Direct App Downloads (v2.0.0)</h2>
+    <p class="sec-sub reveal" data-i18n="dl_sub">Choose your operating system below for instant 1-click download — no email or account required.</p>
     <div class="dl-grid">
-      <div class="dl-card">
+      <div class="dl-card reveal">
         <div>
           <div class="dl-os">macOS (Apple Silicon)</div>
           <div class="dl-desc" data-i18n="dl_mac_desc">For M1 / M2 / M3 / M4 Macs. Open the .dmg and drag Shishoki YuE Studio into Applications.</div>
@@ -242,7 +311,7 @@
         </div>
       </div>
 
-      <div class="dl-card">
+      <div class="dl-card reveal">
         <div>
           <div class="dl-os">Windows (64-bit)</div>
           <div class="dl-desc" data-i18n="dl_win_desc">For Windows 10 &amp; 11 (x64). Recommended: standard .EXE installer (or .MSI for enterprise).</div>
@@ -253,7 +322,7 @@
         </div>
       </div>
 
-      <div class="dl-card">
+      <div class="dl-card reveal">
         <div>
           <div class="dl-os">Linux (x86_64)</div>
           <div class="dl-desc" data-i18n="dl_lin_desc">Universal .AppImage for any distro (chmod +x to run), or .DEB package for Ubuntu / Debian.</div>
@@ -264,100 +333,115 @@
         </div>
       </div>
     </div>
-    <div class="dl-note" data-i18n-html="dl_note">
+    <div class="dl-note reveal" data-i18n-html="dl_note">
       <b>First-Time Setup:</b> After installing, click <b>Model &amp; Engine Setup Guide</b> in the bottom-left sidebar (or see Chapter 1 of the PDF manual) to place <code>audio.cpp</code> and GGUF models in your <code>YuE2</code> Engine Folder.
     </div>
   </section>
 
   <section id="features" class="container">
-    <h2 class="sec-title" data-i18n="feat_title">Everything You Need in One Local Studio</h2>
-    <p class="sec-sub" data-i18n="feat_sub">Built for musicians, arrangers, and producers who want full creative control offline on their own hardware.</p>
+    <h2 class="sec-title reveal" data-i18n="feat_title">Built for Serious Music Producers</h2>
+    <p class="sec-sub reveal" data-i18n="feat_sub">From raw idea or hummed melody to multi-track MIDI, engraved sheet music, and 48kHz audio — completely offline on your own hardware.</p>
     <div class="grid-3">
-      <div class="card">
-        <div class="card-kicker" data-i18n="f1_k">01 · Offline Engine</div>
-        <h3 data-i18n="f1_t">Powered by audio.cpp</h3>
+      <div class="card reveal">
+        <div class="card-kicker" data-i18n="f1_k">01 · Offline AI Engine</div>
+        <h3 data-i18n="f1_t">Zero Cloud Limits (audio.cpp)</h3>
         <p data-i18n="f1_b">Run YuE2-3B synthesis and SheetSage2 transcription locally on Metal, CUDA, Vulkan, or CPU with Q5_K_M, Q8_0, and BF16 quantization tiers.</p>
       </div>
-      <div class="card">
-        <div class="card-kicker" data-i18n="f2_k">02 · 3 Creation Modes</div>
-        <h3 data-i18n="f2_t">Templates, Original &amp; Covers</h3>
-        <p data-i18n="f2_b">Start fast with 22 genre presets, craft custom prompts with Smart Style Builder, or extract melody &amp; chords from any song or hummed clip.</p>
+      <div class="card reveal">
+        <div class="card-kicker" data-i18n="f2_k">02 · Hum &amp; Reference Covers</div>
+        <h3 data-i18n="f2_t">Audio-to-Score &amp; Remixing</h3>
+        <p data-i18n="f2_b">Drop any song or hummed clip onto Cover Mode, extract multi-voice melody and chords via SheetSage2, and re-arrange into any genre or karaoke backing.</p>
       </div>
-      <div class="card">
-        <div class="card-kicker" data-i18n="f3_k">03 · Pro-DAW Editors</div>
-        <h3 data-i18n="f3_t">Piano Roll, Stave &amp; Dual View</h3>
-        <p data-i18n="f3_b">Edit notes in a full MIDI Piano Roll (V/B/X/E, Ghost tracks, Cycle Loop) or 5-line Stave (abcjs SVG drag, Step-Input) synced in real time.</p>
+      <div class="card reveal">
+        <div class="card-kicker" data-i18n="f3_k">03 · Pro-DAW MIDI Sequencer</div>
+        <h3 data-i18n="f3_t">Full Piano Roll Workflow</h3>
+        <p data-i18n="f3_b">Multi-note drag/resize, Option/Alt+Drag phrase cloning, Pencil draw, Scissor split, Ghost tracks, Scale Lock, and Cycle Loop playback.</p>
       </div>
-      <div class="card">
-        <div class="card-kicker" data-i18n="f4_k">04 · Smart Harmony</div>
-        <h3 data-i18n="f4_t">Chord Studio &amp; Reharmonizer</h3>
-        <p data-i18n="f4_b">Transform plain chords into Jazz 7th/9th or R&amp;B/Neo-Soul voicings in one click, split mid-bar chords, and export clean .MID / .SVG / PDF.</p>
+      <div class="card reveal">
+        <div class="card-kicker" data-i18n="f4_k">04 · Sheet Music Engraving</div>
+        <h3 data-i18n="f4_t">Live Visual Stave (abcjs)</h3>
+        <p data-i18n="f4_b">Drag SVG noteheads vertically with instant SoundFont auditioning, enter notes via Step-Input keyboard keys, and export print-ready PDF or SVG scores.</p>
       </div>
-      <div class="card">
-        <div class="card-kicker" data-i18n="f5_k">05 · Dual LoRA &amp; Mastering</div>
-        <h3 data-i18n="f5_t">Stage-1 AR + Stage-2 NAR</h3>
-        <p data-i18n="f5_b">Combine Instrumental AR LoRAs with optional Stage-2 NAR acoustic adapters, lock seeds across takes, and export 48kHz WAV or 320kbps MP3.</p>
+      <div class="card reveal">
+        <div class="card-kicker" data-i18n="f5_k">05 · Harmony &amp; Reharmonizer</div>
+        <h3 data-i18n="f5_t">Chord Grid &amp; Chord Studio</h3>
+        <p data-i18n="f5_b">Re-voice chords into Jazz 7th/9th or R&amp;B/Neo-Soul in one click, split mid-bar chords, and pick diatonic or slash-bass chords with live audition.</p>
       </div>
-      <div class="card">
-        <div class="card-kicker" data-i18n="f6_k">06 · Multilingual UI</div>
-        <h3 data-i18n="f6_t">5 Built-in Languages</h3>
-        <p data-i18n="f6_b">Switch the entire interface instantaneously between English, 简体中文, 繁體中文, Bahasa Melayu, and தமிழ் (Malaysia).</p>
+      <div class="card reveal">
+        <div class="card-kicker" data-i18n="f6_k">06 · DAW Interoperability</div>
+        <h3 data-i18n="f6_t">Multi-Track .MID &amp; .ABC I/O</h3>
+        <p data-i18n="f6_b">Import multi-track MIDI directly into Dual View or export clean melody, chord, and tempo maps to Logic Pro, Ableton Live, Cubase, or FL Studio.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-kicker" data-i18n="f7_k">07 · Iterative Production</div>
+        <h3 data-i18n="f7_t">Seed Locking &amp; Take History</h3>
+        <p data-i18n="f7_b">Auto-Take Versioning (_take02, _take03) protects great renders. Recall exact #seeds, prompts, and scores from the last 10 takes or route to Cover Ref.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-kicker" data-i18n="f8_k">08 · Clean Audio Output</div>
+        <h3 data-i18n="f8_t">48kHz WAV &amp; Stage-1 AR LoRA</h3>
+        <p data-i18n="f8_b">Render uncolored 48kHz lossless WAV (or 320kbps MP3 via ffmpeg), audition with WaveSurfer scrubbing, and use Stage-1 AR LoRA for pure instrumentals.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-kicker" data-i18n="f9_k">09 · Global Studio</div>
+        <h3 data-i18n="f9_t">5 Languages &amp; Live Inspector</h3>
+        <p data-i18n="f9_b">Switch instantly between English, 简体中文, 繁體中文, Bahasa Melayu, and தமிழ் with real-time hover documentation in the bottom-right inspector.</p>
       </div>
     </div>
   </section>
 
   <section id="screenshots" class="container">
-    <h2 class="sec-title" data-i18n="ws_title">Inside the Workstation</h2>
-    <p class="sec-sub" data-i18n="ws_sub">Synchronized MIDI sequencing, interactive harmony editing, and fine-grained Pro Engine controls.</p>
+    <h2 class="sec-title reveal" data-i18n="ws_title">Inside the Workstation</h2>
+    <p class="sec-sub reveal" data-i18n="ws_sub">Synchronized MIDI sequencing, interactive harmony editing, and fine-grained Pro Engine controls.</p>
     <div class="gallery-grid">
-      <div class="shot-card">
+      <div class="shot-card reveal">
         <img src="assets/dual-view.png" alt="Dual View MIDI and Stave" />
         <div class="cap" data-i18n-html="s1_cap"><b>Dual View (Piano Roll + Visual Stave)</b>Edit MIDI and engraved notation side-by-side with live SoundFont auditioning.</div>
       </div>
-      <div class="shot-card">
+      <div class="shot-card reveal">
         <img src="assets/chord-studio.png" alt="Chord Studio Popover" />
         <div class="cap" data-i18n-html="s2_cap"><b>Chord Studio Popover</b>1-click diatonic Roman-numeral chords, 13 chord qualities, and bass slash inversions.</div>
       </div>
-      <div class="shot-card">
+      <div class="shot-card reveal">
         <img src="assets/pro-engine.png" alt="Pro Engine Drawer" />
-        <div class="cap" data-i18n-html="s3_cap"><b>Pro Engine &amp; Dual LoRA Controls</b>Independent AR/NAR LoRA scales, Compute Backend, NAR Arena MB, and sampling overrides.</div>
+        <div class="cap" data-i18n-html="s3_cap"><b>Pro Engine Controls</b>Compute Backend, NAR Arena MB, sampling overrides, and optional experimental LoRA slots.</div>
       </div>
     </div>
   </section>
 
   <section id="manuals" class="container">
-    <h2 class="sec-title" data-i18n="man_title">Illustrated Producer Manual 2.0 (PDF)</h2>
-    <p class="sec-sub" data-i18n="man_sub">Choose your preferred language below to download the complete 19-page illustrated manual individually.</p>
+    <h2 class="sec-title reveal" data-i18n="man_title">Illustrated Producer Manual 2.0 (PDF)</h2>
+    <p class="sec-sub reveal" data-i18n="man_sub">Choose your preferred language below to download the complete 19-page illustrated manual individually.</p>
     <div class="manuals-grid">
-      <div class="manual-card">
+      <div class="manual-card reveal">
         <div>
           <div class="manual-lang">English</div>
           <div class="manual-meta">19 Pages · Master Edition (4.2 MB)</div>
         </div>
         <a class="manual-btn" href="manuals/Shishoki_YuE_Studio_v2.0_User_Manual.pdf" download>⬇ Download PDF</a>
       </div>
-      <div class="manual-card">
+      <div class="manual-card reveal">
         <div>
           <div class="manual-lang">简体中文</div>
           <div class="manual-meta">19 页 · 简体中文版 (10 MB)</div>
         </div>
         <a class="manual-btn" href="manuals/Shishoki_YuE_Studio_v2.0_User_Manual_zh-CN.pdf" download>⬇ 下载 PDF</a>
       </div>
-      <div class="manual-card">
+      <div class="manual-card reveal">
         <div>
           <div class="manual-lang">繁體中文</div>
           <div class="manual-meta">19 頁 · 繁體中文版 (11 MB)</div>
         </div>
         <a class="manual-btn" href="manuals/Shishoki_YuE_Studio_v2.0_User_Manual_zh-TW.pdf" download>⬇ 下載 PDF</a>
       </div>
-      <div class="manual-card">
+      <div class="manual-card reveal">
         <div>
           <div class="manual-lang">Bahasa Melayu</div>
           <div class="manual-meta">19 Halaman · Edisi BM (7.9 MB)</div>
         </div>
         <a class="manual-btn" href="manuals/Shishoki_YuE_Studio_v2.0_User_Manual_ms.pdf" download>⬇ Muat Turun PDF</a>
       </div>
-      <div class="manual-card">
+      <div class="manual-card reveal">
         <div>
           <div class="manual-lang">தமிழ் (Tamil)</div>
           <div class="manual-meta">19 பக்கங்கள் · தமிழ் பதிப்பு (8.7 MB)</div>
@@ -368,16 +452,16 @@
   </section>
 
   <section id="tutorial" class="container">
-    <h2 class="sec-title" data-i18n="vid_title">Video Walkthrough &amp; Tutorial</h2>
-    <p class="sec-sub" data-i18n="vid_sub">See Shishoki YuE Studio v2.0 in action — from Engine Folder setup to AI song synthesis, covers, and MIDI editing.</p>
-    <div class="video-box">
+    <h2 class="sec-title reveal" data-i18n="vid_title">Video Walkthrough &amp; Tutorial</h2>
+    <p class="sec-sub reveal" data-i18n="vid_sub">See Shishoki YuE Studio v2.0 in action — from Engine Folder setup to AI song synthesis, covers, and MIDI editing.</p>
+    <div class="video-box reveal">
       <h3 data-i18n="vid_box_t">YouTube Tutorial Coming Soon</h3>
       <p data-i18n-html="vid_box_b">Once your tutorial is uploaded to YouTube, replace this box in <code>index.html</code> with your YouTube embed.</p>
     </div>
   </section>
 
   <section id="donate" class="container">
-    <div class="donate-banner">
+    <div class="donate-banner reveal">
       <h3 data-i18n="don_title">☕ Enjoying Shishoki YuE Studio?</h3>
       <p data-i18n="don_desc">Shishoki YuE Studio is 100% free and offline. If it helps your music production, you can support ongoing development with a voluntary donation via Lemon Squeezy.</p>
       <a class="btn-donate" style="display:inline-block;" href="https://shishoki.lemonsqueezy.com/checkout/buy/60168574-c439-47f1-a39b-de181c6d17e0" target="_blank" rel="noreferrer" data-i18n="don_btn">
@@ -418,25 +502,31 @@
         dl_lin_app: "⬇ Download .AppImage (79 MB)",
         dl_lin_deb: "Download .DEB Package (4.1 MB)",
         dl_note: "<b>First-Time Setup:</b> After installing, click <b>Model &amp; Engine Setup Guide</b> in the bottom-left sidebar (or see Chapter 1 of the PDF manual) to place <code>audio.cpp</code> and GGUF models in your <code>YuE2</code> Engine Folder.",
-        feat_title: "Everything You Need in One Local Studio",
-        feat_sub: "Built for musicians, arrangers, and producers who want full creative control offline on their own hardware.",
-        f1_k: "01 · Offline Engine", f1_t: "Powered by audio.cpp",
+        feat_title: "Built for Serious Music Producers",
+        feat_sub: "From raw idea or hummed melody to multi-track MIDI, engraved sheet music, and 48kHz audio — completely offline on your own hardware.",
+        f1_k: "01 · Offline AI Engine", f1_t: "Zero Cloud Limits (audio.cpp)",
         f1_b: "Run YuE2-3B synthesis and SheetSage2 transcription locally on Metal, CUDA, Vulkan, or CPU with Q5_K_M, Q8_0, and BF16 quantization tiers.",
-        f2_k: "02 · 3 Creation Modes", f2_t: "Templates, Original & Covers",
-        f2_b: "Start fast with 22 genre presets, craft custom prompts with Smart Style Builder, or extract melody & chords from any song or hummed clip.",
-        f3_k: "03 · Pro-DAW Editors", f3_t: "Piano Roll, Stave & Dual View",
-        f3_b: "Edit notes in a full MIDI Piano Roll (V/B/X/E, Ghost tracks, Cycle Loop) or 5-line Stave (abcjs SVG drag, Step-Input) synced in real time.",
-        f4_k: "04 · Smart Harmony", f4_t: "Chord Studio & Reharmonizer",
-        f4_b: "Transform plain chords into Jazz 7th/9th or R&B/Neo-Soul voicings in one click, split mid-bar chords, and export clean .MID / .SVG / PDF.",
-        f5_k: "05 · Dual LoRA & Mastering", f5_t: "Stage-1 AR + Stage-2 NAR",
-        f5_b: "Combine Instrumental AR LoRAs with optional Stage-2 NAR acoustic adapters, lock seeds across takes, and export 48kHz WAV or 320kbps MP3.",
-        f6_k: "06 · Multilingual UI", f6_t: "5 Built-in Languages",
-        f6_b: "Switch the entire interface instantaneously between English, 简体中文, 繁體中文, Bahasa Melayu, and தமிழ் (Malaysia).",
+        f2_k: "02 · Hum & Reference Covers", f2_t: "Audio-to-Score & Remixing",
+        f2_b: "Drop any song or hummed clip onto Cover Mode, extract multi-voice melody and chords via SheetSage2, and re-arrange into any genre or karaoke backing.",
+        f3_k: "03 · Pro-DAW MIDI Sequencer", f3_t: "Full Piano Roll Workflow",
+        f3_b: "Multi-note drag/resize, Option/Alt+Drag phrase cloning, Pencil draw, Scissor split, Ghost tracks, Scale Lock, and Cycle Loop playback.",
+        f4_k: "04 · Sheet Music Engraving", f4_t: "Live Visual Stave (abcjs)",
+        f4_b: "Drag SVG noteheads vertically with instant SoundFont auditioning, enter notes via Step-Input keyboard keys, and export print-ready PDF or SVG scores.",
+        f5_k: "05 · Harmony & Reharmonizer", f5_t: "Chord Grid & Chord Studio",
+        f5_b: "Re-voice chords into Jazz 7th/9th or R&B/Neo-Soul in one click, split mid-bar chords, and pick diatonic or slash-bass chords with live audition.",
+        f6_k: "06 · DAW Interoperability", f6_t: "Multi-Track .MID & .ABC I/O",
+        f6_b: "Import multi-track MIDI directly into Dual View or export clean melody, chord, and tempo maps to Logic Pro, Ableton Live, Cubase, or FL Studio.",
+        f7_k: "07 · Iterative Production", f7_t: "Seed Locking & Take History",
+        f7_b: "Auto-Take Versioning (_take02, _take03) protects great renders. Recall exact #seeds, prompts, and scores from the last 10 takes or route to Cover Ref.",
+        f8_k: "08 · Clean Audio Output", f8_t: "48kHz WAV & Stage-1 AR LoRA",
+        f8_b: "Render uncolored 48kHz lossless WAV (or 320kbps MP3 via ffmpeg), audition with WaveSurfer scrubbing, and use Stage-1 AR LoRA for pure instrumentals.",
+        f9_k: "09 · Global Studio", f9_t: "5 Languages & Live Inspector",
+        f9_b: "Switch instantly between English, 简体中文, 繁體中文, Bahasa Melayu, and தமிழ் with real-time hover documentation in the bottom-right inspector.",
         ws_title: "Inside the Workstation",
         ws_sub: "Synchronized MIDI sequencing, interactive harmony editing, and fine-grained Pro Engine controls.",
         s1_cap: "<b>Dual View (Piano Roll + Visual Stave)</b>Edit MIDI and engraved notation side-by-side with live SoundFont auditioning.",
         s2_cap: "<b>Chord Studio Popover</b>1-click diatonic Roman-numeral chords, 13 chord qualities, and bass slash inversions.",
-        s3_cap: "<b>Pro Engine &amp; Dual LoRA Controls</b>Independent AR/NAR LoRA scales, Compute Backend, NAR Arena MB, and sampling overrides.",
+        s3_cap: "<b>Pro Engine Controls</b>Compute Backend, NAR Arena MB, sampling overrides, and optional experimental LoRA slots.",
         man_title: "Illustrated Producer Manual 2.0 (PDF)",
         man_sub: "Choose your preferred language below to download the complete 19-page illustrated manual individually.",
         vid_title: "Video Walkthrough & Tutorial",
@@ -472,25 +562,31 @@
         dl_lin_app: "⬇ 下载 .AppImage (79 MB)",
         dl_lin_deb: "下载 .DEB 安装包 (4.1 MB)",
         dl_note: "<b>首次使用提示：</b>安装后请点击左下角 <b>Model &amp; Engine Setup Guide</b>（或查看 PDF 手册第 1 章），将 <code>audio.cpp</code> 与 GGUF 模型放入您的 <code>YuE2</code> 引擎文件夹。",
-        feat_title: "集齐本地音乐制作所需的全部工具",
-        feat_sub: "专为希望在自己电脑上完全离线掌控创作的音乐人、编曲师与制作人打造。",
-        f1_k: "01 · 离线引擎", f1_t: "由 audio.cpp 驱动",
+        feat_title: "专为专业音乐制作人打造",
+        feat_sub: "从一段灵感或哼唱旋律起步，完成多轨 MIDI 编修、出版级五线谱与 48kHz 音频输出 —— 全程本地离线运行。",
+        f1_k: "01 · 离线 AI 引擎", f1_t: "零云端限制 (audio.cpp)",
         f1_b: "在 Metal、CUDA、Vulkan 或 CPU 上本地运行 YuE2-3B 合成与 SheetSage2 扒谱，支持 Q5_K_M、Q8_0 与 BF16 量化分级。",
-        f2_k: "02 · 三大创作模式", f2_t: "快速模板、原创与翻唱",
-        f2_b: "内置 22 个曲风预设快速起步，使用智能标签生成器写原创，或从任意歌曲/哼唱音频提取旋律与和弦。",
-        f3_k: "03 · 专业 DAW 编辑器", f3_t: "Piano Roll、五线谱与双视图",
-        f3_b: "在完整 MIDI Piano Roll（V/B/X/E、幽灵轨、循环播放）或 5 线五线谱（SVG 拖拽、步进输入）中实时同步编辑。",
-        f4_k: "04 · 智能和声", f4_t: "Chord Studio 与智能重配和声",
-        f4_b: "一键将三和弦转为爵士七/九和弦或 R&B/Neo-Soul 色彩，支持小节内拆分和弦并导出 .MID / .SVG / PDF。",
-        f5_k: "05 · 双 LoRA 与母带", f5_t: "Stage-1 AR + Stage-2 NAR",
-        f5_b: "结合纯器乐 AR LoRA 与可选 Stage-2 NAR 声学适配器，锁定随机种子，导出 48kHz WAV 或 320kbps MP3。",
-        f6_k: "06 · 多语言界面", f6_t: "内置 5 种界面语言",
-        f6_b: "可在 English、简体中文、繁體中文、Bahasa Melayu 与 தமிழ் (Malaysia) 之间即时切换。",
+        f2_k: "02 · 哼唱与参考翻唱", f2_t: "音频扒谱与跨曲风改编",
+        f2_b: "拖入任意歌曲或哼唱片段，通过 SheetSage2 提取多声部旋律与和弦，轻松改编为全新曲风或卡拉 OK 伴奏。",
+        f3_k: "03 · 专业 DAW 音序器", f3_t: "完整 Piano Roll 工作流",
+        f3_b: "支持多音符拖拽缩放、Option/Alt+拖拽乐句克隆、画笔绘制、剪刀分割、幽灵轨参考、音阶锁定与循环播放。",
+        f4_k: "04 · 五线谱制谱", f4_t: "交互式 SVG 五线谱 (abcjs)",
+        f4_b: "直接上下拖拽符头并伴随 SoundFont 实时试听，支持键盘步进输入与可打印的 PDF / SVG 乐谱导出。",
+        f5_k: "05 · 智能和声编排", f5_t: "和弦网格与 Chord Studio",
+        f5_b: "一键转为爵士七/九和弦或 R&B/Neo-Soul 色彩，支持小节内拆分和弦及带实时试听的顺阶/斜杠低音选择。",
+        f6_k: "06 · DAW 无缝互通", f6_t: "多轨 .MID 与 .ABC 导入导出",
+        f6_b: "支持导入多轨 MIDI 到双视图，或将旋律、和弦与速度映射导出至 Logic Pro、Ableton Live、Cubase 或 FL Studio。",
+        f7_k: "07 · 迭代创作保护", f7_t: "种子锁定与历史版本记录",
+        f7_b: "自动版本编号 (_take02, _take03) 防止覆盖满意作品；随时从最近 10 次记录恢复精确 #seed、提示词与乐谱。",
+        f8_k: "08 · 纯净音频输出", f8_t: "48kHz WAV 与纯器乐 AR LoRA",
+        f8_b: "输出无染色的 48kHz 无损 WAV（或经 ffmpeg 导出 320kbps MP3），支持波形试听与 Stage-1 纯器乐 LoRA。",
+        f9_k: "09 · 全球化工作室", f9_t: "5 种语言与实时悬停检视器",
+        f9_b: "可在 English、简体中文、繁體中文、Bahasa Melayu 与 தமிழ் 间即时切换，右下角提供实时控件说明。",
         ws_title: "工作站界面预览",
         ws_sub: "实时同步的 MIDI 音序器、交互式和声编辑与精细的 Pro Engine 参数控制。",
         s1_cap: "<b>Dual View 双视图（Piano Roll + 五线谱）</b>同屏联动编辑 MIDI 与五线谱，支持 SoundFont 实时试听。",
         s2_cap: "<b>Chord Studio 和弦工作室</b>一键点选调内顺阶和弦、13 种和弦性质与低音斜杠转位。",
-        s3_cap: "<b>Pro Engine 与双 LoRA 控制</b>独立调节 AR/NAR LoRA 权重、计算后端、NAR Arena 显存与采样参数。",
+        s3_cap: "<b>Pro Engine 参数控制</b>调节计算后端、NAR Arena 显存缓冲、采样参数与可选实验性 LoRA 槽位。",
         man_title: "图文制作人手册 2.0 (PDF)",
         man_sub: "请直接点击您需要的语言版本，单独下载完整 19 页图文 PDF 手册。",
         vid_title: "视频演示与教程",
@@ -526,25 +622,31 @@
         dl_lin_app: "⬇ 下載 .AppImage (79 MB)",
         dl_lin_deb: "下載 .DEB 套件 (4.1 MB)",
         dl_note: "<b>首次使用提示：</b>安裝後請點擊左下角 <b>Model &amp; Engine Setup Guide</b>（或查看 PDF 手冊第 1 章），將 <code>audio.cpp</code> 與 GGUF 模型放入您的 <code>YuE2</code> 引擎資料夾。",
-        feat_title: "集齊本地音樂製作所需的全部工具",
-        feat_sub: "專為希望在自己電腦上完全離線掌控創作的音樂人、編曲師與製作人打造。",
-        f1_k: "01 · 離線引擎", f1_t: "由 audio.cpp 驅動",
+        feat_title: "專為專業音樂製作人打造",
+        feat_sub: "從一段靈感或哼唱旋律起步，完成多軌 MIDI 編修、出版級五線譜與 48kHz 音訊輸出 —— 全程本地離線運行。",
+        f1_k: "01 · 離線 AI 引擎", f1_t: "零雲端限制 (audio.cpp)",
         f1_b: "在 Metal、CUDA、Vulkan 或 CPU 上本地運行 YuE2-3B 合成與 SheetSage2 扒譜，支援 Q5_K_M、Q8_0 與 BF16 量化分級。",
-        f2_k: "02 · 三大創作模式", f2_t: "快速範本、原創與翻唱",
-        f2_b: "內建 22 個曲風預設快速起步，使用智慧標籤生成器寫原創，或從任意歌曲/哼唱音訊提取旋律與和弦。",
-        f3_k: "03 · 專業 DAW 編輯器", f3_t: "Piano Roll、五線譜與雙視圖",
-        f3_b: "在完整 MIDI Piano Roll（V/B/X/E、幽靈軌、循環播放）或 5 線五線譜（SVG 拖曳、步進輸入）中即時同步編輯。",
-        f4_k: "04 · 智慧和聲", f4_t: "Chord Studio 與智慧重配和聲",
-        f4_b: "一鍵將三和弦轉為爵士七/九和弦或 R&B/Neo-Soul 色彩，支援小節內拆分和弦並匯出 .MID / .SVG / PDF。",
-        f5_k: "05 · 雙 LoRA 與母帶", f5_t: "Stage-1 AR + Stage-2 NAR",
-        f5_b: "結合純器樂 AR LoRA 與可選 Stage-2 NAR 聲學適配器，鎖定隨機種子，匯出 48kHz WAV 或 320kbps MP3。",
-        f6_k: "06 · 多語言介面", f6_t: "內建 5 種介面語言",
-        f6_b: "可在 English、简体中文、繁體中文、Bahasa Melayu 與 தமிழ் (Malaysia) 之間即時切換。",
+        f2_k: "02 · 哼唱與參考翻唱", f2_t: "音訊扒譜與跨曲風改編",
+        f2_b: "拖入任意歌曲或哼唱片段，透過 SheetSage2 提取多聲部旋律與和弦，輕鬆改編為全新曲風或卡拉 OK 伴奏。",
+        f3_k: "03 · 專業 DAW 音序器", f3_t: "完整 Piano Roll 工作流",
+        f3_b: "支援多音符拖曳縮放、Option/Alt+拖曳樂句複製、畫筆繪製、剪刀分割、幽靈軌參考、音階鎖定與循環播放。",
+        f4_k: "04 · 五線譜製譜", f4_t: "互動式 SVG 五線譜 (abcjs)",
+        f4_b: "直接上下拖曳符頭並伴隨 SoundFont 即時試聽，支援鍵盤步進輸入與可列印的 PDF / SVG 樂譜匯出。",
+        f5_k: "05 · 智慧和聲編排", f5_t: "和弦網格與 Chord Studio",
+        f5_b: "一鍵轉為爵士七/九和弦或 R&B/Neo-Soul 色彩，支援小節內拆分和弦及帶即時試聽的順階/斜線低音選擇。",
+        f6_k: "06 · DAW 無縫互通", f6_t: "多軌 .MID 與 .ABC 匯入匯出",
+        f6_b: "支援匯入多軌 MIDI 到雙視圖，或將旋律、和弦與速度映射匯出至 Logic Pro、Ableton Live、Cubase 或 FL Studio。",
+        f7_k: "07 · 迭代創作保護", f7_t: "種子鎖定與歷史版本紀錄",
+        f7_b: "自動版本編號 (_take02, _take03) 防止覆蓋滿意作品；隨時從最近 10 次紀錄恢復精確 #seed、提示詞與樂譜。",
+        f8_k: "08 · 純淨音訊輸出", f8_t: "48kHz WAV 與純器樂 AR LoRA",
+        f8_b: "輸出無染色的 48kHz 無損 WAV（或經 ffmpeg 匯出 320kbps MP3），支援波形試聽與 Stage-1 純器樂 LoRA。",
+        f9_k: "09 · 全球化工作室", f9_t: "5 種語言與即時懸停檢視器",
+        f9_b: "可在 English、简体中文、繁體中文、Bahasa Melayu 與 தமிழ் 間即時切換，右下角提供即時控制項說明。",
         ws_title: "工作站介面預覽",
         ws_sub: "即時同步的 MIDI 音序器、互動式和聲編輯與精細的 Pro Engine 參數控制。",
         s1_cap: "<b>Dual View 雙視圖（Piano Roll + 五線譜）</b>同螢幕聯動編輯 MIDI 與五線譜，支援 SoundFont 即時試聽。",
         s2_cap: "<b>Chord Studio 和弦工作室</b>一鍵點選調內順階和弦、13 種和弦性質與低音斜線轉位。",
-        s3_cap: "<b>Pro Engine 與雙 LoRA 控制</b>獨立調節 AR/NAR LoRA 權重、計算後端、NAR Arena 顯存與採樣參數。",
+        s3_cap: "<b>Pro Engine 參數控制</b>調節計算後端、NAR Arena 顯存緩衝、採樣參數與可選實驗性 LoRA 槽位。",
         man_title: "圖文製作人手冊 2.0 (PDF)",
         man_sub: "請直接點擊您需要的語言版本，單獨下載完整 19 頁圖文 PDF 手冊。",
         vid_title: "影片示範與教學",
@@ -580,25 +682,31 @@
         dl_lin_app: "⬇ Muat Turun .AppImage (79 MB)",
         dl_lin_deb: "Muat Turun Pakej .DEB (4.1 MB)",
         dl_note: "<b>Tetapan Kali Pertama:</b> Selepas memasang, klik <b>Model &amp; Engine Setup Guide</b> di bar sisi kiri bawah (atau lihat Bab 1 manual PDF) untuk meletakkan <code>audio.cpp</code> dan model GGUF dalam folder <code>YuE2</code>.",
-        feat_title: "Semua Alat yang Anda Perlukan dalam Satu Studio",
-        feat_sub: "Dibina untuk pemuzik, penyusun lagu dan penerbit yang mahukan kawalan kreatif penuh secara luar talian.",
-        f1_k: "01 · Enjin Luar Talian", f1_t: "Dikuasakan oleh audio.cpp",
+        feat_title: "Dibina untuk Penerbit Muzik Serius",
+        feat_sub: "Daripada idea mentah atau siulan kepada MIDI berbilang trek, skor notasi dan audio 48kHz — sepenuhnya luar talian.",
+        f1_k: "01 · Enjin AI Luar Talian", f1_t: "Tanpa Had Awan (audio.cpp)",
         f1_b: "Jalankan sintesis YuE2-3B dan transkripsi SheetSage2 secara tempatan pada Metal, CUDA, Vulkan atau CPU (Q5_K_M, Q8_0, BF16).",
-        f2_k: "02 · 3 Mod Penciptaan", f2_t: "Templat, Lagu Asli & Cover",
-        f2_b: "Mulakan pantas dengan 22 pratetap genre, bina lagu asli dengan Smart Style Builder, atau ekstrak melodi & kord daripada audio rujukan.",
-        f3_k: "03 · Editor Pro-DAW", f3_t: "Piano Roll, Stave & Dual View",
-        f3_b: "Sunting nota dalam Piano Roll MIDI (V/B/X/E, Trek Ghost, Cycle Loop) atau Stave 5-garis (seretan SVG abcjs, Step-Input) secara segerak.",
-        f4_k: "04 · Harmoni Pintar", f4_t: "Chord Studio & Penyelaras Kord",
-        f4_b: "Tukar kord asas kepada Jazz 7th/9th atau R&B/Neo-Soul dengan satu klik, pecahkan kord pertengahan bar, dan eksport .MID / .SVG / PDF.",
-        f5_k: "05 · Dual LoRA & Mastering", f5_t: "Stage-1 AR + Stage-2 NAR",
-        f5_b: "Gabungkan Instrumental AR LoRA dengan penyesuai akustik Stage-2 NAR, kunci seed, dan eksport 48kHz WAV atau 320kbps MP3.",
-        f6_k: "06 · Antara Muka Pelbagai Bahasa", f6_t: "5 Bahasa Terbina Dalam",
-        f6_b: "Tukar keseluruhan antara muka serta-merta antara English, 简体中文, 繁體中文, Bahasa Melayu, dan தமிழ் (Malaysia).",
+        f2_k: "02 · Cover Siulan & Rujukan", f2_t: "Audio-ke-Skor & Remix",
+        f2_b: "Masukkan mana-mana lagu atau rakaman siulan, ekstrak melodi & kord melalui SheetSage2, dan gubah semula dalam apa jua genre atau karaoke.",
+        f3_k: "03 · Penjujuk MIDI Pro-DAW", f3_t: "Aliran Kerja Piano Roll Penuh",
+        f3_b: "Seret/ubah saiz multi-nota, klon frasa Option/Alt+Seret, alat Lukis & Pisah, Trek Ghost, Kunci Skala dan Cycle Loop.",
+        f4_k: "04 · Ukiran Skor Muzik", f4_t: "Stave Visual Langsung (abcjs)",
+        f4_b: "Seret kepala nota SVG secara menegak dengan ujian SoundFont langsung, masukkan nota dengan papan kekunci, dan eksport PDF atau SVG.",
+        f5_k: "05 · Harmoni & Reharmonizer", f5_t: "Grid Kord & Chord Studio",
+        f5_b: "Tukar kord kepada Jazz 7th/9th atau R&B/Neo-Soul dengan satu klik, pecahkan kord pertengahan bar, dan pilih songsangan bes.",
+        f6_k: "06 · Keserasian DAW", f6_t: "I/O .MID & .ABC Berbilang Trek",
+        f6_b: "Import MIDI berbilang trek terus ke Dual View atau eksport melodi, kord dan peta tempo ke Logic Pro, Ableton Live, Cubase atau FL Studio.",
+        f7_k: "07 · Pengeluaran Berulang", f7_t: "Kunci Seed & Sejarah Take",
+        f7_b: "Penomboran Auto-Take (_take02, _take03) melindungi hasil terbaik. Pulihkan #seed, prompt dan skor daripada 10 take terakhir.",
+        f8_k: "08 · Output Audio Bersih", f8_t: "WAV 48kHz & Stage-1 AR LoRA",
+        f8_b: "Render WAV 48kHz tanpa kehilangan (atau MP3 320kbps melalui ffmpeg) dengan gelombang WaveSurfer dan Stage-1 AR LoRA untuk instrumental tulen.",
+        f9_k: "09 · Studio Global", f9_t: "5 Bahasa & Pemeriksa Langsung",
+        f9_b: "Tukar serta-merta antara English, 简体中文, 繁體中文, Bahasa Melayu, dan தமிழ் dengan dokumentasi langsung di penjuru kanan bawah.",
         ws_title: "Paparan Ruang Kerja",
         ws_sub: "Penjujukan MIDI segerak, suntingan harmoni interaktif, dan kawalan terperinci Pro Engine.",
         s1_cap: "<b>Dual View (Piano Roll + Stave Visual)</b>Sunting MIDI dan notasi sebelah-menyebelah dengan ujian SoundFont langsung.",
         s2_cap: "<b>Popover Chord Studio</b>Kord diatonik 1-klik, 13 kualiti kord, dan songsangan bes garis miring.",
-        s3_cap: "<b>Kawalan Pro Engine &amp; Dual LoRA</b>Skala AR/NAR LoRA berasingan, Compute Backend, NAR Arena MB, dan tetapan persampelan.",
+        s3_cap: "<b>Kawalan Pro Engine</b>Compute Backend, NAR Arena MB, tetapan persampelan, dan slot LoRA eksperimen pilihan.",
         man_title: "Manual Penerbit Berilustrasi 2.0 (PDF)",
         man_sub: "Pilih bahasa pilihan anda di bawah untuk memuat turun manual berilustrasi 19 halaman secara individu.",
         vid_title: "Video Panduan & Tutorial",
@@ -634,25 +742,31 @@
         dl_lin_app: "⬇ .AppImage பதிவிறக்கம் (79 MB)",
         dl_lin_deb: ".DEB தொகுப்பு பதிவிறக்கம் (4.1 MB)",
         dl_note: "<b>முதல் முறை அமைப்பு:</b> நிறுவிய பின், கீழ்-இடது பக்கப்பட்டியில் <b>Model &amp; Engine Setup Guide</b>-ஐ கிளிக் செய்து (அல்லது PDF கையேடு அத்தியாயம் 1) <code>audio.cpp</code> மற்றும் GGUF மாடல்களை <code>YuE2</code> கோப்புறையில் வைக்கவும்.",
-        feat_title: "ஒரே உள்ளூர் ஸ்டுடியோவில் தேவையான அனைத்தும்",
-        feat_sub: "தங்கள் சொந்த கணினியில் ஆஃப்லைனில் முழுப் படைப்பாற்றல் கட்டுப்பாட்டை விரும்பும் இசையமைப்பாளர்களுக்காக உருவாக்கப்பட்டது.",
-        f1_k: "01 · ஆஃப்லைன் எஞ்சின்", f1_t: "audio.cpp மூலம் இயங்குகிறது",
+        feat_title: "தொழில்முறை இசைத் தயாரிப்பாளர்களுக்கானது",
+        feat_sub: "ஒரு சிறிய மெலடி அல்லது ஹம்மிங்கிலிருந்து பல-தட MIDI, இசைக்குறிப்பு மற்றும் 48kHz ஆடியோ வரை — முழுமையாக ஆஃப்லைனில்.",
+        f1_k: "01 · ஆஃப்லைன் AI எஞ்சின்", f1_t: "கிளவுட் வரம்பு இல்லை (audio.cpp)",
         f1_b: "Metal, CUDA, Vulkan அல்லது CPU-வில் Q5_K_M, Q8_0 மற்றும் BF16 நிலைகளில் YuE2-3B மற்றும் SheetSage2-ஐ உள்ளூரில் இயக்கவும்.",
-        f2_k: "02 · 3 உருவாக்க முறைகள்", f2_t: "Templates, Original & Covers",
-        f2_b: "22 இசை வகை Presets, Smart Style Builder, அல்லது எந்தப் பாடல்/ஹம்மிங் ஆடியோவிலிருந்தும் மெலடி & கார்டுகளைப் பிரித்தெடுக்கவும்.",
-        f3_k: "03 · Pro-DAW எடிட்டர்கள்", f3_t: "Piano Roll, Stave & Dual View",
-        f3_b: "முழு MIDI Piano Roll (V/B/X/E, Ghost தடங்கள், Cycle Loop) அல்லது 5-வரி Stave (abcjs SVG இழுத்தல், Step-Input) ஆகியவற்றில் நேரடியாகத் திருத்தவும்.",
-        f4_k: "04 · ஸ்மார்ட் ஹார்மனி", f4_t: "Chord Studio & Reharmonizer",
-        f4_b: "சாதாரண கார்டுகளை ஒரே கிளிக்கில் Jazz 7th/9th அல்லது R&B/Neo-Soul ஆக மாற்றவும்; .MID / .SVG / PDF ஆக ஏற்றுமதி செய்யவும்.",
-        f5_k: "05 · Dual LoRA & மாஸ்டரிங்", f5_t: "Stage-1 AR + Stage-2 NAR",
-        f5_b: "Instrumental AR LoRA மற்றும் Stage-2 NAR அடாப்டர்களை இணைத்து, Seed-ஐப் பூட்டி, 48kHz WAV அல்லது 320kbps MP3 ஏற்றுமதி செய்யவும்.",
-        f6_k: "06 · பல மொழி இடைமுகம்", f6_t: "5 உள்ளமைந்த மொழிகள்",
-        f6_b: "English, 简体中文, 繁體中文, Bahasa Melayu மற்றும் தமிழ் (Malaysia) ஆகியவற்றுக்கிடையே உடனடியாக மாறவும்.",
+        f2_k: "02 · ஹம்மிங் & Cover", f2_t: "Audio-to-Score & ரீமிக்ஸ்",
+        f2_b: "எந்தப் பாடல் அல்லது ஹம்மிங்கையும் Cover Mode-இல் சேர்த்து SheetSage2 மூலம் மெலடி & கார்டுகளைப் பிரித்தெடுத்து புதிய வகையில் உருவாக்கவும்.",
+        f3_k: "03 · Pro-DAW MIDI சீக்வென்சர்", f3_t: "முழு Piano Roll செயல்முறை",
+        f3_b: "Multi-note இழுத்தல், Option/Alt+Drag குளோனிங், Pencil draw, Scissor split, Ghost tracks, Scale Lock மற்றும் Cycle Loop.",
+        f4_k: "04 · இசைக்குறிப்புப் பதிப்பு", f4_t: "நேரடி SVG Stave (abcjs)",
+        f4_b: "உடனடி SoundFont ஒலியுடன் SVG நோட்டுகளை மேலும் கீழும் இழுத்துத் திருத்தவும்; அச்சிடத் தயாரான PDF அல்லது SVG ஏற்றுமதி செய்யவும்.",
+        f5_k: "05 · ஹார்மனி & Reharmonizer", f5_t: "Chord Grid & Chord Studio",
+        f5_b: "ஒரே கிளிக்கில் Jazz 7th/9th அல்லது R&B/Neo-Soul கார்டுகளாக மாற்றவும்; நடு-பார் கார்டு பிரிப்பு மற்றும் slash-bass தேர்வுகள்.",
+        f6_k: "06 · DAW இணக்கத்தன்மை", f6_t: "பல-தட .MID & .ABC I/O",
+        f6_b: "Dual View-இல் பல-தட MIDI இறக்குமதி செய்யவும் அல்லது Logic Pro, Ableton Live, Cubase, FL Studio-விற்கு ஏற்றுமதி செய்யவும்.",
+        f7_k: "07 · தொடர் தயாரிப்பு", f7_t: "Seed பூட்டுதல் & Take வரலாறு",
+        f7_b: "Auto-Take Versioning (_take02, _take03) சிறந்த படைப்புகளைப் பாதுகாக்கும்; கடைசி 10 Takes-இலிருந்து #seed மற்றும் ஸ்கோரை மீட்டெடுக்கவும்.",
+        f8_k: "08 · தூய ஆடியோ வெளியீடு", f8_t: "48kHz WAV & Stage-1 AR LoRA",
+        f8_b: "கலப்படமற்ற 48kHz WAV (அல்லது ffmpeg வழியாக 320kbps MP3), WaveSurfer அலைவடிவம் மற்றும் தூய இசைக்கான Stage-1 AR LoRA.",
+        f9_k: "09 · உலகளாவிய ஸ்டுடியோ", f9_t: "5 மொழிகள் & நேரடி உதவி",
+        f9_b: "English, 简体中文, 繁體中文, Bahasa Melayu மற்றும் தமிழ் இடையே உடனே மாறவும்; கீழ்-வலதுபுறத்தில் நேரடி உதவி கிடைக்கும்.",
         ws_title: "பணியிடக் காட்சி",
         ws_sub: "ஒத்திசைக்கப்பட்ட MIDI சீக்வென்சிங், ஊடாடும் ஹார்மனி திருத்தம் மற்றும் Pro Engine கட்டுப்பாடுகள்.",
         s1_cap: "<b>Dual View (Piano Roll + Visual Stave)</b>நேரடி SoundFont ஒலியுடன் MIDI மற்றும் இசைக்குறிப்பை அருகருகே திருத்தவும்.",
         s2_cap: "<b>Chord Studio Popover</b>1-கிளிக் Diatonic கார்டுகள், 13 கார்டு வகைகள் மற்றும் Bass slash inversions.",
-        s3_cap: "<b>Pro Engine &amp; Dual LoRA கட்டுப்பாடுகள்</b>தனித்தனி AR/NAR LoRA அளவுகள், Compute Backend, NAR Arena MB & sampling அமைப்புகள்.",
+        s3_cap: "<b>Pro Engine கட்டுப்பாடுகள்</b>Compute Backend, NAR Arena MB, sampling அமைப்புகள் மற்றும் விருப்ப LoRA இடங்கள்.",
         man_title: "சித்திரத் தயாரிப்பாளர் கையேடு 2.0 (PDF)",
         man_sub: "முழுமையான 19-பக்க கையேட்டைத் தனித்தனியாகப் பதிவிறக்க உங்கள் விருப்ப மொழியைத் தேர்ந்தெடுக்கவும்.",
         vid_title: "வீடியோ வழிகாட்டி & பயிற்சி",
@@ -687,6 +801,40 @@
     select.value = I18N[initial] ? initial : "en";
     applyLang(select.value);
     select.addEventListener("change", (e) => applyLang(e.target.value));
+
+    // Apple-style staggered scroll reveal
+    const revealEls = document.querySelectorAll(".reveal");
+    revealEls.forEach((el) => {
+      const parent = el.parentElement;
+      if (parent && (parent.classList.contains("grid-3") || parent.classList.contains("dl-grid") || parent.classList.contains("gallery-grid") || parent.classList.contains("manuals-grid"))) {
+        const idx = Array.from(parent.children).indexOf(el);
+        el.style.transitionDelay = `${(idx % 3) * 85}ms`;
+      }
+    });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    revealEls.forEach((el) => observer.observe(el));
+
+    // Apple-style scroll-linked 3D perspective on Hero Studio screenshot
+    const heroShot = document.getElementById("heroShot");
+    if (heroShot && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const updateHeroTransform = () => {
+        const rect = heroShot.getBoundingClientRect();
+        const vh = window.innerHeight || 800;
+        const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh * 0.85)));
+        const tilt = (1 - progress) * 5.5;
+        const scale = 0.965 + progress * 0.035;
+        heroShot.style.transform = `rotateX(${tilt.toFixed(2)}deg) scale(${scale.toFixed(4)})`;
+      };
+      updateHeroTransform();
+      window.addEventListener("scroll", () => requestAnimationFrame(updateHeroTransform), { passive: true });
+    }
   </script>
 </body>
 </html>
