@@ -246,6 +246,325 @@
     @media (max-width: 800px) {
       .nav-links a:not(.nav-cta) { display: none; }
     }
+
+    /* Audio Showcase & Spectrum VFX */
+    .audio-studio {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+    @media (max-width: 960px) {
+      .audio-studio { grid-template-columns: 1fr; }
+    }
+    .player-panel, .ref-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .player-panel::before {
+      content: "";
+      position: absolute;
+      inset: -40% -20% auto -20%;
+      height: 260px;
+      background: radial-gradient(circle at 50% 35%, rgba(0, 255, 209, var(--vfx-glow, 0.14)), rgba(56, 189, 248, 0.06) 45%, transparent 72%);
+      pointer-events: none;
+      transition: opacity 0.15s ease-out;
+      z-index: 0;
+    }
+    .player-panel > * { position: relative; z-index: 1; }
+    .now-playing-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .np-kicker {
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 4px;
+    }
+    .np-title {
+      font-size: 1.32rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .np-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .np-badge {
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: #cbd5e1;
+    }
+    .np-badge.wav {
+      background: rgba(0, 255, 209, 0.1);
+      border-color: rgba(0, 255, 209, 0.35);
+      color: var(--teal);
+    }
+    .spectrum-wrap {
+      background: rgba(7, 9, 15, 0.75);
+      border: 1px solid rgba(38, 43, 69, 0.9);
+      border-radius: 12px;
+      padding: 10px 12px 6px;
+      box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.55);
+    }
+    #spectrumCanvas {
+      width: 100%;
+      height: 112px;
+      display: block;
+    }
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .time-label {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-variant-numeric: tabular-nums;
+      font-size: 0.8rem;
+      color: var(--muted);
+      min-width: 44px;
+    }
+    .time-label.end { text-align: right; }
+    .seek-bar {
+      flex: 1;
+      height: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .seek-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #0ea5a4, #00ffd1);
+      border-radius: 999px;
+      box-shadow: 0 0 12px rgba(0, 255, 209, 0.55);
+      transition: width 0.06s linear;
+    }
+    .transport-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .transport-btns {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ctrl-btn {
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      height: 42px;
+      padding: 0 14px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: border-color 0.2s, transform 0.15s, color 0.2s, background 0.2s;
+    }
+    .ctrl-btn:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-1px); }
+    .ctrl-btn.play {
+      background: linear-gradient(135deg, #00ffd1, #0ea5a4);
+      color: #07090f;
+      border: none;
+      min-width: 54px;
+      height: 44px;
+      font-size: 1.05rem;
+      box-shadow: 0 6px 24px rgba(0, 255, 209, 0.26);
+    }
+    .ctrl-btn.play:hover { color: #07090f; opacity: 0.94; transform: translateY(-1px) scale(1.03); }
+    .vol-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .vol-slider {
+      width: 88px;
+      accent-color: var(--teal);
+      cursor: pointer;
+    }
+    .playlist-head {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .playlist {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 310px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .track-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(24, 28, 48, 0.55);
+      border: 1px solid rgba(38, 43, 69, 0.75);
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+    .track-item:hover {
+      border-color: rgba(0, 255, 209, 0.45);
+      background: rgba(24, 28, 48, 0.95);
+    }
+    .track-item.active {
+      border-color: var(--teal);
+      background: rgba(0, 255, 209, 0.09);
+      box-shadow: 0 0 20px rgba(0, 255, 209, 0.08);
+    }
+    .track-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .track-num {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      min-width: 22px;
+    }
+    .track-item.active .track-num { color: var(--teal); }
+    .track-meta { min-width: 0; }
+    .track-name {
+      font-weight: 700;
+      font-size: 0.92rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .track-sub {
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .track-size {
+      font-size: 0.74rem;
+      color: var(--muted);
+      white-space: nowrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .eq-bars {
+      display: none;
+      align-items: flex-end;
+      gap: 2px;
+      height: 14px;
+    }
+    .track-item.active.playing .eq-bars { display: inline-flex; }
+    .track-item.active.playing .track-num { display: none; }
+    .eq-bars span {
+      width: 3px;
+      background: var(--teal);
+      border-radius: 2px;
+      animation: eqBounce 0.8s ease-in-out infinite alternate;
+    }
+    .eq-bars span:nth-child(2) { animation-delay: 0.2s; }
+    .eq-bars span:nth-child(3) { animation-delay: 0.45s; }
+    @keyframes eqBounce {
+      from { height: 4px; }
+      to { height: 14px; }
+    }
+    .ref-box {
+      background: rgba(7, 9, 15, 0.65);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .ref-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    .ref-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal);
+    }
+    .copy-btn {
+      background: rgba(0, 255, 209, 0.12);
+      color: var(--teal);
+      border: 1px solid rgba(0, 255, 209, 0.35);
+      border-radius: 7px;
+      padding: 4px 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .copy-btn:hover { background: var(--teal); color: #07090f; }
+    .prompt-text {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.62;
+      color: #e2e8f0;
+      word-break: break-word;
+    }
+    .note-text {
+      margin-top: 8px;
+      font-size: 0.78rem;
+      color: var(--amber);
+      line-height: 1.5;
+    }
+    .lyrics-box {
+      flex: 1;
+      min-height: 260px;
+      max-height: 390px;
+      overflow-y: auto;
+      font-size: 0.88rem;
+      line-height: 1.72;
+      color: #cbd5e1;
+      white-space: pre-wrap;
+      padding-right: 6px;
+    }
+    .lyric-tag {
+      display: inline-block;
+      color: var(--teal);
+      font-weight: 700;
+      margin-top: 4px;
+    }
   </style>
 </head>
 <body>
@@ -258,6 +577,7 @@
       <div class="nav-links">
         <a href="#downloads" data-i18n="nav_downloads">Downloads</a>
         <a href="#features" data-i18n="nav_features">Features</a>
+        <a href="#samples" data-i18n="nav_samples">Samples</a>
         <a href="#manuals" data-i18n="nav_manuals">PDF Manuals</a>
         <a href="#tutorial" data-i18n="nav_tutorial">Tutorial</a>
         <select id="langSelect" class="lang-select" aria-label="Language">
@@ -281,6 +601,9 @@
     <div class="hero-actions">
       <a class="btn-primary" href="#downloads" data-i18n="btn_download">
         ⬇ Direct Download (v2.0.0)
+      </a>
+      <a class="btn-secondary" href="#samples" data-i18n="btn_samples">
+        🎧 Audio Samples (WAV)
       </a>
       <a class="btn-secondary" href="#manuals" data-i18n="btn_manuals">
         📖 PDF Manuals (5 Languages)
@@ -390,6 +713,74 @@
     </div>
   </section>
 
+  <section id="samples" class="container">
+    <h2 class="sec-title reveal" data-i18n="smp_title">Lossless AI Audio Showcase (48kHz WAV)</h2>
+    <p class="sec-sub reveal" data-i18n="smp_sub">Listen directly to full-quality WAV tracks generated locally with Shishoki YuE Studio across 7 languages and genres — complete with the exact style prompt and lyrics for your reference.</p>
+
+    <div class="audio-studio reveal" id="audioStudio">
+      <div class="player-panel" id="playerPanel">
+        <div class="now-playing-head">
+          <div>
+            <div class="np-kicker" data-i18n="smp_now">NOW PLAYING · LOSSLESS WAV</div>
+            <div class="np-title" id="npTitle">Loading samples...</div>
+            <div class="np-badges">
+              <span class="np-badge" id="npLang">—</span>
+              <span class="np-badge" id="npGenre">—</span>
+              <span class="np-badge" id="npVocal">—</span>
+              <span class="np-badge wav" id="npSize">WAV</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="spectrum-wrap">
+          <canvas id="spectrumCanvas" aria-label="Real-time audio spectrum visualizer"></canvas>
+        </div>
+
+        <div class="progress-row">
+          <span class="time-label" id="timeCur">00:00</span>
+          <div class="seek-bar" id="seekBar" role="slider" aria-label="Seek progress" tabindex="0">
+            <div class="seek-fill" id="seekFill"></div>
+          </div>
+          <span class="time-label end" id="timeDur">00:00</span>
+        </div>
+
+        <div class="transport-row">
+          <div class="transport-btns">
+            <button type="button" class="ctrl-btn" id="btnPrev" title="Previous Track">⏮ <span data-i18n="smp_prev">Prev</span></button>
+            <button type="button" class="ctrl-btn play" id="btnPlay" title="Play / Pause">▶</button>
+            <button type="button" class="ctrl-btn" id="btnNext" title="Next Track"><span data-i18n="smp_next">Next</span> ⏭</button>
+          </div>
+          <div class="vol-wrap">
+            <span id="volIcon">🔊</span>
+            <input type="range" class="vol-slider" id="volSlider" min="0" max="1" step="0.02" value="0.9" aria-label="Volume" />
+          </div>
+        </div>
+
+        <div class="playlist-head" data-i18n="smp_playlist">Tracklist (8 Multi-Language Samples)</div>
+        <div class="playlist" id="playlistEl"></div>
+      </div>
+
+      <div class="ref-panel">
+        <div class="ref-box">
+          <div class="ref-head">
+            <span class="ref-label" data-i18n="smp_prompt_lbl">Style Prompt Used</span>
+            <button type="button" class="copy-btn" id="btnCopyPrompt" data-i18n="smp_copy">Copy Prompt</button>
+          </div>
+          <div class="prompt-text" id="refPrompt">—</div>
+          <div class="note-text" id="refNote"></div>
+        </div>
+
+        <div class="ref-box" style="flex:1; display:flex; flex-direction:column;">
+          <div class="ref-head">
+            <span class="ref-label" data-i18n="smp_lyrics_lbl">Lyrics &amp; Structure Tags</span>
+          </div>
+          <div class="lyrics-box" id="refLyrics">—</div>
+        </div>
+      </div>
+    </div>
+    <audio id="studioAudio" preload="metadata" crossorigin="anonymous"></audio>
+  </section>
+
   <section id="screenshots" class="container">
     <h2 class="sec-title reveal" data-i18n="ws_title">Inside the Workstation</h2>
     <p class="sec-sub reveal" data-i18n="ws_sub">Synchronized MIDI sequencing, interactive harmony editing, and fine-grained Pro Engine controls.</p>
@@ -481,6 +872,7 @@
       en: {
         nav_downloads: "Downloads",
         nav_features: "Features",
+        nav_samples: "Samples",
         nav_manuals: "PDF Manuals",
         nav_tutorial: "Tutorial",
         nav_download: "Download Free",
@@ -488,6 +880,7 @@
         hero_title: "Local AI Music Synthesis,<br />Vocal Covers &amp; Pro-DAW Notation",
         hero_desc: "Shishoki YuE Studio is a native desktop workstation powered locally by <b>audio.cpp</b> (<b>YuE2-3B</b> synthesis + <b>SheetSage2</b> audio-to-score transcription) with zero cloud limits or subscriptions.",
         btn_download: "⬇ Direct Download (v2.0.0)",
+        btn_samples: "🎧 Audio Samples (WAV)",
         btn_manuals: "📖 PDF Manuals (5 Languages)",
         btn_donate: "☕ Support / Donate",
         platforms: "Direct installers for macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — No sign-up required",
@@ -527,6 +920,16 @@
         s1_cap: "<b>Dual View (Piano Roll + Visual Stave)</b>Edit MIDI and engraved notation side-by-side with live SoundFont auditioning.",
         s2_cap: "<b>Chord Studio Popover</b>1-click diatonic Roman-numeral chords, 13 chord qualities, and bass slash inversions.",
         s3_cap: "<b>Pro Engine Controls</b>Compute Backend, NAR Arena MB, sampling overrides, and optional experimental LoRA slots.",
+        smp_title: "Lossless AI Audio Showcase (48kHz WAV)",
+        smp_sub: "Listen directly to full-quality WAV tracks generated locally with Shishoki YuE Studio across 7 languages and genres — complete with the exact style prompt and lyrics for your reference.",
+        smp_now: "NOW PLAYING · LOSSLESS WAV",
+        smp_prev: "Prev",
+        smp_next: "Next",
+        smp_playlist: "Tracklist (8 Multi-Language Samples)",
+        smp_prompt_lbl: "Style Prompt Used",
+        smp_lyrics_lbl: "Lyrics & Structure Tags",
+        smp_copy: "Copy Prompt",
+        smp_copied: "Copied!",
         man_title: "Illustrated Producer Manual 2.0 (PDF)",
         man_sub: "Choose your preferred language below to download the complete 20-page illustrated manual individually.",
         vid_title: "Video Walkthrough & Tutorial",
@@ -541,6 +944,7 @@
       "zh-CN": {
         nav_downloads: "立即下载",
         nav_features: "核心功能",
+        nav_samples: "试听样品",
         nav_manuals: "PDF 手册",
         nav_tutorial: "视频教程",
         nav_download: "免费下载",
@@ -548,6 +952,7 @@
         hero_title: "本地 AI 音乐合成、<br />人声翻唱与专业 DAW 制谱",
         hero_desc: "Shishoki YuE Studio 是一款由本地 <b>audio.cpp</b>（<b>YuE2-3B</b> 合成 + <b>SheetSage2</b> 音频扒谱）驱动的原生桌面工作站，无需云端、无订阅限制。",
         btn_download: "⬇ 直接下载应用 (v2.0.0)",
+        btn_samples: "🎧 无损试听 (WAV)",
         btn_manuals: "📖 PDF 手册（5 种语言）",
         btn_donate: "☕ 赞赏 / 捐赠支持",
         platforms: "支持 macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — 无需注册直接下载",
@@ -587,6 +992,16 @@
         s1_cap: "<b>Dual View 双视图（Piano Roll + 五线谱）</b>同屏联动编辑 MIDI 与五线谱，支持 SoundFont 实时试听。",
         s2_cap: "<b>Chord Studio 和弦工作室</b>一键点选调内顺阶和弦、13 种和弦性质与低音斜杠转位。",
         s3_cap: "<b>Pro Engine 参数控制</b>调节计算后端、NAR Arena 显存缓冲、采样参数与可选实验性 LoRA 槽位。",
+        smp_title: "无损 AI 音频试听展厅 (48kHz WAV)",
+        smp_sub: "直接试听使用 Shishoki YuE Studio 在本地生成的 7 种语言与曲风完整无损 WAV 作品 —— 同步展示所用的风格提示词与歌词结构供参考。",
+        smp_now: "正在播放 · 无损 WAV",
+        smp_prev: "上一首",
+        smp_next: "下一首",
+        smp_playlist: "曲目列表（8 首多语言示范）",
+        smp_prompt_lbl: "使用的风格提示词 (Style Prompt)",
+        smp_lyrics_lbl: "歌词与段落标签 (Lyrics & Structure)",
+        smp_copy: "复制提示词",
+        smp_copied: "已复制!",
         man_title: "图文制作人手册 2.0 (PDF)",
         man_sub: "请直接点击您需要的语言版本，单独下载完整 20 页图文 PDF 手册。",
         vid_title: "视频演示与教程",
@@ -601,6 +1016,7 @@
       "zh-TW": {
         nav_downloads: "立即下載",
         nav_features: "核心功能",
+        nav_samples: "試聽樣品",
         nav_manuals: "PDF 手冊",
         nav_tutorial: "影片教學",
         nav_download: "免費下載",
@@ -608,6 +1024,7 @@
         hero_title: "本地 AI 音樂合成、<br />人聲翻唱與專業 DAW 製譜",
         hero_desc: "Shishoki YuE Studio 是一款由本地 <b>audio.cpp</b>（<b>YuE2-3B</b> 合成 + <b>SheetSage2</b> 音訊扒譜）驅動的原生桌面工作站，無需雲端、無訂閱限制。",
         btn_download: "⬇ 直接下載應用 (v2.0.0)",
+        btn_samples: "🎧 無損試聽 (WAV)",
         btn_manuals: "📖 PDF 手冊（5 種語言）",
         btn_donate: "☕ 贊助 / 捐贈支持",
         platforms: "支援 macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — 無需註冊直接下載",
@@ -647,6 +1064,16 @@
         s1_cap: "<b>Dual View 雙視圖（Piano Roll + 五線譜）</b>同螢幕聯動編輯 MIDI 與五線譜，支援 SoundFont 即時試聽。",
         s2_cap: "<b>Chord Studio 和弦工作室</b>一鍵點選調內順階和弦、13 種和弦性質與低音斜線轉位。",
         s3_cap: "<b>Pro Engine 參數控制</b>調節計算後端、NAR Arena 顯存緩衝、採樣參數與可選實驗性 LoRA 槽位。",
+        smp_title: "無損 AI 音訊試聽展廳 (48kHz WAV)",
+        smp_sub: "直接試聽使用 Shishoki YuE Studio 在本地生成的 7 種語言與曲風完整無損 WAV 作品 —— 同步展示所用的風格提示詞與歌詞結構供參考。",
+        smp_now: "正在播放 · 無損 WAV",
+        smp_prev: "上一首",
+        smp_next: "下一首",
+        smp_playlist: "曲目列表（8 首多語言示範）",
+        smp_prompt_lbl: "使用的風格提示詞 (Style Prompt)",
+        smp_lyrics_lbl: "歌詞與段落標籤 (Lyrics & Structure)",
+        smp_copy: "複製提示詞",
+        smp_copied: "已複製!",
         man_title: "圖文製作人手冊 2.0 (PDF)",
         man_sub: "請直接點擊您需要的語言版本，單獨下載完整 20 頁圖文 PDF 手冊。",
         vid_title: "影片示範與教學",
@@ -661,6 +1088,7 @@
       ms: {
         nav_downloads: "Muat Turun",
         nav_features: "Ciri-ciri",
+        nav_samples: "Sampel Audio",
         nav_manuals: "Manual PDF",
         nav_tutorial: "Tutorial",
         nav_download: "Muat Turun Percuma",
@@ -668,6 +1096,7 @@
         hero_title: "Sintesis Muzik AI Tempatan,<br />Lagu Cover &amp; Notasi Pro-DAW",
         hero_desc: "Shishoki YuE Studio ialah stesen kerja desktop natif yang dikuasakan secara tempatan oleh <b>audio.cpp</b> (sintesis <b>YuE2-3B</b> + transkripsi <b>SheetSage2</b>) tanpa had awan atau langganan.",
         btn_download: "⬇ Muat Turun Terus (v2.0.0)",
+        btn_samples: "🎧 Sampel Audio (WAV)",
         btn_manuals: "📖 Manual PDF (5 Bahasa)",
         btn_donate: "☕ Sokong / Derma",
         platforms: "Pemasang terus untuk macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — Tanpa pendaftaran",
@@ -707,6 +1136,16 @@
         s1_cap: "<b>Dual View (Piano Roll + Stave Visual)</b>Sunting MIDI dan notasi sebelah-menyebelah dengan ujian SoundFont langsung.",
         s2_cap: "<b>Popover Chord Studio</b>Kord diatonik 1-klik, 13 kualiti kord, dan songsangan bes garis miring.",
         s3_cap: "<b>Kawalan Pro Engine</b>Compute Backend, NAR Arena MB, tetapan persampelan, dan slot LoRA eksperimen pilihan.",
+        smp_title: "Pameran Audio AI Tanpa Kehilangan (WAV 48kHz)",
+        smp_sub: "Dengar terus trek WAV kualiti penuh yang dijana secara tempatan dengan Shishoki YuE Studio merentasi 7 bahasa dan genre — lengkap dengan prompt gaya dan lirik untuk rujukan anda.",
+        smp_now: "SEDANG DIMAINKAN · WAV TANPA KEHILANGAN",
+        smp_prev: "Sebelum",
+        smp_next: "Seterusnya",
+        smp_playlist: "Senarai Lagu (8 Sampel Pelbagai Bahasa)",
+        smp_prompt_lbl: "Prompt Gaya Yang Digunakan",
+        smp_lyrics_lbl: "Lirik & Tag Struktur",
+        smp_copy: "Salin Prompt",
+        smp_copied: "Disalin!",
         man_title: "Manual Penerbit Berilustrasi 2.0 (PDF)",
         man_sub: "Pilih bahasa pilihan anda di bawah untuk memuat turun manual berilustrasi 20 halaman secara individu.",
         vid_title: "Video Panduan & Tutorial",
@@ -721,6 +1160,7 @@
       ta: {
         nav_downloads: "பதிவிறக்கம்",
         nav_features: "அம்சங்கள்",
+        nav_samples: "மாதிரி பாடல்கள்",
         nav_manuals: "PDF கையேடுகள்",
         nav_tutorial: "பயிற்சி வீடியோ",
         nav_download: "இலவச பதிவிறக்கம்",
@@ -728,6 +1168,7 @@
         hero_title: "உள்ளூர் AI இசை உருவாக்கம்,<br />குரல் Covers &amp; Pro-DAW இசைக்குறிப்பு",
         hero_desc: "Shishoki YuE Studio என்பது கிளவுட் வரம்போ சந்தாவோ இன்றி உங்கள் கணினியில் உள்ளூர் <b>audio.cpp</b> (<b>YuE2-3B</b> + <b>SheetSage2</b>) மூலம் இயங்கும் டெஸ்க்டாப் இசைப் பணியிடமாகும்.",
         btn_download: "⬇ நேரடிப் பதிவிறக்கம் (v2.0.0)",
+        btn_samples: "🎧 மாதிரி பாடல்கள் (WAV)",
         btn_manuals: "📖 PDF கையேடுகள் (5 மொழிகள்)",
         btn_donate: "☕ ஆதரவு / நன்கொடை",
         platforms: "macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — பதிவு தேவையில்லை",
@@ -767,6 +1208,16 @@
         s1_cap: "<b>Dual View (Piano Roll + Visual Stave)</b>நேரடி SoundFont ஒலியுடன் MIDI மற்றும் இசைக்குறிப்பை அருகருகே திருத்தவும்.",
         s2_cap: "<b>Chord Studio Popover</b>1-கிளிக் Diatonic கார்டுகள், 13 கார்டு வகைகள் மற்றும் Bass slash inversions.",
         s3_cap: "<b>Pro Engine கட்டுப்பாடுகள்</b>Compute Backend, NAR Arena MB, sampling அமைப்புகள் மற்றும் விருப்ப LoRA இடங்கள்.",
+        smp_title: "தூய AI ஆடியோ காட்சியகம் (48kHz WAV)",
+        smp_sub: "Shishoki YuE Studio மூலம் உள்ளூரில் உருவாக்கப்பட்ட 7 மொழிகள் மற்றும் இசை வகைகளில் உள்ள முழு WAV பாடல்களைக் கேளுங்கள் — உங்கள் வழிகாட்டியாக Style Prompt மற்றும் பாடல் வரிகளுடன்.",
+        smp_now: "இப்போது ஒலிக்கிறது · தூய WAV",
+        smp_prev: "முந்தைய",
+        smp_next: "அடுத்த",
+        smp_playlist: "பாடல் பட்டியல் (8 பன்மொழி மாதிரிகள்)",
+        smp_prompt_lbl: "பயன்படுத்திய Style Prompt",
+        smp_lyrics_lbl: "பாடல் வரிகள் & அமைப்பு",
+        smp_copy: "Prompt நகலெடு",
+        smp_copied: "நகலெடுக்கப்பட்டது!",
         man_title: "சித்திரத் தயாரிப்பாளர் கையேடு 2.0 (PDF)",
         man_sub: "முழுமையான 20-பக்க கையேட்டைத் தனித்தனியாகப் பதிவிறக்க உங்கள் விருப்ப மொழியைத் தேர்ந்தெடுக்கவும்.",
         vid_title: "வீடியோ வழிகாட்டி & பயிற்சி",
@@ -835,6 +1286,285 @@
       updateHeroTransform();
       window.addEventListener("scroll", () => requestAnimationFrame(updateHeroTransform), { passive: true });
     }
+
+    // Lossless WAV Audio Showcase & Real-Time Spectrum Light VFX
+    (function initAudioShowcase() {
+      const audio = document.getElementById("studioAudio");
+      const canvas = document.getElementById("spectrumCanvas");
+      const panel = document.getElementById("playerPanel");
+      const npTitle = document.getElementById("npTitle");
+      const npLang = document.getElementById("npLang");
+      const npGenre = document.getElementById("npGenre");
+      const npVocal = document.getElementById("npVocal");
+      const npSize = document.getElementById("npSize");
+      const timeCur = document.getElementById("timeCur");
+      const timeDur = document.getElementById("timeDur");
+      const seekBar = document.getElementById("seekBar");
+      const seekFill = document.getElementById("seekFill");
+      const btnPrev = document.getElementById("btnPrev");
+      const btnPlay = document.getElementById("btnPlay");
+      const btnNext = document.getElementById("btnNext");
+      const volSlider = document.getElementById("volSlider");
+      const volIcon = document.getElementById("volIcon");
+      const playlistEl = document.getElementById("playlistEl");
+      const refPrompt = document.getElementById("refPrompt");
+      const refNote = document.getElementById("refNote");
+      const refLyrics = document.getElementById("refLyrics");
+      const btnCopyPrompt = document.getElementById("btnCopyPrompt");
+
+      if (!audio || !canvas) return;
+      const ctx = canvas.getContext("2d");
+
+      let tracks = [];
+      let currentIdx = 0;
+      let audioCtx = null;
+      let analyser = null;
+      let freqData = null;
+      let sourceConnected = false;
+      let isSeeking = false;
+      const peaks = new Array(56).fill(0);
+
+      function fmtTime(sec) {
+        if (!isFinite(sec) || sec < 0) return "00:00";
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60);
+        return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+      }
+
+      function escapeHtml(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+
+      function renderLyrics(text) {
+        const lines = (text || "").split("\n");
+        refLyrics.innerHTML = lines.map((line) => {
+          const trimmed = line.trim();
+          if (/^(\[.*\]|【.*】)$/.test(trimmed)) {
+            return '<span class="lyric-tag">' + escapeHtml(line) + "</span>";
+          }
+          return escapeHtml(line);
+        }).join("\n");
+      }
+
+      function updateActiveRow() {
+        const items = playlistEl.querySelectorAll(".track-item");
+        items.forEach((item, i) => {
+          item.classList.toggle("active", i === currentIdx);
+          item.classList.toggle("playing", i === currentIdx && !audio.paused);
+        });
+        btnPlay.textContent = audio.paused ? "▶" : "⏸";
+      }
+
+      function selectTrack(idx, autoPlay) {
+        if (!tracks.length) return;
+        currentIdx = (idx + tracks.length) % tracks.length;
+        const t = tracks[currentIdx];
+        npTitle.textContent = t.title;
+        npLang.textContent = t.language;
+        npGenre.textContent = t.genre;
+        npVocal.textContent = t.vocal;
+        npSize.textContent = "48kHz WAV · " + t.size;
+        refPrompt.textContent = t.prompt;
+        refNote.textContent = t.note || "";
+        refNote.style.display = t.note ? "block" : "none";
+        renderLyrics(t.lyrics);
+        refLyrics.scrollTop = 0;
+        timeCur.textContent = "00:00";
+        timeDur.textContent = "00:00";
+        seekFill.style.width = "0%";
+        audio.src = t.src;
+        audio.load();
+        updateActiveRow();
+        if (autoPlay) playAudio();
+      }
+
+      function ensureAnalyser() {
+        if (sourceConnected) {
+          if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+          return;
+        }
+        try {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return;
+          audioCtx = new AC();
+          analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 256;
+          analyser.smoothingTimeConstant = 0.82;
+          const srcNode = audioCtx.createMediaElementSource(audio);
+          srcNode.connect(analyser);
+          analyser.connect(audioCtx.destination);
+          freqData = new Uint8Array(analyser.frequencyBinCount);
+          sourceConnected = true;
+        } catch (err) {
+          analyser = null;
+        }
+      }
+
+      function playAudio() {
+        ensureAnalyser();
+        const p = audio.play();
+        if (p && p.catch) p.catch(() => {});
+        updateActiveRow();
+      }
+
+      function togglePlay() {
+        if (!tracks.length) return;
+        if (audio.paused) playAudio();
+        else {
+          audio.pause();
+          updateActiveRow();
+        }
+      }
+
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.max(300, Math.floor(rect.width * dpr));
+        canvas.height = Math.floor(112 * dpr);
+      }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      function drawSpectrum(ts) {
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const bars = 56;
+        const gap = w * 0.004;
+        const barW = (w - gap * (bars - 1)) / bars;
+        const isPlaying = !audio.paused;
+
+        let bassSum = 0;
+        if (analyser && freqData && isPlaying) {
+          analyser.getByteFrequencyData(freqData);
+        }
+
+        for (let i = 0; i < bars; i++) {
+          let val = 0;
+          if (analyser && freqData && isPlaying) {
+            const bin = Math.min(freqData.length - 1, Math.floor((i / bars) * (freqData.length * 0.72)));
+            val = freqData[bin] / 255;
+            if (i < 8) bassSum += val;
+          } else if (isPlaying) {
+            val = 0.25 + 0.35 * Math.abs(Math.sin(ts * 0.005 + i * 0.35));
+            if (i < 8) bassSum += val;
+          } else {
+            val = 0.06 + 0.04 * Math.sin(ts * 0.002 + i * 0.22);
+          }
+
+          if (val > peaks[i]) peaks[i] = val;
+          else peaks[i] = Math.max(val, peaks[i] - 0.012);
+
+          const barH = Math.max(3, val * (h * 0.84));
+          const x = i * (barW + gap);
+          const y = h - barH;
+
+          const grad = ctx.createLinearGradient(0, h, 0, y);
+          grad.addColorStop(0, "rgba(14, 165, 164, 0.45)");
+          grad.addColorStop(0.55, "rgba(0, 255, 209, 0.85)");
+          grad.addColorStop(1, "rgba(56, 189, 248, 0.98)");
+
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(x, y, barW, barH, [3, 3, 0, 0]);
+          else ctx.rect(x, y, barW, barH);
+          ctx.fill();
+
+          // Peak cap light
+          const peakY = Math.max(2, h - peaks[i] * (h * 0.84) - 4);
+          ctx.fillStyle = isPlaying ? "rgba(255, 255, 255, 0.82)" : "rgba(0, 255, 209, 0.35)";
+          ctx.fillRect(x, peakY, barW, 2);
+        }
+
+        const glow = isPlaying ? Math.min(0.42, 0.12 + (bassSum / 8) * 0.32) : 0.10;
+        panel.style.setProperty("--vfx-glow", glow.toFixed(3));
+        requestAnimationFrame(drawSpectrum);
+      }
+      requestAnimationFrame(drawSpectrum);
+
+      function seekToClientX(clientX) {
+        if (!isFinite(audio.duration) || audio.duration <= 0) return;
+        const rect = seekBar.getBoundingClientRect();
+        const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+        audio.currentTime = ratio * audio.duration;
+        seekFill.style.width = (ratio * 100).toFixed(2) + "%";
+        timeCur.textContent = fmtTime(audio.currentTime);
+      }
+
+      seekBar.addEventListener("mousedown", (e) => { isSeeking = true; seekToClientX(e.clientX); });
+      window.addEventListener("mousemove", (e) => { if (isSeeking) seekToClientX(e.clientX); });
+      window.addEventListener("mouseup", () => { isSeeking = false; });
+      seekBar.addEventListener("touchstart", (e) => {
+        if (e.touches[0]) seekToClientX(e.touches[0].clientX);
+      }, { passive: true });
+
+      btnPlay.addEventListener("click", togglePlay);
+      btnPrev.addEventListener("click", () => selectTrack(currentIdx - 1, true));
+      btnNext.addEventListener("click", () => selectTrack(currentIdx + 1, true));
+
+      volSlider.addEventListener("input", () => {
+        audio.volume = Number(volSlider.value);
+        volIcon.textContent = audio.volume === 0 ? "🔇" : audio.volume < 0.45 ? "🔉" : "🔊";
+      });
+
+      audio.addEventListener("loadedmetadata", () => {
+        timeDur.textContent = fmtTime(audio.duration);
+      });
+      audio.addEventListener("timeupdate", () => {
+        if (isSeeking || !isFinite(audio.duration) || audio.duration <= 0) return;
+        timeCur.textContent = fmtTime(audio.currentTime);
+        timeDur.textContent = fmtTime(audio.duration);
+        seekFill.style.width = ((audio.currentTime / audio.duration) * 100).toFixed(2) + "%";
+      });
+      audio.addEventListener("play", updateActiveRow);
+      audio.addEventListener("pause", updateActiveRow);
+      audio.addEventListener("ended", () => selectTrack(currentIdx + 1, true));
+
+      btnCopyPrompt.addEventListener("click", () => {
+        const text = refPrompt.textContent || "";
+        if (!text || text === "—") return;
+        navigator.clipboard.writeText(text).then(() => {
+          const lang = select.value || "en";
+          const dict = I18N[lang] || I18N.en;
+          btnCopyPrompt.textContent = dict.smp_copied || "Copied!";
+          setTimeout(() => {
+            btnCopyPrompt.textContent = (I18N[select.value] || I18N.en).smp_copy || "Copy Prompt";
+          }, 1600);
+        });
+      });
+
+      fetch("samples/tracks.json")
+        .then((r) => r.json())
+        .then((data) => {
+          tracks = data || [];
+          playlistEl.innerHTML = "";
+          tracks.forEach((t, idx) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "track-item";
+            btn.innerHTML =
+              '<div class="track-left">' +
+                '<span class="track-num">' + String(t.id).padStart(2, "0") + "</span>" +
+                '<span class="eq-bars"><span></span><span></span><span></span></span>' +
+                '<div class="track-meta">' +
+                  '<div class="track-name">' + escapeHtml(t.title) + "</div>" +
+                  '<div class="track-sub">' + escapeHtml(t.language + " · " + t.genre + " · " + t.vocal) + "</div>" +
+                "</div>" +
+              "</div>" +
+              '<span class="track-size">' + escapeHtml(t.size) + "</span>";
+            btn.addEventListener("click", () => {
+              if (idx === currentIdx) togglePlay();
+              else selectTrack(idx, true);
+            });
+            playlistEl.appendChild(btn);
+          });
+          if (tracks.length) selectTrack(0, false);
+        })
+        .catch(() => {
+          npTitle.textContent = "Unable to load samples/tracks.json";
+        });
+    })();
   </script>
 </body>
 </html>
