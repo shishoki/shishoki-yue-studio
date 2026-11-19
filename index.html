@@ -215,17 +215,342 @@
     .card h3 { font-size: 1.12rem; margin-bottom: 10px; }
     .card p { color: var(--muted); font-size: 0.92rem; line-height: 1.72; }
 
+    /* Hero Slideshow Carousel */
+    .hero-carousel {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #07090f;
+    }
+    .hero-stage {
+      position: relative;
+      aspect-ratio: 16 / 9.2;
+      width: 100%;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      transform: scale(1.015);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+    .hero-slide.active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+    .hero-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 4;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(7, 9, 15, 0.72);
+      backdrop-filter: blur(10px);
+      color: #f8fafc;
+      font-size: 1.35rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .hero-arrow:hover {
+      background: rgba(0, 255, 209, 0.18);
+      border-color: var(--teal);
+      color: var(--teal);
+      transform: translateY(-50%) scale(1.07);
+    }
+    .hero-arrow.prev { left: 14px; }
+    .hero-arrow.next { right: 14px; }
+    .hero-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 4;
+    }
+    .hero-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #0ea5a4, #00ffd1);
+      box-shadow: 0 0 10px rgba(0, 255, 209, 0.6);
+    }
+    .hero-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 10px 4px;
+    }
+    .hero-tab {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .hero-tab:hover { color: var(--text); border-color: rgba(0, 255, 209, 0.45); }
+    .hero-tab.active {
+      background: rgba(0, 255, 209, 0.13);
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    /* Editorial Studio Banner */
+    .studio-editorial {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      min-height: 410px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 58px;
+      box-shadow: 0 26px 65px rgba(0, 0, 0, 0.52);
+    }
+    .studio-editorial img.bg-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center right;
+      z-index: 0;
+    }
+    .studio-editorial::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(7, 9, 15, 0.88) 0%, rgba(7, 9, 15, 0.56) 44%, rgba(7, 9, 15, 0.14) 100%);
+      z-index: 1;
+    }
+    .studio-ed-content {
+      position: relative;
+      z-index: 2;
+      max-width: 560px;
+      padding: 44px 40px;
+    }
+    .ed-kicker {
+      display: inline-block;
+      color: var(--teal);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .studio-ed-content h3 {
+      font-size: clamp(1.45rem, 2.6vw, 2rem);
+      font-weight: 800;
+      line-height: 1.22;
+      margin-bottom: 14px;
+    }
+    .studio-ed-content p {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.72;
+      margin-bottom: 24px;
+    }
+    .ed-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .ed-stat {
+      background: rgba(17, 20, 35, 0.76);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 209, 0.22);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+    .ed-stat b { color: var(--teal); margin-right: 4px; }
+    @media (max-width: 760px) {
+      .studio-editorial::after {
+        background: linear-gradient(180deg, rgba(7, 9, 15, 0.75) 0%, rgba(7, 9, 15, 0.92) 60%);
+      }
+      .studio-ed-content { padding: 32px 24px; }
+    }
+
+    /* Alternating 3D Spotlights */
+    .spotlights {
+      display: flex;
+      flex-direction: column;
+      gap: 68px;
+      margin-bottom: 64px;
+    }
+    .spotlight-row {
+      display: grid;
+      grid-template-columns: 0.92fr 1.18fr;
+      gap: 42px;
+      align-items: center;
+    }
+    .spotlight-row.reverse { grid-template-columns: 1.18fr 0.92fr; }
+    .spotlight-row.reverse .spotlight-copy { order: 2; }
+    .spotlight-row.reverse .spotlight-stage { order: 1; }
+    @media (max-width: 920px) {
+      .spotlight-row, .spotlight-row.reverse { grid-template-columns: 1fr; gap: 26px; }
+      .spotlight-row.reverse .spotlight-copy, .spotlight-row.reverse .spotlight-stage { order: unset; }
+    }
+    .sp-kicker {
+      color: var(--teal);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .spotlight-copy h3 {
+      font-size: clamp(1.35rem, 2.2vw, 1.72rem);
+      font-weight: 800;
+      line-height: 1.28;
+      margin-bottom: 14px;
+    }
+    .spotlight-copy p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .sp-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sp-tag {
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: #cbd5e1;
+    }
+    .spotlight-stage {
+      position: relative;
+      padding: 18px 18px 34px 18px;
+      perspective: 1200px;
+    }
+    .sp-main {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 255, 209, 0.25);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+      display: block;
+      cursor: zoom-in;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s;
+    }
+    .spotlight-stage:hover .sp-main {
+      transform: translateY(-4px) scale(1.01);
+      border-color: rgba(0, 255, 209, 0.55);
+    }
+    .sp-float-a, .sp-float-b {
+      position: absolute;
+      border-radius: 11px;
+      border: 1px solid rgba(0, 255, 209, 0.42);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.72);
+      cursor: zoom-in;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 3;
+    }
+    .sp-float-a {
+      width: 56%;
+      bottom: 6px;
+      left: 0;
+      transform: rotateY(4deg) translateZ(10px);
+    }
+    .sp-float-b {
+      width: 34%;
+      top: 4px;
+      right: 0;
+      border-color: rgba(251, 191, 36, 0.45);
+      transform: rotateY(-4deg) translateZ(16px);
+    }
+    .spotlight-stage:hover .sp-float-a { transform: translate(-4px, -6px) scale(1.03); }
+    .spotlight-stage:hover .sp-float-b { transform: translate(4px, -6px) scale(1.03); }
+    .spotlight-row.reverse .sp-float-a { left: auto; right: 0; width: 58%; bottom: 4px; }
+    .spotlight-row.reverse .sp-float-b { right: auto; left: 4px; top: auto; bottom: 20px; width: 25%; }
+    .sp-float-b.tall { top: 24px; bottom: auto; width: 25%; }
+
     /* Gallery */
-    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
     .shot-card {
       background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+      cursor: zoom-in;
       transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s, box-shadow 0.25s;
     }
-    .shot-card:hover { transform: translateY(-4px); border-color: rgba(0, 255, 209, 0.45); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4); }
-    .shot-card img { width: 100%; height: 220px; object-fit: cover; object-position: top; display: block; border-bottom: 1px solid var(--border); transition: transform 0.4s ease; }
-    .shot-card:hover img { transform: scale(1.03); }
-    .shot-card .cap { padding: 18px 20px; font-size: 0.9rem; color: var(--muted); line-height: 1.68; }
-    .shot-card .cap b { color: var(--text); display: block; margin-bottom: 6px; }
+    .shot-card:hover { transform: translateY(-4px); border-color: rgba(0, 255, 209, 0.48); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45); }
+    .shot-card img { width: 100%; height: 215px; object-fit: contain; object-position: center; background: #0a0d18; padding: 6px; display: block; border-bottom: 1px solid var(--border); transition: transform 0.4s ease; }
+    .shot-card:hover img { transform: scale(1.035); }
+    .shot-card .cap { padding: 16px 20px; font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+    .shot-card .cap b { color: var(--text); display: block; margin-bottom: 5px; font-size: 0.96rem; }
+
+    /* Lightbox Modal */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(4, 6, 12, 0.92);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
+    .lb-inner {
+      position: relative;
+      max-width: 1180px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .lb-inner img {
+      max-width: 100%;
+      max-height: 82vh;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 209, 0.35);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.8);
+      object-fit: contain;
+    }
+    .lb-cap { color: #e2e8f0; font-size: 0.95rem; text-align: center; }
+    .lb-close, .lb-nav {
+      position: fixed;
+      background: rgba(17, 20, 35, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      font-size: 1.35rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .lb-close:hover, .lb-nav:hover { border-color: var(--teal); color: var(--teal); }
+    .lb-close { top: 20px; right: 24px; }
+    .lb-nav.prev { left: 20px; top: 50%; transform: translateY(-50%); }
+    .lb-nav.next { right: 20px; top: 50%; transform: translateY(-50%); }
 
     /* Manuals */
     .manuals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
@@ -246,11 +571,34 @@
 
     /* Video & Donate */
     .video-box {
-      max-width: 820px; margin: 0 auto;
-      background: var(--surface); border: 1px dashed var(--border); border-radius: 14px;
-      padding: 56px 28px; text-align: center; color: var(--muted); line-height: 1.75;
+      position: relative;
+      max-width: 860px; margin: 0 auto;
+      background: var(--surface); border: 1px solid rgba(0, 255, 209, 0.28); border-radius: 16px;
+      overflow: hidden;
+      min-height: 360px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 56px 28px; text-align: center; color: #cbd5e1; line-height: 1.75;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
     }
-    .video-box h3 { color: var(--text); margin-bottom: 12px; }
+    .video-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0.36; z-index: 0; filter: saturate(1.1);
+    }
+    .video-box::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(circle at center, rgba(7, 9, 15, 0.48), rgba(7, 9, 15, 0.88));
+      z-index: 1;
+    }
+    .video-content { position: relative; z-index: 2; max-width: 560px; }
+    .play-emblem {
+      width: 68px; height: 68px; margin: 0 auto 20px; border-radius: 999px;
+      background: linear-gradient(135deg, rgba(0, 255, 209, 0.22), rgba(14, 165, 164, 0.14));
+      border: 1.5px solid rgba(0, 255, 209, 0.65);
+      box-shadow: 0 0 34px rgba(0, 255, 209, 0.28);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--teal); font-size: 1.65rem; padding-left: 4px;
+    }
+    .video-box h3 { color: var(--text); font-size: 1.35rem; margin-bottom: 10px; }
     .donate-banner {
       background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(14, 165, 164, 0.12));
       border: 1px solid rgba(251, 191, 36, 0.35); border-radius: 16px;
@@ -635,7 +983,25 @@
     <div class="platforms" data-i18n="platforms">Direct installers for macOS (Apple Silicon) · Windows (x64) · Linux (AppImage / DEB) — No sign-up required</div>
     <div class="hero-perspective">
       <div class="hero-shot" id="heroShot">
-        <img src="assets/hero-studio.png" alt="Shishoki YuE Studio Workspace" />
+        <div class="hero-carousel" id="heroCarousel">
+          <div class="hero-stage" id="heroStage">
+            <img class="hero-slide active lb-trigger" src="assets/showcase-3d-stack.webp" alt="All-in-One Local AI & Pro-DAW Suite" data-lb-key="hs_0" />
+            <img class="hero-slide lb-trigger" src="assets/slide-quick-template.webp" alt="3-Bay Hardware-Inspired Studio Console" data-lb-key="hs_1" />
+            <img class="hero-slide lb-trigger" src="assets/slide-cover-mode.webp" alt="Cover, Genre-Swap & Audio-to-Score Mode" data-lb-key="hs_2" />
+            <img class="hero-slide lb-trigger" src="assets/slide-pianoroll-full.webp" alt="Full-Screen Pro-DAW Piano Roll Sequencer" data-lb-key="hs_3" />
+            <img class="hero-slide lb-trigger" src="assets/slide-stave-full.webp" alt="Interactive 5-Line Visual Stave Engraving" data-lb-key="hs_4" />
+            <button type="button" class="hero-arrow prev" id="heroPrev" aria-label="Previous slide">‹</button>
+            <button type="button" class="hero-arrow next" id="heroNext" aria-label="Next slide">›</button>
+            <div class="hero-progress"><div class="hero-progress-bar" id="heroProgressBar"></div></div>
+          </div>
+          <div class="hero-tabs" id="heroTabs">
+            <button type="button" class="hero-tab active" data-slide="0" data-i18n="hs_0">3D Suite Overview</button>
+            <button type="button" class="hero-tab" data-slide="1" data-i18n="hs_1">Studio Console</button>
+            <button type="button" class="hero-tab" data-slide="2" data-i18n="hs_2">Cover &amp; Remix</button>
+            <button type="button" class="hero-tab" data-slide="3" data-i18n="hs_3">Piano Roll MIDI</button>
+            <button type="button" class="hero-tab" data-slide="4" data-i18n="hs_4">Visual Stave</button>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -790,18 +1156,105 @@
   <section id="screenshots" class="container">
     <h2 class="sec-title reveal" data-i18n="ws_title">Inside the Workstation</h2>
     <p class="sec-sub reveal" data-i18n="ws_sub">Synchronized MIDI sequencing, interactive harmony editing, and fine-grained Pro Engine controls.</p>
+
+    <!-- Studio Editorial Lifestyle Banner -->
+    <div class="studio-editorial reveal">
+      <img class="bg-photo" src="assets/studio-producer.webp" alt="Home music studio workstation" />
+      <div class="studio-ed-content">
+        <span class="ed-kicker" data-i18n="ed_kicker">HOME STUDIO ARCHITECTURE</span>
+        <h3 data-i18n="ed_title">Your Private Offline Music Studio</h3>
+        <p data-i18n="ed_desc">Compose, brainstorm ideas, arrange wild genre-swap covers, and export clean multi-track MIDI + 48kHz audio straight into your primary DAW — with zero subscriptions or cloud queues.</p>
+        <div class="ed-stats">
+          <div class="ed-stat" data-i18n-html="ed_s1"><b>100%</b> Offline Local GPU/CPU</div>
+          <div class="ed-stat" data-i18n-html="ed_s2"><b>48kHz</b> Uncolored Lossless WAV</div>
+          <div class="ed-stat" data-i18n-html="ed_s3"><b>22</b> Built-In Genre Presets</div>
+          <div class="ed-stat" data-i18n-html="ed_s4"><b>5</b> Native Studio Languages</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alternating 3D Spotlights -->
+    <div class="spotlights">
+      <div class="spotlight-row reveal">
+        <div class="spotlight-copy">
+          <div class="sp-kicker" data-i18n="sp1_k">WORKFLOW 01 · TEXT-TO-SONG</div>
+          <h3 data-i18n="sp1_t">Instant Composition &amp; Smart Style Builder</h3>
+          <p data-i18n="sp1_p">Launch fast with 22 categorized genre templates or assemble disciplined prompts using Smart Style Builder (Language → BPM → Genre → Lead Instruments) plus structured [Intro], [Verse], and [Chorus] tags.</p>
+          <div class="sp-tags">
+            <span class="sp-tag" data-i18n="sp1_tag1">22 Genre Presets</span>
+            <span class="sp-tag" data-i18n="sp1_tag2">Smart Tag Order</span>
+            <span class="sp-tag" data-i18n="sp1_tag3">CFG &amp; Seed Controls</span>
+          </div>
+        </div>
+        <div class="spotlight-stage">
+          <img class="sp-main lb-trigger" src="assets/slide-original-rock.webp" alt="Original Song 1970s Classic Rock Studio Session" data-lb-key="sp1_t" />
+          <img class="sp-float-a lb-trigger" src="assets/feat-style-builder.webp" alt="Smart Style Builder Palette" data-lb-key="sp1_tag2" />
+          <img class="sp-float-b lb-trigger" src="assets/feat-presets-menu.webp" alt="22 Categorized Genre Presets" data-lb-key="sp1_tag1" />
+        </div>
+      </div>
+
+      <div class="spotlight-row reverse reveal">
+        <div class="spotlight-copy">
+          <div class="sp-kicker" data-i18n="sp2_k">WORKFLOW 02 · REMIX &amp; COVER SUITE</div>
+          <h3 data-i18n="sp2_t">Covers, Genre Swaps &amp; Iterative Takes</h3>
+          <p data-i18n="sp2_p">Drop a reference song (or import .mid from your DAW), extract melody + chords with SheetSage2, choose Vocal Cover or Karaoke/Instrumental Lead modes, and protect every winner with Auto-Take Versioning &amp; exact #seed recall.</p>
+          <div class="sp-tags">
+            <span class="sp-tag" data-i18n="sp2_tag1">SheetSage2 Extraction</span>
+            <span class="sp-tag" data-i18n="sp2_tag2">3 Instrumental Modes</span>
+            <span class="sp-tag" data-i18n="sp2_tag3">Auto-Take History</span>
+          </div>
+        </div>
+        <div class="spotlight-stage">
+          <img class="sp-main lb-trigger" src="assets/slide-cover-mode.webp" alt="Cover and Arrangement Mode Workspace" data-lb-key="sp2_t" />
+          <img class="sp-float-a lb-trigger" src="assets/feat-inst-cover.webp" alt="Instrumental Cover Type Selector" data-lb-key="sp2_tag2" />
+          <img class="sp-float-b tall lb-trigger" src="assets/feat-render-complete.webp" alt="Completed Render WaveSurfer Playback and Takes" data-lb-key="sp2_tag3" />
+        </div>
+      </div>
+
+      <div class="spotlight-row reveal">
+        <div class="spotlight-copy">
+          <div class="sp-kicker" data-i18n="sp3_k">WORKFLOW 03 · PRO-DAW EDITORS</div>
+          <h3 data-i18n="sp3_t">Dual View MIDI, Stave &amp; Chord Studio</h3>
+          <p data-i18n="sp3_p">Edit Piano Roll notes and 5-line engraved Stave notation side-by-side — every note edit syncs instantaneously across all views and auditions through 8 built-in SoundFont instruments with 1-click Jazz/R&amp;B reharmonization.</p>
+          <div class="sp-tags">
+            <span class="sp-tag" data-i18n="sp3_tag1">Synchronized Dual View</span>
+            <span class="sp-tag" data-i18n="sp3_tag2">8 SoundFont Instruments</span>
+            <span class="sp-tag" data-i18n="sp3_tag3">Chord Studio Popover</span>
+          </div>
+        </div>
+        <div class="spotlight-stage">
+          <img class="sp-main lb-trigger" src="assets/slide-dual-view.webp" alt="Synchronized Dual View Piano Roll and Stave" data-lb-key="sp3_t" />
+          <img class="sp-float-a lb-trigger" src="assets/feat-audition-inst.webp" alt="Shared SoundFont Audition Instrument Menu" data-lb-key="sp3_tag2" />
+          <img class="sp-float-b tall lb-trigger" src="assets/chord-studio.png" alt="Chord Studio Diatonic Popover" data-lb-key="sp3_tag3" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Click-to-Zoom Detail Gallery Grid -->
     <div class="gallery-grid">
-      <div class="shot-card reveal">
-        <img src="assets/dual-view.png" alt="Dual View MIDI and Stave" />
-        <div class="cap" data-i18n-html="s1_cap"><b>Dual View (Piano Roll + Visual Stave)</b>Edit MIDI and engraved notation side-by-side with live SoundFont auditioning.</div>
+      <div class="shot-card reveal lb-trigger" data-lb-key="g1_cap" data-lb-src="assets/slide-chords-grid.webp">
+        <img src="assets/slide-chords-grid.webp" alt="Interactive Chord Grid and Smart Reharmonizer" />
+        <div class="cap" data-i18n-html="g1_cap"><b>Interactive Chord Grid &amp; Reharmonizer</b>Rewrite progressions bar-by-bar by song section, split mid-bar chords, or apply 1-click Jazz 7th/9th voicings.</div>
       </div>
-      <div class="shot-card reveal">
-        <img src="assets/chord-studio.png" alt="Chord Studio Popover" />
-        <div class="cap" data-i18n-html="s2_cap"><b>Chord Studio Popover</b>1-click diatonic Roman-numeral chords, 13 chord qualities, and bass slash inversions.</div>
+      <div class="shot-card reveal lb-trigger" data-lb-key="g2_cap" data-lb-src="assets/feat-pianoroll-ghost.webp">
+        <img src="assets/feat-pianoroll-ghost.webp" alt="Piano Roll Ghost Track and Multi-Note Editing" />
+        <div class="cap" data-i18n-html="g2_cap"><b>Piano Roll Ghost Tracks &amp; Alt-Clone</b>Overlay inactive accompaniment notes as dashed Ghost guides while editing or cloning lead vocal melodies.</div>
       </div>
-      <div class="shot-card reveal">
+      <div class="shot-card reveal lb-trigger" data-lb-key="g3_cap" data-lb-src="assets/slide-stave-full.webp">
+        <img src="assets/slide-stave-full.webp" alt="Full-Screen Visual Stave Score Editor" />
+        <div class="cap" data-i18n-html="g3_cap"><b>Full-Screen Visual Stave (abcjs)</b>Drag SVG noteheads vertically, step-enter notes from your keyboard, and export print-ready PDF or SVG scores.</div>
+      </div>
+      <div class="shot-card reveal lb-trigger" data-lb-key="g4_cap" data-lb-src="assets/feat-abc-raw.webp">
+        <img src="assets/feat-abc-raw.webp" alt="Multi-Voice ABC Raw Engine" />
+        <div class="cap" data-i18n-html="g4_cap"><b>Multi-Voice ABC Raw Engine</b>Clean dual-channel V: Vocal + V: Ins notation synced live with Stave, Piano Roll, and .MID export.</div>
+      </div>
+      <div class="shot-card reveal lb-trigger" data-lb-key="s3_cap" data-lb-src="assets/pro-engine.png">
         <img src="assets/pro-engine.png" alt="Pro Engine Drawer" />
         <div class="cap" data-i18n-html="s3_cap"><b>Pro Engine Controls</b>Compute Backend, NAR Arena MB, sampling overrides, and optional experimental LoRA slots.</div>
+      </div>
+      <div class="shot-card reveal lb-trigger" data-lb-key="g6_cap" data-lb-src="assets/feat-quant-menu.webp">
+        <img src="assets/feat-quant-menu.webp" alt="GGUF Quantization Tiers with RAM Guidance" />
+        <div class="cap" data-i18n-html="g6_cap"><b>Smart GGUF RAM Tier Selector</b>Automatic hardware memory guidance across Q5_K_M, Q8_0 (Near-Lossless), and BF16 Studio Master models.</div>
       </div>
     </div>
   </section>
@@ -810,8 +1263,12 @@
     <h2 class="sec-title reveal" data-i18n="vid_title">Video Walkthrough &amp; Tutorial</h2>
     <p class="sec-sub reveal" data-i18n="vid_sub">See Shishoki YuE Studio v2.0 in action — from Engine Folder setup to AI song synthesis, covers, and MIDI editing.</p>
     <div class="video-box reveal">
-      <h3 data-i18n="vid_box_t">YouTube Tutorial Coming Soon</h3>
-      <p data-i18n-html="vid_box_b">Once your tutorial is uploaded to YouTube, replace this box in <code>index.html</code> with your YouTube embed.</p>
+      <img class="video-bg" src="assets/studio-cover-session.webp" alt="Home music studio hardware desk session" />
+      <div class="video-content">
+        <div class="play-emblem" aria-hidden="true">▶</div>
+        <h3 data-i18n="vid_box_t">YouTube Tutorial Coming Soon</h3>
+        <p data-i18n-html="vid_box_b">Once your tutorial is uploaded to YouTube, replace this box in <code>index.html</code> with your YouTube embed.</p>
+      </div>
     </div>
   </section>
 
@@ -908,6 +1365,16 @@
     </div>
   </section>
 
+  <div class="lightbox" id="imgLightbox" role="dialog" aria-modal="true" aria-label="Screenshot preview">
+    <button type="button" class="lb-close" id="lbClose" aria-label="Close preview">✕</button>
+    <button type="button" class="lb-nav prev" id="lbPrev" aria-label="Previous image">‹</button>
+    <div class="lb-inner">
+      <img id="lbImg" src="" alt="" />
+      <div class="lb-cap" id="lbCap"></div>
+    </div>
+    <button type="button" class="lb-nav next" id="lbNext" aria-label="Next image">›</button>
+  </div>
+
   <footer>
     <div class="container" data-i18n="footer">
       Shishoki Production · Shishoki YuE Studio v2.0.0 · Powered locally by audio.cpp (YuE2 &amp; SheetSage2)
@@ -967,6 +1434,41 @@
         s1_cap: "<b>Dual View (Piano Roll + Visual Stave)</b>Edit MIDI and engraved notation side-by-side with live SoundFont auditioning.",
         s2_cap: "<b>Chord Studio Popover</b>1-click diatonic Roman-numeral chords, 13 chord qualities, and bass slash inversions.",
         s3_cap: "<b>Pro Engine Controls</b>Compute Backend, NAR Arena MB, sampling overrides, and optional experimental LoRA slots.",
+        hs_0: "3D Suite Overview",
+        hs_1: "Studio Console",
+        hs_2: "Cover & Remix",
+        hs_3: "Piano Roll MIDI",
+        hs_4: "Visual Stave",
+        ed_kicker: "HOME STUDIO ARCHITECTURE",
+        ed_title: "Your Private Offline Music Studio",
+        ed_desc: "Compose, brainstorm ideas, arrange wild genre-swap covers, and export clean multi-track MIDI + 48kHz audio straight into your primary DAW — with zero subscriptions or cloud queues.",
+        ed_s1: "<b>100%</b> Offline Local GPU/CPU",
+        ed_s2: "<b>48kHz</b> Uncolored Lossless WAV",
+        ed_s3: "<b>22</b> Built-In Genre Presets",
+        ed_s4: "<b>5</b> Native Studio Languages",
+        sp1_k: "WORKFLOW 01 · TEXT-TO-SONG",
+        sp1_t: "Instant Composition & Smart Style Builder",
+        sp1_p: "Launch fast with 22 categorized genre templates or assemble disciplined prompts using Smart Style Builder (Language → BPM → Genre → Lead Instruments) plus structured [Intro], [Verse], and [Chorus] tags.",
+        sp1_tag1: "22 Genre Presets",
+        sp1_tag2: "Smart Tag Order",
+        sp1_tag3: "CFG & Seed Controls",
+        sp2_k: "WORKFLOW 02 · REMIX & COVER SUITE",
+        sp2_t: "Covers, Genre Swaps & Iterative Takes",
+        sp2_p: "Drop a reference song (or import .mid from your DAW), extract melody + chords with SheetSage2, choose Vocal Cover or Karaoke/Instrumental Lead modes, and protect every winner with Auto-Take Versioning & exact #seed recall.",
+        sp2_tag1: "SheetSage2 Extraction",
+        sp2_tag2: "3 Instrumental Modes",
+        sp2_tag3: "Auto-Take History",
+        sp3_k: "WORKFLOW 03 · PRO-DAW EDITORS",
+        sp3_t: "Dual View MIDI, Stave & Chord Studio",
+        sp3_p: "Edit Piano Roll notes and 5-line engraved Stave notation side-by-side — every note edit syncs instantaneously across all views and auditions through 8 built-in SoundFont instruments with 1-click Jazz/R&B reharmonization.",
+        sp3_tag1: "Synchronized Dual View",
+        sp3_tag2: "8 SoundFont Instruments",
+        sp3_tag3: "Chord Studio Popover",
+        g1_cap: "<b>Interactive Chord Grid & Reharmonizer</b>Rewrite progressions bar-by-bar by song section, split mid-bar chords, or apply 1-click Jazz 7th/9th voicings.",
+        g2_cap: "<b>Piano Roll Ghost Tracks & Alt-Clone</b>Overlay inactive accompaniment notes as dashed Ghost guides while editing or cloning lead vocal melodies.",
+        g3_cap: "<b>Full-Screen Visual Stave (abcjs)</b>Drag SVG noteheads vertically, step-enter notes from your keyboard, and export print-ready PDF or SVG scores.",
+        g4_cap: "<b>Multi-Voice ABC Raw Engine</b>Clean dual-channel V: Vocal + V: Ins notation synced live with Stave, Piano Roll, and .MID export.",
+        g6_cap: "<b>Smart GGUF RAM Tier Selector</b>Automatic hardware memory guidance across Q5_K_M, Q8_0 (Near-Lossless), and BF16 Studio Master models.",
         smp_title: "Lossless AI Audio Showcase (48kHz WAV)",
         smp_sub: "Listen directly to full-quality WAV tracks generated locally with Shishoki YuE Studio across 7 languages and genres — complete with the exact style prompt and lyrics for your reference.",
         smp_now: "NOW PLAYING · LOSSLESS WAV",
@@ -1039,6 +1541,41 @@
         s1_cap: "<b>Dual View 双视图（Piano Roll + 五线谱）</b>同屏联动编辑 MIDI 与五线谱，支持 SoundFont 实时试听。",
         s2_cap: "<b>Chord Studio 和弦工作室</b>一键点选调内顺阶和弦、13 种和弦性质与低音斜杠转位。",
         s3_cap: "<b>Pro Engine 参数控制</b>调节计算后端、NAR Arena 显存缓冲、采样参数与可选实验性 LoRA 槽位。",
+        hs_0: "3D 全景总览",
+        hs_1: "三栏控制台",
+        hs_2: "翻唱与扒谱",
+        hs_3: "Piano Roll MIDI",
+        hs_4: "五线谱打谱",
+        ed_kicker: "HOME STUDIO ARCHITECTURE",
+        ed_title: "属于你的私有离线音乐工作室",
+        ed_desc: "从灵感编曲、跨曲风翻唱改造，到导出纯净多轨 MIDI 与 48kHz 无损音频进入你的主力 DAW —— 无需订阅、无需云端排队。",
+        ed_s1: "<b>100%</b> 本地 GPU/CPU 离线运行",
+        ed_s2: "<b>48kHz</b> 无染色无损 WAV 输出",
+        ed_s3: "<b>22</b> 组内置曲风模板",
+        ed_s4: "<b>5</b> 种原生工作室语言",
+        sp1_k: "WORKFLOW 01 · TEXT-TO-SONG",
+        sp1_t: "快速成曲与 Smart Style 提示词生成器",
+        sp1_p: "内置 6 大分类共 22 个风格预设一键起步，或用 Smart Style Builder 按规范顺序组合标签（语言 → BPM → 曲风 → 主奏乐器）搭配段落结构标签。",
+        sp1_tag1: "22 个曲风预设",
+        sp1_tag2: "规范标签顺序",
+        sp1_tag3: "CFG 与种子控制",
+        sp2_k: "WORKFLOW 02 · REMIX & COVER SUITE",
+        sp2_t: "跨曲风翻唱与迭代版本保护",
+        sp2_p: "拖入参考歌曲（或导入 DAW .mid 文件），用 SheetSage2 自动扒出旋律与和弦，自由切换人声翻唱或纯伴奏/卡拉 OK 模式，并通过自动版本编号保存每次 #seed。",
+        sp2_tag1: "SheetSage2 自动扒谱",
+        sp2_tag2: "3 种纯器乐翻唱模式",
+        sp2_tag3: "Auto-Take 历史记录",
+        sp3_k: "WORKFLOW 03 · PRO-DAW EDITORS",
+        sp3_t: "双视图联动、五线谱与和弦工作室",
+        sp3_p: "同屏同步编辑 Piano Roll 与五线谱 —— 任意修改即时联动所有视图，内置 8 种 SoundFont 乐器实时试听与一键爵士/R&B 重配和声。",
+        sp3_tag1: "Dual View 双视图同步",
+        sp3_tag2: "8 种 SoundFont 试听",
+        sp3_tag3: "Chord Studio 弹窗",
+        g1_cap: "<b>交互式和弦网格与智能重配和声</b>按歌曲段落逐小节改写和弦、拆分小节内和弦，或一键升级爵士七/九和弦。",
+        g2_cap: "<b>Piano Roll 幽灵轨与 Alt 克隆</b>叠加另一声部作为虚线幽灵音符参考，轻松修正主旋律八度跳变或克隆乐句。",
+        g3_cap: "<b>全屏可视化五线谱 (abcjs)</b>直接上下拖拽符头、键盘步进输入音符，并导出可打印 PDF 或矢量 SVG 乐谱。",
+        g4_cap: "<b>多声部 ABC 源码引擎</b>清晰的 V: Vocal 与 V: Ins 双通道记谱，实时双向同步五线谱、MIDI 与 .MID 导出。",
+        g6_cap: "<b>智能 GGUF 内存分级选择</b>下拉菜单自动标注 Q5_K_M、Q8_0（近无损）与 BF16 母带模型所需的内存建议。",
         smp_title: "无损 AI 音频试听展厅 (48kHz WAV)",
         smp_sub: "直接试听使用 Shishoki YuE Studio 在本地生成的 7 种语言与曲风完整无损 WAV 作品 —— 同步展示所用的风格提示词与歌词结构供参考。",
         smp_now: "正在播放 · 无损 WAV",
@@ -1111,6 +1648,41 @@
         s1_cap: "<b>Dual View 雙視圖（Piano Roll + 五線譜）</b>同螢幕聯動編輯 MIDI 與五線譜，支援 SoundFont 即時試聽。",
         s2_cap: "<b>Chord Studio 和弦工作室</b>一鍵點選調內順階和弦、13 種和弦性質與低音斜線轉位。",
         s3_cap: "<b>Pro Engine 參數控制</b>調節計算後端、NAR Arena 顯存緩衝、採樣參數與可選實驗性 LoRA 槽位。",
+        hs_0: "3D 全景總覽",
+        hs_1: "三欄控制台",
+        hs_2: "翻唱與扒譜",
+        hs_3: "Piano Roll MIDI",
+        hs_4: "五線譜打譜",
+        ed_kicker: "HOME STUDIO ARCHITECTURE",
+        ed_title: "屬於你的私有離線音樂工作室",
+        ed_desc: "從靈感編曲、跨曲風翻唱改造，到匯出純淨多軌 MIDI 與 48kHz 無損音訊進入你的主力 DAW —— 無需訂閱、無需雲端排隊。",
+        ed_s1: "<b>100%</b> 本地 GPU/CPU 離線運行",
+        ed_s2: "<b>48kHz</b> 無染色無損 WAV 輸出",
+        ed_s3: "<b>22</b> 組內建曲風模板",
+        ed_s4: "<b>5</b> 種原生工作室語言",
+        sp1_k: "WORKFLOW 01 · TEXT-TO-SONG",
+        sp1_t: "快速成曲與 Smart Style 提示詞生成器",
+        sp1_p: "內建 6 大分類共 22 個風格預設一鍵起步，或用 Smart Style Builder 按規範順序組合標籤（語言 → BPM → 曲風 → 主奏樂器）搭配段落結構標籤。",
+        sp1_tag1: "22 個曲風預設",
+        sp1_tag2: "規範標籤順序",
+        sp1_tag3: "CFG 與種子控制",
+        sp2_k: "WORKFLOW 02 · REMIX & COVER SUITE",
+        sp2_t: "跨曲風翻唱與迭代版本保護",
+        sp2_p: "拖入參考歌曲（或匯入 DAW .mid 檔案），用 SheetSage2 自動扒出旋律與和弦，自由切換人聲翻唱或純伴奏/卡拉 OK 模式，並透過自動版本編號保存每次 #seed。",
+        sp2_tag1: "SheetSage2 自動扒譜",
+        sp2_tag2: "3 種純器樂翻唱模式",
+        sp2_tag3: "Auto-Take 歷史紀錄",
+        sp3_k: "WORKFLOW 03 · PRO-DAW EDITORS",
+        sp3_t: "雙視圖聯動、五線譜與和弦工作室",
+        sp3_p: "同螢幕同步編輯 Piano Roll 與五線譜 —— 任意修改即時聯動所有視圖，內建 8 種 SoundFont 樂器即時試聽與一鍵爵士/R&B 重配和聲。",
+        sp3_tag1: "Dual View 雙視圖同步",
+        sp3_tag2: "8 種 SoundFont 試聽",
+        sp3_tag3: "Chord Studio 彈窗",
+        g1_cap: "<b>互動式和弦網格與智慧重配和聲</b>按歌曲段落逐小節改寫和弦、拆分小節內和弦，或一鍵升級爵士七/九和弦。",
+        g2_cap: "<b>Piano Roll 幽靈軌與 Alt 複製</b>疊加另一聲部作為虛線幽靈音符參考，輕鬆修正主旋律八度跳變或複製樂句。",
+        g3_cap: "<b>全螢幕視覺化五線譜 (abcjs)</b>直接上下拖曳符頭、鍵盤步進輸入音符，並匯出可列印 PDF 或向量 SVG 樂譜。",
+        g4_cap: "<b>多聲部 ABC 源碼引擎</b>清晰的 V: Vocal 與 V: Ins 雙通道記譜，即時雙向同步五線譜、MIDI 與 .MID 匯出。",
+        g6_cap: "<b>智慧 GGUF 記憶體分級選擇</b>下拉選單自動標註 Q5_K_M、Q8_0（近無損）與 BF16 母帶模型所需的記憶體建議。",
         smp_title: "無損 AI 音訊試聽展廳 (48kHz WAV)",
         smp_sub: "直接試聽使用 Shishoki YuE Studio 在本地生成的 7 種語言與曲風完整無損 WAV 作品 —— 同步展示所用的風格提示詞與歌詞結構供參考。",
         smp_now: "正在播放 · 無損 WAV",
@@ -1183,6 +1755,41 @@
         s1_cap: "<b>Dual View (Piano Roll + Stave Visual)</b>Sunting MIDI dan notasi sebelah-menyebelah dengan ujian SoundFont langsung.",
         s2_cap: "<b>Popover Chord Studio</b>Kord diatonik 1-klik, 13 kualiti kord, dan songsangan bes garis miring.",
         s3_cap: "<b>Kawalan Pro Engine</b>Compute Backend, NAR Arena MB, tetapan persampelan, dan slot LoRA eksperimen pilihan.",
+        hs_0: "Paparan 3D Sut Penuh",
+        hs_1: "Konsol Studio",
+        hs_2: "Cover & Remix",
+        hs_3: "Piano Roll MIDI",
+        hs_4: "Stave Visual",
+        ed_kicker: "SENI BINA STUDIO RUMAH",
+        ed_title: "Studio Muzik Luar Talian Peribadi Anda",
+        ed_desc: "Gubah lagu, jana idea segar, susun lagu cover tukar genre, dan eksport MIDI berbilang trek + audio 48kHz terus ke DAW utama anda — tanpa langganan atau giliran awan.",
+        ed_s1: "<b>100%</b> Luar Talian GPU/CPU Tempatan",
+        ed_s2: "<b>48kHz</b> WAV Tanpa Kehilangan",
+        ed_s3: "<b>22</b> Pratetap Genre Binaan Dalam",
+        ed_s4: "<b>5</b> Bahasa Studio Natif",
+        sp1_k: "ALIRAN 01 · TEKS-KE-LAGU",
+        sp1_t: "Gubahan Pantas & Pembina Gaya Pintar",
+        sp1_p: "Mulakan pantas dengan 22 templat genre atau susun prompt kemas menggunakan Smart Style Builder (Bahasa → BPM → Genre → Instrumen Utama) bersama tag struktur [Intro], [Verse], [Chorus].",
+        sp1_tag1: "22 Pratetap Genre",
+        sp1_tag2: "Susunan Tag Pintar",
+        sp1_tag3: "Kawalan CFG & Seed",
+        sp2_k: "ALIRAN 02 · SUT REMIX & COVER",
+        sp2_t: "Cover Tukar Genre & Sejarah Take",
+        sp2_p: "Masukkan lagu rujukan (atau import .mid dari DAW), ekstrak melodi & kord melalui SheetSage2, pilih mod Vokal Cover atau Instrumental Lead, dan simpan setiap #seed secara automatik.",
+        sp2_tag1: "Transkripsi SheetSage2",
+        sp2_tag2: "3 Mod Instrumental",
+        sp2_tag3: "Sejarah Auto-Take",
+        sp3_k: "ALIRAN 03 · EDITOR PRO-DAW",
+        sp3_t: "Dual View MIDI, Stave & Chord Studio",
+        sp3_p: "Sunting nota Piano Roll dan skor Stave sebelah-menyebelah — setiap suntingan segerak serta-merta dengan 8 instrumen SoundFont dan reharmonisasi Jazz/R&B 1-klik.",
+        sp3_tag1: "Dual View Segerak",
+        sp3_tag2: "8 Instrumen SoundFont",
+        sp3_tag3: "Popover Chord Studio",
+        g1_cap: "<b>Grid Kord Interaktif & Reharmonizer</b>Tulis semula kord mengikut bahagian lagu, pecahkan kord pertengahan bar, atau guna warna Jazz 7th/9th dalam 1 klik.",
+        g2_cap: "<b>Trek Ghost Piano Roll & Klon Alt</b>Paparkan trek iringan sebagai panduan garisan putus-putus sambil menyunting melodi vokal utama.",
+        g3_cap: "<b>Stave Visual Skrin Penuh (abcjs)</b>Seret kepala nota SVG secara menegak, masukkan nota guna papan kekunci, dan eksport skor PDF atau SVG.",
+        g4_cap: "<b>Enjin ABC Raw Berbilang Suara</b>Notasi dwi-saluran V: Vocal + V: Ins yang segerak langsung dengan Stave, Piano Roll, dan eksport .MID.",
+        g6_cap: "<b>Pemilih Tahap RAM GGUF Pintar</b>Panduan memori perkakasan automatik merentasi model Q5_K_M, Q8_0 (Near-Lossless), dan BF16 Studio Master.",
         smp_title: "Pameran Audio AI Tanpa Kehilangan (WAV 48kHz)",
         smp_sub: "Dengar terus trek WAV kualiti penuh yang dijana secara tempatan dengan Shishoki YuE Studio merentasi 7 bahasa dan genre — lengkap dengan prompt gaya dan lirik untuk rujukan anda.",
         smp_now: "SEDANG DIMAINKAN · WAV TANPA KEHILANGAN",
@@ -1255,6 +1862,41 @@
         s1_cap: "<b>Dual View (Piano Roll + Visual Stave)</b>நேரடி SoundFont ஒலியுடன் MIDI மற்றும் இசைக்குறிப்பை அருகருகே திருத்தவும்.",
         s2_cap: "<b>Chord Studio Popover</b>1-கிளிக் Diatonic கார்டுகள், 13 கார்டு வகைகள் மற்றும் Bass slash inversions.",
         s3_cap: "<b>Pro Engine கட்டுப்பாடுகள்</b>Compute Backend, NAR Arena MB, sampling அமைப்புகள் மற்றும் விருப்ப LoRA இடங்கள்.",
+        hs_0: "3D ஸ்டுடியோ பார்வை",
+        hs_1: "ஸ்டுடியோ கன்சோல்",
+        hs_2: "Cover & ரீமிக்ஸ்",
+        hs_3: "Piano Roll MIDI",
+        hs_4: "Stave இசைக்குறிப்பு",
+        ed_kicker: "வீட்டு ஸ்டுடியோ கட்டமைப்பு",
+        ed_title: "உங்கள் தனிப்பட்ட ஆஃப்லைன் இசை ஸ்டுடியோ",
+        ed_desc: "புதிய இசை உருவாக்கவும், Cover பாடல்களை வகை மாற்றம் செய்யவும், மற்றும் தூய பல-தட MIDI + 48kHz WAV ஆடியோவை உங்கள் முதன்மை DAW-க்கு ஏற்றுமதி செய்யவும் — எந்த சந்தாவும் இல்லாமல்.",
+        ed_s1: "<b>100%</b> உள்ளூர் GPU/CPU ஆஃப்லைன்",
+        ed_s2: "<b>48kHz</b> தூய Lossless WAV",
+        ed_s3: "<b>22</b> உள்ளமைந்த இசை வகைகள்",
+        ed_s4: "<b>5</b> ஸ்டுடியோ மொழிகள்",
+        sp1_k: "செயல்முறை 01 · TEXT-TO-SONG",
+        sp1_t: "உடனடி இசையமைப்பு & Smart Style Builder",
+        sp1_p: "22 இசை வகை டெம்ப்ளேட்களுடன் விரைவாகத் தொடங்குங்கள் அல்லது Smart Style Builder (மொழி → BPM → வகை → முக்கிய கருவி) மூலம் துல்லியமான Prompt உருவாக்குங்கள்.",
+        sp1_tag1: "22 இசை டெம்ப்ளேட்கள்",
+        sp1_tag2: "சீரான Prompt வரிசை",
+        sp1_tag3: "CFG & Seed கட்டுப்பாடு",
+        sp2_k: "செயல்முறை 02 · REMIX & COVER",
+        sp2_t: "வகை மாற்றும் Covers & Take வரலாறு",
+        sp2_p: "ஒரு பாடலைச் சேர்க்கவும் (அல்லது DAW .mid இறக்குமதி செய்யவும்), SheetSage2 மூலம் மெலடி + கார்டுகளைப் பிரித்தெடுத்து Vocal Cover அல்லது Instrumental Lead முறையில் உருவாக்கவும்.",
+        sp2_tag1: "SheetSage2 பிரித்தெடுப்பு",
+        sp2_tag2: "3 வாத்திய Cover முறைகள்",
+        sp2_tag3: "Auto-Take வரலாறு",
+        sp3_k: "செயல்முறை 03 · PRO-DAW கருவிகள்",
+        sp3_t: "Dual View MIDI, Stave & Chord Studio",
+        sp3_p: "Piano Roll மற்றும் 5-வரி Stave இசைக்குறிப்பை அருகருகே திருத்தவும் — 8 SoundFont கருவிகள் வழியாக நேரடி ஒலி கேட்டும், 1-கிளிக் Jazz/R&B கார்டு மாற்றமும் செய்யலாம்.",
+        sp3_tag1: "இணைந்த Dual View",
+        sp3_tag2: "8 SoundFont கருவிகள்",
+        sp3_tag3: "Chord Studio பாப்அப்",
+        g1_cap: "<b>ஊடாடும் Chord Grid & Reharmonizer</b>பாடல் பகுதி வாரியாக கார்டுகளைத் திருத்தவும், நடு-பார் கார்டுகளைப் பிரிக்கவும், அல்லது Jazz 7th/9th-க்கு மாற்றவும்.",
+        g2_cap: "<b>Piano Roll Ghost தடங்கள் & Alt-Clone</b>பின்னணி தடங்களை வழிகாட்டியாகக் காட்டி முதன்மை மெலடியைத் துல்லியமாகத் திருத்தவும் நகலெடுக்கவும்.",
+        g3_cap: "<b>முழுத்திரை Visual Stave (abcjs)</b>SVG நோட்டுகளை மேலும் கீழும் இழுத்துத் திருத்தவும்; அச்சிடத் தயாரான PDF அல்லது SVG ஏற்றுமதி செய்யவும்.",
+        g4_cap: "<b>பல-குரல் ABC Raw எஞ்சின்</b>V: Vocal + V: Ins குறியீடுகள் Stave, Piano Roll மற்றும் .MID ஏற்றுமதியுடன் உடனடியாக ஒத்திசைகின்றன.",
+        g6_cap: "<b>ஸ்மார்ட் GGUF RAM நிலைத் தேர்வி</b>Q5_K_M, Q8_0 (Near-Lossless) மற்றும் BF16 மாடல்களுக்கான கணினி நினைவக வழிகாட்டுதல்.",
         smp_title: "தூய AI ஆடியோ காட்சியகம் (48kHz WAV)",
         smp_sub: "Shishoki YuE Studio மூலம் உள்ளூரில் உருவாக்கப்பட்ட 7 மொழிகள் மற்றும் இசை வகைகளில் உள்ள முழு WAV பாடல்களைக் கேளுங்கள் — உங்கள் வழிகாட்டியாக Style Prompt மற்றும் பாடல் வரிகளுடன்.",
         smp_now: "இப்போது ஒலிக்கிறது · தூய WAV",
@@ -1611,6 +2253,99 @@
         .catch(() => {
           npTitle.textContent = "Unable to load samples/tracks.json";
         });
+    })();
+
+    // Hero Interactive Commercial Slideshow
+    (function initHeroSlideshow() {
+      const carousel = document.getElementById("heroCarousel");
+      if (!carousel) return;
+      const slides = Array.from(carousel.querySelectorAll(".hero-slide"));
+      const tabs = Array.from(carousel.querySelectorAll(".hero-tab"));
+      const prevBtn = document.getElementById("heroPrev");
+      const nextBtn = document.getElementById("heroNext");
+      const bar = document.getElementById("heroProgressBar");
+      const INTERVAL = 5500;
+      let idx = 0;
+      let startTs = performance.now();
+      let paused = false;
+
+      function goTo(newIdx) {
+        idx = (newIdx + slides.length) % slides.length;
+        slides.forEach((s, i) => s.classList.toggle("active", i === idx));
+        tabs.forEach((t, i) => t.classList.toggle("active", i === idx));
+        startTs = performance.now();
+        if (bar) bar.style.width = "0%";
+      }
+
+      if (prevBtn) prevBtn.addEventListener("click", (e) => { e.stopPropagation(); goTo(idx - 1); });
+      if (nextBtn) nextBtn.addEventListener("click", (e) => { e.stopPropagation(); goTo(idx + 1); });
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => goTo(Number(tab.getAttribute("data-slide") || 0)));
+      });
+      carousel.addEventListener("mouseenter", () => { paused = true; });
+      carousel.addEventListener("mouseleave", () => {
+        paused = false;
+        startTs = performance.now();
+      });
+
+      function tick(now) {
+        if (!paused) {
+          const elapsed = now - startTs;
+          const pct = Math.min(100, (elapsed / INTERVAL) * 100);
+          if (bar) bar.style.width = pct.toFixed(1) + "%";
+          if (elapsed >= INTERVAL) goTo(idx + 1);
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+
+    // Full-Screen Click-to-Zoom Lightbox Modal
+    (function initLightbox() {
+      const lb = document.getElementById("imgLightbox");
+      const lbImg = document.getElementById("lbImg");
+      const lbCap = document.getElementById("lbCap");
+      const lbClose = document.getElementById("lbClose");
+      const lbPrev = document.getElementById("lbPrev");
+      const lbNext = document.getElementById("lbNext");
+      const triggers = Array.from(document.querySelectorAll(".lb-trigger"));
+      if (!lb || !triggers.length) return;
+
+      let activeIdx = 0;
+
+      function getCaption(el) {
+        const key = el.getAttribute("data-lb-key");
+        const lang = (select && select.value) || "en";
+        const dict = I18N[lang] || I18N.en;
+        if (key && dict[key]) return dict[key];
+        const img = el.tagName === "IMG" ? el : el.querySelector("img");
+        return img ? img.alt : "";
+      }
+
+      function showAt(i) {
+        activeIdx = (i + triggers.length) % triggers.length;
+        const el = triggers[activeIdx];
+        const src = el.getAttribute("data-lb-src") || el.getAttribute("src") || "";
+        const img = el.tagName === "IMG" ? el : el.querySelector("img");
+        lbImg.src = src;
+        lbImg.alt = img ? img.alt : "";
+        lbCap.innerHTML = getCaption(el).replace(/<br\s*\/?>/gi, " — ").replace(/<\/b>/gi, " — ").replace(/<b>/gi, "<strong>");
+        lb.classList.add("open");
+      }
+
+      triggers.forEach((el, i) => {
+        el.addEventListener("click", () => showAt(i));
+      });
+      lbClose.addEventListener("click", () => lb.classList.remove("open"));
+      lbPrev.addEventListener("click", (e) => { e.stopPropagation(); showAt(activeIdx - 1); });
+      lbNext.addEventListener("click", (e) => { e.stopPropagation(); showAt(activeIdx + 1); });
+      lb.addEventListener("click", (e) => { if (e.target === lb) lb.classList.remove("open"); });
+      document.addEventListener("keydown", (e) => {
+        if (!lb.classList.contains("open")) return;
+        if (e.key === "Escape") lb.classList.remove("open");
+        else if (e.key === "ArrowLeft") showAt(activeIdx - 1);
+        else if (e.key === "ArrowRight") showAt(activeIdx + 1);
+      });
     })();
   </script>
 </body>
